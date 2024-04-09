@@ -1,5 +1,5 @@
 const express = require('express');
-const {createConnection} = require('mysql2/promise');
+
 const cors = require('cors');
 
 require('dotenv').config();
@@ -7,18 +7,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-let connection;
 const port = 7319
+
+const productRoutes = require("./controller-layer/Product");
 
 async function main()
 {
-    connection = await createConnection({
-        'host': process.env.DB_HOST,
-        'user': process.env.DB_USER,
-        'database': process.env.DB_NAME,
-        'password': process.env.DB_PASSWORD
-    })
-
     app.get("/", function(req,res){
 
         res.status(200);
@@ -26,6 +20,8 @@ async function main()
             "message":"Success"
         })
     });
+
+    app.use("/products" , productRoutes);
 
     app.listen(port, function()
     {
