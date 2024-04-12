@@ -1,20 +1,11 @@
-const {createConnection} = require('mysql2/promise');
+const { getConnection } = require("./sql");
+
 
 let connection;
 
-async function main()
-{
-    connection = await createConnection({
-        'host': process.env.DB_HOST,
-        'user': process.env.DB_USER,
-        'database': process.env.DB_NAME,
-        'password': process.env.DB_PASSWORD
-    })
-}
-
 const getAllProductsDAL = async () => {
     try {
-        await main();
+        const connection = getConnection();
         let [products] = await connection.execute(`
             SELECT Products.*,Categories.category_name,Brands.brand_name FROM Products 
             INNER JOIN Categories ON Categories.category_id = Products.category_id 
@@ -28,7 +19,7 @@ const getAllProductsDAL = async () => {
 
 const getProductDAL = async (product_id) => {
     try {
-        await main();
+        const connection = getConnection();
         let [product] = await connection.execute(`
             SELECT Products.*,Categories.category_name,Brands.brand_name FROM Products 
             INNER JOIN Categories ON Categories.category_id = Products.category_id 
@@ -43,7 +34,7 @@ const getProductDAL = async (product_id) => {
 
 const addProductDAL = async (product_name, category_id, brand_id, description, price, quantity_available) => {
     try {
-        await main();
+        const connection = getConnection();
         let response = await connection.execute(`
             INSERT INTO Products (product_name, category_id, brand_id, description, price, quantity_available)
             VALUES (?,?,?,?,?,?)
@@ -56,7 +47,7 @@ const addProductDAL = async (product_name, category_id, brand_id, description, p
 
 const editProductDAL = async (product_name, category_id, brand_id, description, price, quantity_available,product_id) => {
     try {
-        await main();
+        const connection = getConnection();
         let response = await connection.execute(`
             UPDATE Products SET product_name=?, category_id=?, brand_id=?, description=?, price=?, quantity_available=? WHERE product_id=?
         `, [product_name, category_id, brand_id, description, price, quantity_available,product_id]);
@@ -68,7 +59,7 @@ const editProductDAL = async (product_name, category_id, brand_id, description, 
 
 const deleteProductDAL = async (product_id) => {
     try {
-        await main();
+        const connection = getConnection();
         let response = await connection.execute(`
             DELETE FROM Products WHERE product_id=?
         `, [product_id]);
@@ -80,6 +71,7 @@ const deleteProductDAL = async (product_id) => {
 
 const searchProductDAL = async (product_name="", category_id=0, brand_id=0) => {
     try {
+        const connection = getConnection();
         let queryArray = [];
         let searchquery = `WHERE `;
         if(product_name)
@@ -93,7 +85,6 @@ const searchProductDAL = async (product_name="", category_id=0, brand_id=0) => {
             if(index != queryArray.length - 1)
                 searchquery = searchquery + " AND "
         }
-        await main();
         let [products] = await connection.execute(`
             SELECT Products.*,Categories.category_name,Brands.brand_name FROM Products 
             INNER JOIN Categories ON Categories.category_id = Products.category_id 
@@ -106,11 +97,24 @@ const searchProductDAL = async (product_name="", category_id=0, brand_id=0) => {
     }
 }
 
+const getMainCategoriesDAL = async () => {
+    try {
+        const connection = getConnection();
+        let [categories] = await connection.execute(`
+            SELECT * FROM Categories WHERE parent_category_id is NULL;
+        `);
+        return categories;
+    } catch (error) {
+        console.log("Error getting Categories", error)
+    }
+}
+
 module.exports = {
     getAllProductsDAL,
     addProductDAL,
     editProductDAL,
     deleteProductDAL,
     getProductDAL,
-    searchProductDAL
+    searchProductDAL,
+    getMainCategoriesDAL
 }

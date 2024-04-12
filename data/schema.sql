@@ -27,6 +27,7 @@ CREATE TABLE Categories (
     category_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     category_name VARCHAR(100) NOT NULL,
     parent_category_id INT UNSIGNED,
+    category_img_url VARCHAR(255),
     FOREIGN KEY (parent_category_id) REFERENCES Categories(category_id)
 );
 
