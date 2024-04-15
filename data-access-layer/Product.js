@@ -39,7 +39,7 @@ const addProductDAL = async (product_name, category_id, brand_id, description, p
             INSERT INTO Products (product_name, category_id, brand_id, description, price, quantity_available)
             VALUES (?,?,?,?,?,?)
         `, [product_name, category_id, brand_id, description, price, quantity_available]);
-        return "Product Added"
+        return response;
     } catch (error) {
         console.log("Error adding Product", error)
     }
@@ -109,6 +109,30 @@ const getMainCategoriesDAL = async () => {
     }
 }
 
+const getAllCategoriesDAL = async () => {
+    try {
+        const connection = getConnection();
+        let [categories] = await connection.execute(`
+            SELECT * FROM Categories;
+        `);
+        return categories;
+    } catch (error) {
+        console.log("Error getting Categories", error)
+    }
+}
+
+const getAllBrandsDAL = async () => {
+    try {
+        const connection = getConnection();
+        let [brands] = await connection.execute(`
+            SELECT * FROM Brands;
+        `);
+        return brands;
+    } catch (error) {
+        console.log("Error getting Brands", error)
+    }
+}
+
 module.exports = {
     getAllProductsDAL,
     addProductDAL,
@@ -116,5 +140,7 @@ module.exports = {
     deleteProductDAL,
     getProductDAL,
     searchProductDAL,
-    getMainCategoriesDAL
+    getMainCategoriesDAL,
+    getAllBrandsDAL,
+    getAllCategoriesDAL
 }

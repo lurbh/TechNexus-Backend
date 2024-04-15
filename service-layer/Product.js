@@ -36,6 +36,16 @@ const serviceGetMainCategories = async () => {
     return categories;
 }
 
+const serviceGetAllCategories = async () => {
+    const categories = await productDAL.getAllCategoriesDAL();
+    return categories;
+}
+
+const serviceGetAllBrands = async () => {
+    const categories = await productDAL.getAllBrandsDAL();
+    return categories;
+}
+
 module.exports = {
     serviceGetAllProducts,
     serviceAddProduct,
@@ -43,5 +53,7 @@ module.exports = {
     serviceDeleteProduct,
     serviceGetProduct,
     serviceSearchProduct,
-    serviceGetMainCategories
+    serviceGetMainCategories,
+    serviceGetAllCategories,
+    serviceGetAllBrands
 }

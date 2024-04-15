@@ -4,12 +4,29 @@ const cors = require('cors');
 
 require('dotenv').config();
 const app = express();
+const hbs = require('hbs');
+const wax = require('wax-on');
 app.use(cors());
 app.use(express.json());
+// use hbs for the view engine
+app.set('view engine', 'hbs');
+
+// enable the static folder
+app.use(express.static('public'));
+
+// enable wax-on for template inheritance
+wax.on(hbs.handlebars);
+wax.setLayoutPath('./views/layouts');
+
+app.use(
+    express.urlencoded({
+        'extended': false
+    })
+);
 
 const { connectToDB, getConnection } = require('./data-access-layer/sql.js');
 
-const port = 7319
+const port = 7319;
 
 const productRoutes = require("./controller-layer/Product");
 
