@@ -36,13 +36,13 @@ exports.up = function(db, callback) {
       unsigned: true
     }
   }, () => {
-    db.addForeignKey('Orders', 'Users', 'fk_user_id', {
+    db.addForeignKey('Orders', 'Users', 'orders_users_fk', {
       'user_id': 'user_id'
     }, {
       onDelete: 'CASCADE',
       onUpdate: 'RESTRICT'
     }, () => {
-      db.addForeignKey('Orders', 'Order_Statuses', 'fk_status_id', {
+      db.addForeignKey('Orders', 'Order_Statuses', 'orders_order_status_fk', {
         'status_id': 'status_id'
       }, {
         onDelete: 'CASCADE',
@@ -53,7 +53,11 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('Orders', callback);
+  db.removeForeignKey('Orders', 'orders_users_fk', () => {
+    db.removeForeignKey('Orders', 'orders_order_status_fk', () => {
+      db.dropTable('Orders', callback);
+    });
+  });
 };
 
 

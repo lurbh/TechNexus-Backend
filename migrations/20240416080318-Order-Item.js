@@ -41,13 +41,13 @@ exports.up = function(db, callback) {
       length: '10,2'
     }
   }, () => {
-    db.addForeignKey('Order_Items', 'Orders', 'fk_order_id', {
+    db.addForeignKey('Order_Items', 'Orders', 'order_items_orders_fk', {
       'order_id': 'order_id'
     }, {
       onDelete: 'CASCADE',
       onUpdate: 'RESTRICT'
     }, () => {
-      db.addForeignKey('Order_Items', 'Products', 'fk_orderproduct_id', {
+      db.addForeignKey('Order_Items', 'Products', 'order_items_products_fk', {
         'product_id': 'product_id'
       }, {
         onDelete: 'CASCADE',
@@ -58,7 +58,11 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('Order_Items', callback);
+  db.removeForeignKey('Order_Items', 'order_items_orders_fk', () => {
+    db.removeForeignKey('Order_Items', 'order_items_products_fk', () => {
+      db.dropTable('Order_Items', callback);
+    });
+  });
 };
 
 

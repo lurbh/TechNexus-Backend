@@ -58,13 +58,13 @@ exports.up = function(db, callback) {
       onUpdate: 'CURRENT_TIMESTAMP'
     }
   }, () => {
-    db.addForeignKey('Products', 'Categories', 'fk_category_id', {
+    db.addForeignKey('Products', 'Categories', 'products_categories_fk', {
       'category_id': 'category_id'
     }, {
       onDelete: 'CASCADE',
       onUpdate: 'RESTRICT'
     }, () => {
-      db.addForeignKey('Products', 'Brands', 'fk_brand_id', {
+      db.addForeignKey('Products', 'Brands', 'products_brands_fk', {
         'brand_id': 'brand_id'
       }, {
         onDelete: 'CASCADE',
@@ -75,7 +75,11 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('Products', callback);
+  db.removeForeignKey('Products', 'products_categories_fk', () => {
+    db.removeForeignKey('Products', 'products_brands_fk', () => {
+      db.dropTable('Products', callback);
+    });
+  });
 };
 
 exports._meta = {

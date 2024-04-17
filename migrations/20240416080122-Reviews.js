@@ -43,13 +43,13 @@ exports.up = function(db, callback) {
       defaultValue: 'CURRENT_TIMESTAMP'
     }
   }, () => {
-    db.addForeignKey('Reviews', 'Products', 'fk_product_id', {
+    db.addForeignKey('Reviews', 'Products', 'reviews_products_fk', {
       'product_id': 'product_id'
     }, {
       onDelete: 'CASCADE',
       onUpdate: 'RESTRICT'
     }, () => {
-      db.addForeignKey('Reviews', 'Users', 'fk_user_id', {
+      db.addForeignKey('Reviews', 'Users', 'reviews_users_fk', {
         'user_id': 'user_id'
       }, {
         onDelete: 'CASCADE',
@@ -60,7 +60,11 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('Reviews', callback);
+  db.removeForeignKey('Reviews', 'reviews_products_fk', () => {
+    db.removeForeignKey('Reviews', 'reviews_users_fk', () => {
+      db.dropTable('Reviews', callback);
+    });
+  });
 };
 
 exports._meta = {

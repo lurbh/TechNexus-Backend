@@ -39,7 +39,7 @@ exports.up = function(db, callback) {
       unsigned: true
     }
   }, () => {
-    db.addForeignKey('News_Articles', 'Users', 'fk_author_id', {
+    db.addForeignKey('News_Articles', 'Users', 'news_articles_users_fk', {
       'author_id': 'user_id'
     }, {
       onDelete: 'CASCADE',
@@ -49,7 +49,9 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('News_Articles', callback);
+  db.removeForeignKey('News_Articles', 'news_articles_users_fk', () => {
+    db.dropTable('News_Articles', callback);
+  });
 };
 
 
