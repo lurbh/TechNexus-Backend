@@ -54,17 +54,17 @@
             {{this.quantity_available}}
         </td>
         <td>
-            <a href="/products/update-product/{{this.id}}"
-               class="btn btn-primary btn-sm">Update</a>
+            <a href="products/update-product/{{this.id}}"
+               class="btn btn-warning btn-sm">Update</a>
         </td>
         <td>
-            <a href="/products/update-product/{{this.id}}"
-               class="btn btn-primary btn-sm">Delete</a>
+            <a href="products/delete-product/{{this.id}}"
+               class="btn btn-danger btn-sm">Delete</a>
         </td>
     </tr>
     {{/each}}
 </table>
-
+<a class="btn btn-info btn-sm" href="products/add-product">Add Products</a>
 {{/block}}
 
 {{/extends}}

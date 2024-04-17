@@ -11,6 +11,18 @@
     <title>TechNexus Admin Portal</title>
   </head>
   <body>
+    {{#each success_messages}}
+      <div class="alert alert-success">
+        {{this}}
+      </div>
+    {{/each}}
+
+    {{#each error_messages}}
+      <div class="alert alert-danger">
+        {{this}}
+      </div>
+    {{/each}}
+
     <div class="container">
         {{#block "content"}}{{/block}}
     </div>

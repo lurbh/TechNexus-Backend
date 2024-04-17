@@ -6,6 +6,9 @@ require('dotenv').config();
 const app = express();
 const hbs = require('hbs');
 const wax = require('wax-on');
+const session = require('express-session');
+const flash = require('connect-flash');
+const FileStore = require('session-file-store')(session);
 app.use(cors());
 app.use(express.json());
 // use hbs for the view engine
@@ -24,6 +27,21 @@ app.use(
     })
 );
 
+app.use(session({
+    store: new FileStore(),
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true
+}))
+
+app.use(flash())
+
+
+app.use(function (req, res, next) {
+    res.locals.success_messages = req.flash("success_messages");
+    res.locals.error_messages = req.flash("error_messages");
+    next();
+});
 // const { connectToDB, getConnection } = require('./data-access-layer/sql.js');
 
 const port = 7319;

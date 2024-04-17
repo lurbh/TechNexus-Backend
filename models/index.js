@@ -25,7 +25,13 @@ const Category = bookshelf.model('Category', {
     tableName:'categories',
     products:function() {
         return this.hasMany('Product', 'category_id')
-    }
+    },
+    parentCategory:function() {
+        return this.belongsTo('Category', 'parent_category_id');
+      },
+    childCategories:function() {
+        return this.hasMany('Category', 'parent_category_id');
+      }
 } )
 
 const User = bookshelf.model('User', {
