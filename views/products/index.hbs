@@ -33,7 +33,7 @@
     {{#each products}}
     <tr>
         <td>
-            {{this.product_id}}
+            {{this.id}}
         </td>
         <td>
             {{this.product_name}}
@@ -48,7 +48,10 @@
             {{this.category.category_name}}
         </td>
         <td>
-            {{this.brand.brand_name}}
+            {{this.brands.brand_name}}
+        </td>
+        <td>
+            {{this.quantity_available}}
         </td>
         <td>
             <a href="/products/update-product/{{this.id}}"

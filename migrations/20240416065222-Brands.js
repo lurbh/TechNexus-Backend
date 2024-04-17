@@ -15,8 +15,8 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.createTable('Brands', {
-      brand_id: { type: 'int', primaryKey: true, unsigned: true, autoIncrement: true },
+  db.createTable('brands', {
+      id: { type: 'int', primaryKey: true, unsigned: true, autoIncrement: true },
       brand_name: { type: 'string', length: 100, notNull: true },
       country_of_origin: { type: 'string', length: 100 }
       // Add other brand-related fields as needed
@@ -24,7 +24,7 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('Brands', callback);
+  db.dropTable('brands', callback);
 };
 
 exports._meta = {

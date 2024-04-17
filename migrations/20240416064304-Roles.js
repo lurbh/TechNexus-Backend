@@ -15,16 +15,16 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.createTable('Roles', {
-      role_id: { type: 'int', primaryKey: true, unsigned: true, autoIncrement: true },
+  db.createTable('roles', {
+      id: { type: 'int', primaryKey: true, unsigned: true, autoIncrement: true },
       role_name: { type: 'string', length: 50, notNull: true },
   }, () => {
-      db.addIndex('Roles', 'unique_role_name', 'role_name', true, callback);
+      db.addIndex('roles', 'unique_role_name', 'role_name', true, callback);
   });
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('Roles', callback);
+  db.dropTable('roles', callback);
 };
 
 exports._meta = {

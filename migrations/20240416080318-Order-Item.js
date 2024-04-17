@@ -15,8 +15,8 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.createTable('Order_Items', {
-    order_item_id: {
+  db.createTable('order_items', {
+    id: {
       type: 'int',
       primaryKey: true,
       unsigned: true,
@@ -41,14 +41,14 @@ exports.up = function(db, callback) {
       length: '10,2'
     }
   }, () => {
-    db.addForeignKey('Order_Items', 'Orders', 'order_items_orders_fk', {
-      'order_id': 'order_id'
+    db.addForeignKey('order_items', 'orders', 'order_items_orders_fk', {
+      'order_id': 'id'
     }, {
       onDelete: 'CASCADE',
       onUpdate: 'RESTRICT'
     }, () => {
-      db.addForeignKey('Order_Items', 'Products', 'order_items_products_fk', {
-        'product_id': 'product_id'
+      db.addForeignKey('order_items', 'products', 'order_items_products_fk', {
+        'product_id': 'id'
       }, {
         onDelete: 'CASCADE',
         onUpdate: 'RESTRICT'
@@ -58,9 +58,9 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.removeForeignKey('Order_Items', 'order_items_orders_fk', () => {
-    db.removeForeignKey('Order_Items', 'order_items_products_fk', () => {
-      db.dropTable('Order_Items', callback);
+  db.removeForeignKey('order_items', 'order_items_orders_fk', () => {
+    db.removeForeignKey('order_items', 'order_items_products_fk', () => {
+      db.dropTable('order_items', callback);
     });
   });
 };

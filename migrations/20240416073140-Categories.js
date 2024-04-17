@@ -15,15 +15,15 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.createTable('Categories', {
-      category_id: { type: 'int', primaryKey: true, unsigned: true, autoIncrement: true },
+  db.createTable('categories', {
+      id: { type: 'int', primaryKey: true, unsigned: true, autoIncrement: true },
       category_name: { type: 'string', length: 100, notNull: true },
       parent_category_id: { type: 'int', unsigned: true },
       category_img_url: { type: 'string', length: 255 }
   }, () => {
-      db.addForeignKey('Categories', 'Categories', 'Categories_parent_category_id_foreign',
+      db.addForeignKey('categories', 'categories', 'Categories_parent_category_id_foreign',
           {
-              'parent_category_id': 'category_id'
+              'parent_category_id': 'id'
           },
           {
               onDelete: 'CASCADE',
@@ -35,8 +35,8 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.removeForeignKey('Categories', 'Categories_parent_category_id_foreign', () => {
-      db.dropTable('Categories', callback);
+  db.removeForeignKey('categories', 'Categories_parent_category_id_foreign', () => {
+      db.dropTable('categories', callback);
   });
 };
 

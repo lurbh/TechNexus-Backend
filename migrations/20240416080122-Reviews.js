@@ -15,8 +15,8 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.createTable('Reviews', {
-    review_id: {
+  db.createTable('reviews', {
+    id: {
       type: 'int',
       primaryKey: true,
       unsigned: true,
@@ -43,14 +43,14 @@ exports.up = function(db, callback) {
       defaultValue: 'CURRENT_TIMESTAMP'
     }
   }, () => {
-    db.addForeignKey('Reviews', 'Products', 'reviews_products_fk', {
-      'product_id': 'product_id'
+    db.addForeignKey('reviews', 'products', 'reviews_products_fk', {
+      'product_id': 'id'
     }, {
       onDelete: 'CASCADE',
       onUpdate: 'RESTRICT'
     }, () => {
-      db.addForeignKey('Reviews', 'Users', 'reviews_users_fk', {
-        'user_id': 'user_id'
+      db.addForeignKey('reviews', 'users', 'reviews_users_fk', {
+        'user_id': 'id'
       }, {
         onDelete: 'CASCADE',
         onUpdate: 'RESTRICT'
@@ -60,9 +60,9 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.removeForeignKey('Reviews', 'reviews_products_fk', () => {
-    db.removeForeignKey('Reviews', 'reviews_users_fk', () => {
-      db.dropTable('Reviews', callback);
+  db.removeForeignKey('reviews', 'reviews_products_fk', () => {
+    db.removeForeignKey('reviews', 'reviews_users_fk', () => {
+      db.dropTable('reviews', callback);
     });
   });
 };

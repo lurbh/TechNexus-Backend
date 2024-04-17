@@ -15,8 +15,8 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.createTable('Orders', {
-    order_id: {
+  db.createTable('orders', {
+    id: {
       type: 'int',
       primaryKey: true,
       unsigned: true,
@@ -31,19 +31,19 @@ exports.up = function(db, callback) {
       type: 'datetime',
       defaultValue: 'CURRENT_TIMESTAMP'
     },
-    status_id: {
+    order_status_id: {
       type: 'int',
       unsigned: true
     }
   }, () => {
-    db.addForeignKey('Orders', 'Users', 'orders_users_fk', {
-      'user_id': 'user_id'
+    db.addForeignKey('orders', 'users', 'orders_users_fk', {
+      'User_id': 'id'
     }, {
       onDelete: 'CASCADE',
       onUpdate: 'RESTRICT'
     }, () => {
-      db.addForeignKey('Orders', 'Order_Statuses', 'orders_order_status_fk', {
-        'status_id': 'status_id'
+      db.addForeignKey('orders', 'order_statuses', 'orders_order_status_fk', {
+        'Order_Status_id': 'id'
       }, {
         onDelete: 'CASCADE',
         onUpdate: 'RESTRICT'
@@ -53,9 +53,9 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.removeForeignKey('Orders', 'orders_users_fk', () => {
-    db.removeForeignKey('Orders', 'orders_order_status_fk', () => {
-      db.dropTable('Orders', callback);
+  db.removeForeignKey('orders', 'orders_users_fk', () => {
+    db.removeForeignKey('orders', 'orders_order_status_fk', () => {
+      db.dropTable('orders', callback);
     });
   });
 };

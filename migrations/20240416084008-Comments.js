@@ -15,8 +15,8 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.createTable('Comments', {
-    comment_id: {
+  db.createTable('comments', {
+    id: {
       type: 'int',
       primaryKey: true,
       unsigned: true,
@@ -40,14 +40,14 @@ exports.up = function(db, callback) {
       defaultValue: 'CURRENT_TIMESTAMP'
     }
   }, () => {
-    db.addForeignKey('Comments', 'News_Articles', 'comments_news_articles_fk', {
-      'article_id': 'article_id'
+    db.addForeignKey('comments', 'news_articles', 'comments_news_articles_fk', {
+      'article_id': 'id'
     }, {
       onDelete: 'CASCADE',
       onUpdate: 'RESTRICT'
     }, () => {
-      db.addForeignKey('Comments', 'Users', 'comments_users_fk', {
-        'user_id': 'user_id'
+      db.addForeignKey('comments', 'users', 'comments_users_fk', {
+        'user_id': 'id'
       }, {
         onDelete: 'CASCADE',
         onUpdate: 'RESTRICT'
@@ -57,9 +57,9 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.removeForeignKey('Comments', 'comments_news_articles_fk', () => {
-    db.removeForeignKey('Comments', 'comments_users_fk', () => {
-      db.dropTable('Comments', callback);
+  db.removeForeignKey('comments', 'comments_news_articles_fk', () => {
+    db.removeForeignKey('comments', 'comments_users_fk', () => {
+      db.dropTable('comments', callback);
     });
   });
 };

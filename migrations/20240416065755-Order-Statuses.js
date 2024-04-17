@@ -15,16 +15,16 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.createTable('Order_Statuses', {
-      status_id: { type: 'int', primaryKey: true, unsigned: true, autoIncrement: true },
+  db.createTable('order_statuses', {
+      id: { type: 'int', primaryKey: true, unsigned: true, autoIncrement: true },
       status_name: { type: 'string', length: 50, notNull: true }
   }, () => {
-      db.addIndex('Order_Statuses', 'unique_status_name', 'status_name', true, callback);
+      db.addIndex('order_statuses', 'unique_status_name', 'status_name', true, callback);
   });
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('Order_Statuses', callback);
+  db.dropTable('order_statuses', callback);
 };
 
 exports._meta = {

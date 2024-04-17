@@ -15,8 +15,8 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.createTable('News_Articles', {
-    article_id: {
+  db.createTable('news_articles', {
+    id: {
       type: 'int',
       primaryKey: true,
       unsigned: true,
@@ -39,8 +39,8 @@ exports.up = function(db, callback) {
       unsigned: true
     }
   }, () => {
-    db.addForeignKey('News_Articles', 'Users', 'news_articles_users_fk', {
-      'author_id': 'user_id'
+    db.addForeignKey('news_articles', 'users', 'news_articles_users_fk', {
+      'author_id': 'id'
     }, {
       onDelete: 'CASCADE',
       onUpdate: 'RESTRICT'
@@ -49,8 +49,8 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.removeForeignKey('News_Articles', 'news_articles_users_fk', () => {
-    db.dropTable('News_Articles', callback);
+  db.removeForeignKey('news_articles', 'news_articles_users_fk', () => {
+    db.dropTable('news_articles', callback);
   });
 };
 

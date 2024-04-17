@@ -15,14 +15,14 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.addColumn('Products', 'image_url', {
+  db.addColumn('products', 'image_url', {
     type: 'string',
     length: 255
   }, callback);
 };
 
 exports.down = function(db, callback) {
-  db.removeColumn('Products', 'image_url', callback);
+  db.removeColumn('products', 'image_url', callback);
 };
 
 exports._meta = {

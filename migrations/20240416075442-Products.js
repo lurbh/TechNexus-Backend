@@ -15,8 +15,8 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.createTable('Products', {
-    product_id: {
+  db.createTable('products', {
+    id: {
       type: 'int',
       primaryKey: true,
       unsigned: true,
@@ -58,14 +58,14 @@ exports.up = function(db, callback) {
       onUpdate: 'CURRENT_TIMESTAMP'
     }
   }, () => {
-    db.addForeignKey('Products', 'Categories', 'products_categories_fk', {
-      'category_id': 'category_id'
+    db.addForeignKey('products', 'categories', 'products_categories_fk', {
+      'category_id': 'id'
     }, {
       onDelete: 'CASCADE',
       onUpdate: 'RESTRICT'
     }, () => {
-      db.addForeignKey('Products', 'Brands', 'products_brands_fk', {
-        'brand_id': 'brand_id'
+      db.addForeignKey('products', 'brands', 'products_brands_fk', {
+        'brand_id': 'id'
       }, {
         onDelete: 'CASCADE',
         onUpdate: 'RESTRICT'
@@ -75,9 +75,9 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.removeForeignKey('Products', 'products_categories_fk', () => {
-    db.removeForeignKey('Products', 'products_brands_fk', () => {
-      db.dropTable('Products', callback);
+  db.removeForeignKey('products', 'products_categories_fk', () => {
+    db.removeForeignKey('products', 'products_brands_fk', () => {
+      db.dropTable('products', callback);
     });
   });
 };
