@@ -43,7 +43,7 @@ exports.up = function(db, callback) {
       'author_id': 'user_id'
     }, {
       onDelete: 'CASCADE',
-      onUpdate: 'CASCADE'
+      onUpdate: 'RESTRICT'
     }, callback);
   });
 };

@@ -45,13 +45,13 @@ exports.up = function(db, callback) {
       'order_id': 'order_id'
     }, {
       onDelete: 'CASCADE',
-      onUpdate: 'CASCADE'
+      onUpdate: 'RESTRICT'
     }, () => {
       db.addForeignKey('Order_Items', 'Products', 'fk_orderproduct_id', {
         'product_id': 'product_id'
       }, {
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'RESTRICT'
       }, callback);
     });
   });

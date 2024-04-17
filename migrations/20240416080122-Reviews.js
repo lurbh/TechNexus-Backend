@@ -47,13 +47,13 @@ exports.up = function(db, callback) {
       'product_id': 'product_id'
     }, {
       onDelete: 'CASCADE',
-      onUpdate: 'CASCADE'
+      onUpdate: 'RESTRICT'
     }, () => {
       db.addForeignKey('Reviews', 'Users', 'fk_user_id', {
         'user_id': 'user_id'
       }, {
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'RESTRICT'
       }, callback);
     });
   });

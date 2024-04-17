@@ -62,13 +62,13 @@ exports.up = function(db, callback) {
       'category_id': 'category_id'
     }, {
       onDelete: 'CASCADE',
-      onUpdate: 'CASCADE'
+      onUpdate: 'RESTRICT'
     }, () => {
       db.addForeignKey('Products', 'Brands', 'fk_brand_id', {
         'brand_id': 'brand_id'
       }, {
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'RESTRICT'
       }, callback);
     });
   });

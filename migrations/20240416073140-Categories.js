@@ -27,7 +27,7 @@ exports.up = function(db, callback) {
           },
           {
               onDelete: 'CASCADE',
-              onUpdate: 'CASCADE'
+              onUpdate: 'RESTRICT'
           },
           callback
       );

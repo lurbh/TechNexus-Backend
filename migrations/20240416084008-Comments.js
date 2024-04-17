@@ -44,13 +44,13 @@ exports.up = function(db, callback) {
       'article_id': 'article_id'
     }, {
       onDelete: 'CASCADE',
-      onUpdate: 'CASCADE'
+      onUpdate: 'RESTRICT'
     }, () => {
       db.addForeignKey('Comments', 'Users', 'fk_usercoments_id', {
         'user_id': 'user_id'
       }, {
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'RESTRICT'
       }, callback);
     });
   });

@@ -24,7 +24,7 @@ const Order_Statuses = bookshelf.model('Order_Statuses', {
 const Categories = bookshelf.model('Categories', {
     tableName:'categories',
     products() {
-        return this.hasMany('Products', 'categories_id')
+        return this.hasMany('Products', 'category_id')
     }
 } )
 
@@ -108,7 +108,8 @@ const Comments = bookshelf.model('Comments', {
 })
 
 
-module.exports = {  Roles, 
+module.exports = {  
+                    Roles, 
                     Brands, 
                     Order_Statuses, 
                     Categories, 
@@ -117,5 +118,6 @@ module.exports = {  Roles,
                     Orders, 
                     Order_Items, 
                     Reviews,
-                    News_Articles 
+                    News_Articles,
+                    Comments 
                 }
