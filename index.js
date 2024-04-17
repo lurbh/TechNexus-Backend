@@ -24,22 +24,23 @@ app.use(
     })
 );
 
-const { connectToDB, getConnection } = require('./data-access-layer/sql.js');
+// const { connectToDB, getConnection } = require('./data-access-layer/sql.js');
 
 const port = 7319;
 
 const productRoutes = require("./controller-layer/Product");
+const adminRoutes = require("./controller-layer/admin");
 
 async function main()
 {
-    await connectToDB(
-        process.env.DB_HOST,
-        process.env.DB_USER,
-        process.env.DB_NAME,
-        process.env.DB_PASSWORD
-    );
+    // await connectToDB(
+    //     process.env.DB_HOST,
+    //     process.env.DB_USER,
+    //     process.env.DB_NAME,
+    //     process.env.DB_PASSWORD
+    // );
 
-    const connection = getConnection();
+    // const connection = getConnection();
 
     app.get("/", function(req,res){
 
@@ -50,6 +51,7 @@ async function main()
     });
 
     app.use("/products" , productRoutes);
+    app.use("/admin" , adminRoutes);
 
     app.listen(port, function()
     {

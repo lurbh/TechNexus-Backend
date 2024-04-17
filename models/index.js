@@ -1,106 +1,106 @@
 const bookshelf = require('../bookshelf');
 
-const Roles = bookshelf.model('Roles', {
+const Role = bookshelf.model('Role', {
     tableName:'roles',
     users() {
-        return this.hasMany('Users', 'role')
+        return this.hasMany('User', 'role')
     }
 } )
 
-const Brands = bookshelf.model('Brands', {
+const Brand = bookshelf.model('Brand', {
     tableName:'brands',
     products() {
-        return this.hasMany('Products', 'brand_id')
+        return this.hasMany('Product', 'brand_id')
     }
 } )
 
-const Order_Statuses = bookshelf.model('Order_Statuses', {
+const Order_Status = bookshelf.model('Order_Status', {
     tableName:'order_statuses',
     orders() {
-        return this.hasMany('Orders', 'status_id')
+        return this.hasMany('Order', 'status_id')
     }
 } )
 
-const Categories = bookshelf.model('Categories', {
+const Category = bookshelf.model('Category', {
     tableName:'categories',
     products() {
-        return this.hasMany('Products', 'category_id')
+        return this.hasMany('Product', 'category_id')
     }
 } )
 
-const Users = bookshelf.model('Users', {
+const User = bookshelf.model('User', {
     tableName:'users',
     roles() {
-        return this.belongsTo('Roles')
+        return this.belongsTo('Role')
     },
     reviews() {
-        return this.hasMany('Reviews', 'user_id')
+        return this.hasMany('Review', 'user_id')
     },
     commnets() {
-        return this.hasMany('Comments', 'user_id')
+        return this.hasMany('Comment', 'user_id')
     }
 } )
 
-const Products = bookshelf.model('Products', {
+const Product = bookshelf.model('Product', {
     tableName: 'products',
     brands() {
-        return this.belongsTo('Brands')
+        return this.belongsTo('Brand')
     },
     categories() {
-        return this.belongsTo('Categories')
+        return this.belongsTo('Category')
     },
     order_items() {
-        return this.hasMany('Order_Items', 'product_id')
+        return this.hasMany('Order_Item', 'product_id')
     },
     reviews() {
-        return this.hasMany('Reviews', 'product_id')
+        return this.hasMany('Review', 'product_id')
     }
 })
 
-const Orders = bookshelf.model('Orders' , {
+const Order = bookshelf.model('Order' , {
     tableName: 'orders',
     status() {
-        return this.belongsTo('Order_Statuses')
+        return this.belongsTo('Order_Status')
     },
     order_items() {
-        return this.hasMany('Order_Items', 'order_id')
+        return this.hasMany('Order_Item', 'order_id')
     }
 })
 
-const Order_Items = bookshelf.model('Order_Items', {
+const Order_Item = bookshelf.model('Order_Item', {
     tableName: 'order_items',
     products() {
-        return this.belongsTo('Products')
+        return this.belongsTo('Product')
     },
     order() {
-        return this.belongsTo('Orders')
+        return this.belongsTo('Order')
     }
 })
 
-const Reviews = bookshelf.model('Reviews', {
+const Review = bookshelf.model('Review', {
     tableName: 'reviews',
     user() {
         return this.belongsTo('User');
     },
     products() {
-        return this.belongsTo('Products')
+        return this.belongsTo('Product')
     }
 })
 
-const News_Articles = bookshelf.model('News_Articles', {
+const News_Article = bookshelf.model('News_Article', {
     tableName: 'news_articles',
     user() {
         return this.belongsTo('User');
     },
     comments() {
-        return this.hasMany('Comments', 'article_id')
+        return this.hasMany('Comment', 'article_id')
     }
 }) 
 
-const Comments = bookshelf.model('Comments', {
+const Comment = bookshelf.model('Comment', {
     tableName: 'comments', 
     article() {
-        return this.belongsTo('News_Articles')
+        return this.belongsTo('News_Article')
     },
     user() {
         return this.belongsTo('User')
@@ -109,15 +109,15 @@ const Comments = bookshelf.model('Comments', {
 
 
 module.exports = {  
-                    Roles, 
-                    Brands, 
-                    Order_Statuses, 
-                    Categories, 
-                    Users, 
-                    Products, 
-                    Orders, 
-                    Order_Items, 
-                    Reviews,
-                    News_Articles,
-                    Comments 
+                    Role, 
+                    Brand, 
+                    Order_Status, 
+                    Category, 
+                    User, 
+                    Product, 
+                    Order, 
+                    Order_Item, 
+                    Review,
+                    News_Article,
+                    Comment 
                 }

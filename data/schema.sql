@@ -16,8 +16,8 @@ CREATE TABLE Users (
     email VARCHAR(100) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    role VARCHAR(50) NOT NULL,
-    FOREIGN KEY (role) REFERENCES Roles(role_name),
+    role INT UNSIGNED,
+    FOREIGN KEY (role) REFERENCES Roles(role_id),
     UNIQUE (email)
     -- Add other user profile information fields as needed
 );
@@ -48,9 +48,11 @@ CREATE TABLE Products (
     description TEXT,
     price DECIMAL(10, 2) NOT NULL,
     quantity_available INT UNSIGNED NOT NULL,
+    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    image_url VARCHAR(255) NOT NULL,
     FOREIGN KEY (category_id) REFERENCES Categories(category_id),
     FOREIGN KEY (brand_id) REFERENCES Brands(brand_id)
-    -- Add other product-related fields as needed
 );
 
 -- Create Reviews Table
@@ -112,12 +114,4 @@ CREATE TABLE Comments (
     comment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (article_id) REFERENCES News_Articles(article_id),
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
-);
-
--- Create Images Table
-CREATE TABLE Images (
-    image_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    product_id INT UNSIGNED,
-    image_url VARCHAR(255) NOT NULL,
-    FOREIGN KEY (product_id) REFERENCES Products(product_id)
 );
