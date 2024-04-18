@@ -1,4 +1,3 @@
-const res = require("express/lib/response");
 const productDAL = require("../data-access-layer/Product");
 
 const serviceGetAllProducts = async () => {

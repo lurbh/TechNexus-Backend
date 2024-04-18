@@ -123,3 +123,11 @@ CREATE TABLE Images (
     image_url VARCHAR(255) NOT NULL,
     FOREIGN KEY (product_id) REFERENCES Products(product_id)
 );
+
+-- Create Users Table
+CREATE TABLE JWTUser (
+    user_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(100) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    UNIQUE (email)
+);
