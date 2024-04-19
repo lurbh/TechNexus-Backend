@@ -57,9 +57,13 @@ const updateUserDAL = async (userForm,user_id) => {
             require: true
         });
         const {...userData} = userForm.data;
-        user.set(productData);
-        console.log(user);
-        // await user.save();
+        user.set({
+            'username': userForm.data.username,
+            'password_hash': userForm.data.password,
+            'email': userForm.data.email,
+            'role_id': userForm.data.role_id
+        });
+        await user.save();
         return user;
     } catch (error) {
         console.log("Error adding Product", error)

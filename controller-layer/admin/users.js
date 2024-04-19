@@ -76,6 +76,7 @@ router.post('/update-user/:user_id', checkIfAuthenticated, async function(req,re
             form.data.password = getHashedPassword(form.data.password);
             form.data.confirm_password = getHashedPassword(form.data.confirm_password);
             const user = await serviceLayer.serviceUpdateUser(form,user_id);
+            console.log(user);
             req.flash("success_messages", `User ${user.get('username')} has been updated`)
             res.redirect("/admin/users");
         },
