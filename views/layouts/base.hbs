@@ -24,7 +24,23 @@
     {{/each}}
 
     <div class="container position-relative">
-      <a href="/admin/users/logout" class="btn btn-primary position-absolute top-0 end-0 m-3">Logout</a>
+      <nav class="navbar navbar-expand-sm bg-dark p-3">
+        <div class="container-fluid" >
+          <a href="/admin" class="header-image-link" style="height: 40px;"><img 
+            src="http://res.cloudinary.com/dymr3ncda/image/upload/v1713504268/hlfirr3hu8eg3wxndrrd.png"
+            style="height: 130%; width:auto;"
+            alt="TechNexus Logo"
+        /></a>
+          <div class="container-fluid" >
+            {{#if user}}
+              <span style="color: whitesmoke;">Hello, {{user.username}}</span>,
+              <a href="/admin/users/logout" class="btn btn-primary position-absolute top-0 end-0 m-3">Logout</a>
+              {{else}}
+              <a href="/admin/users/login" class="btn btn-primary position-absolute top-0 end-0 m-3">Login</a>
+            {{/if}}
+          </div>
+        </div>
+      </nav>
         {{#block "content"}}{{/block}}
     </div>
 

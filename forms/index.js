@@ -25,8 +25,6 @@ const bootstrapField = function (name, object) {
 };
 
 const createProductForm = (categories,brands) => {
-    // the object in the parameter
-    // is the form definition
     return forms.create({
         'product_name': fields.string({
             required: true,
@@ -52,7 +50,7 @@ const createProductForm = (categories,brands) => {
             label: 'Category',
             required: true,
             errorAfterField: true,
-            widget: widgets.select(), // use the select dropdown
+            widget: widgets.select(), 
             choices: categories
         }),
         'brand_id':fields.number({
@@ -68,7 +66,7 @@ const createProductForm = (categories,brands) => {
     })
 }
 
-const createRegistrationForm = () => {
+const createUserForm = (roles) => {
     return forms.create({
         'username': fields.string({
             required: true,
@@ -80,6 +78,16 @@ const createRegistrationForm = () => {
         'email': fields.string({
             required: true,
             errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'role_id': fields.number({
+            label: 'Role',
+            required: true,
+            errorAfterField: true,
+            widget: widgets.select(), 
+            choices: roles,
             cssClasses: {
                 label: ['form-label']
             }
@@ -123,6 +131,6 @@ const createLoginForm = () => {
 
 module.exports = {  createProductForm, 
                     bootstrapField, 
-                    createRegistrationForm,
+                    createUserForm,
                     createLoginForm
                  };

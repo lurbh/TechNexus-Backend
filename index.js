@@ -49,6 +49,11 @@ app.use(function(req,res,next){
     next();
 })
 
+app.use(function(req,res,next){
+    res.locals.user = req.session.user;
+    next();
+})
+
 app.use(function(err, req, res, next){
     if (err && err.code == "EBADCSRFTOKEN") {
         req.flash("error_messages", "The form has expired, please try again");
@@ -73,15 +78,6 @@ const cloudinaryRoutes = require('./controller-layer/cloudinary')
 
 async function main()
 {
-    // await connectToDB(
-    //     process.env.DB_HOST,
-    //     process.env.DB_USER,
-    //     process.env.DB_NAME,
-    //     process.env.DB_PASSWORD
-    // );
-
-    // const connection = getConnection();
-
     app.get("/", function(req,res){
 
         res.status(200);

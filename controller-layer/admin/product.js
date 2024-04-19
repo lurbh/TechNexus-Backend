@@ -54,13 +54,10 @@ router.get('/update-product/:product_id', async function(req,res){
     const allCategories = (await serviceLayer.serviceGetAllCategories()).map( category => [ category.get('id'), category.get('category_name')]);
     const allBrands = (await serviceLayer.serviceGetAllBrands()).map (t => [t.get('id'), t.get('brand_name')]);
     const productForm = modelforms.createProductForm(allCategories, allBrands);
-    productForm.fields.product_name.value = product.get('product_name');
-    productForm.fields.price.value = product.get('price');
-    productForm.fields.description.value = product.get('description');
-    productForm.fields.category_id.value = product.get('category_id');
-    productForm.fields.quantity_available.value = product.get('quantity_available');
-    productForm.fields.brand_id.value = product.get('brand_id');
-    productForm.fields.image_url.value = product.get('image_url');
+    for(let field in productForm.fields)
+    {
+        productForm.fields[field].value = product.get(field);
+    }
     res.render('products/update', {
         form: productForm.toHTML(modelforms.bootstrapField),
         'product': product.toJSON(),

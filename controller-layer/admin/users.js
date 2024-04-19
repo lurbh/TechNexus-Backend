@@ -4,6 +4,9 @@ const crypto = require('crypto');
 
 const models = require('../../models');
 const modelforms = require('../../forms');
+const serviceLayer = require('../../service-layer/Users');
+
+const { checkIfAuthenticated } = require('../../middleware');
 
 const getHashedPassword = (password) => {
     const sha256 = crypto.createHash('sha256');
@@ -11,14 +14,82 @@ const getHashedPassword = (password) => {
     return hash;
 }
 
-router.get('/', async function(req,res){
-    const users = await models.User.fetchAll({
-        withRelated:['roles']
-    })
-    console.log(users.toJSON());
+router.get('/', checkIfAuthenticated, async function(req,res){
+    const users = await serviceLayer.serviceGetAllUsers();
     res.render('users/index', {
         users: users.toJSON()
     } );
+})
+
+router.get('/add-user', checkIfAuthenticated, async function(req,res){
+    const roles = (await serviceLayer.serviceGetAllRoles()).map( role => [ role.get('id'), role.get('role_name')]);
+    const userForm = modelforms.createUserForm(roles);
+    res.render('users/create', {
+        form: userForm.toHTML(modelforms.bootstrapField),
+    })
+})
+
+router.post('/add-user', checkIfAuthenticated, async function(req,res){
+    const roles = (await serviceLayer.serviceGetAllRoles()).map( role => [ role.get('id'), role.get('role_name')]);
+    const userForm = modelforms.createUserForm(roles);
+    userForm.handle(req, {
+        'success': async function(form) {
+            form.data.password = getHashedPassword(form.data.password);
+            form.data.confirm_password = getHashedPassword(form.data.confirm_password);
+            const user = await serviceLayer.serviceAddUser(form);
+            req.flash("success_messages", `New User ${user.get('username')} has been created`)
+            res.redirect("/admin/users");
+        },
+        'empty': function(form) {
+            res.render('users/create', {
+                form: form.toHTML(modelforms.bootstrapField)
+            })
+        },
+        'error': function(form) {
+            res.render('users/create', {
+                form: form.toHTML(modelforms.bootstrapField)
+            })
+        }
+    })
+})
+
+router.get('/update-user/:user_id', checkIfAuthenticated, async function(req,res){
+    const { user_id } = req.params;
+    const user = await serviceLayer.serviceGetUser(user_id);
+    const roles = (await serviceLayer.serviceGetAllRoles()).map( role => [ role.get('id'), role.get('role_name')]);
+    const userForm = modelforms.createUserForm(roles);
+    for(let field in userForm.fields)
+    {
+        userForm.fields[field].value = user.get(field);
+    }
+    res.render('users/update', {
+        form: userForm.toHTML(modelforms.bootstrapField),
+    })
+})
+
+router.post('/update-user/:user_id', checkIfAuthenticated, async function(req,res){
+    const { user_id } = req.params;
+    const roles = (await serviceLayer.serviceGetAllRoles()).map( role => [ role.get('id'), role.get('role_name')]);
+    const userForm = modelforms.createUserForm(roles);
+    userForm.handle(req, {
+        'success': async function(form) {
+            form.data.password = getHashedPassword(form.data.password);
+            form.data.confirm_password = getHashedPassword(form.data.confirm_password);
+            const user = await serviceLayer.serviceUpdateUser(form,user_id);
+            req.flash("success_messages", `User ${user.get('username')} has been updated`)
+            res.redirect("/admin/users");
+        },
+        'empty': function(form) {
+            res.render('users/update', {
+                form: form.toHTML(modelforms.bootstrapField)
+            })
+        },
+        'error': function(form) {
+            res.render('users/update', {
+                form: form.toHTML(modelforms.bootstrapField)
+            })
+        }
+    })
 })
 
 // router.get('/register', async function(req,res){
@@ -73,7 +144,7 @@ router.post('/login', (req,res)=>{
             );
 
             if (!user) {
-                req.flash("error_messages", "Sorry, the authentication details you provided does not work1.")
+                req.flash("error_messages", "Sorry, the authentication details you provided does not work.")
                 res.redirect('/admin/users/login');
             } else {
                 if (user.get('password_hash') === getHashedPassword(form.data.password)) {
@@ -85,7 +156,7 @@ router.post('/login', (req,res)=>{
                     req.flash("success_messages", "Welcome back, " + user.get('username'));
                     res.redirect('/admin');
                 } else {
-                    req.flash("error_messages", "Sorry, the authentication details you provided does not work2.")
+                    req.flash("error_messages", "Sorry, the authentication details you provided does not work.")
                     res.redirect('/admin/users/login')
                 }
             }
@@ -98,7 +169,7 @@ router.post('/login', (req,res)=>{
     })
 })
 
-router.get('/logout', (req, res) => {
+router.get('/logout', checkIfAuthenticated, (req, res) => {
     req.session.user = null;
     req.flash('success_messages', "Goodbye");
     res.redirect('/admin/users/login');

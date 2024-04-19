@@ -1,0 +1,14 @@
+{{#extends "base"}}
+
+{{#block "content"}}
+<h1>Create New User</h1>
+<form method="POST">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+    {{{form}}}
+    <a class="btn btn-danger mt-3" href="/admin/users">Cancel</a>
+    <input type="submit" class="btn btn-primary mt-3" value="Add User"/>
+</form>
+{{/block}}
+
+
+{{/extends}}
