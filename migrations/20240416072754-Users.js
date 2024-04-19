@@ -21,7 +21,7 @@ exports.up = function(db, callback) {
       email: { type: 'string', length: 100, notNull: true },
       password_hash: { type: 'string', length: 255, notNull: true },
       registration_date: { type: 'datetime', defaultValue: 'CURRENT_TIMESTAMP' },
-      Role_id: { type: 'int', unsigned: true },
+      role_id: { type: 'int', unsigned: true },
       // Add other user profile information fields as needed
   }, () => {
       db.addForeignKey('users', 'roles', 'Users_roles_foreign',

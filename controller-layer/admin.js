@@ -1,16 +1,20 @@
 const express = require("express");
 const router =  express.Router();
 
+const { checkIfAuthenticated } = require('../middleware');
+
 const models = require('../models');
 const modelforms = require('../forms');
 
 const productRoutes = require("./admin/product");
+const userRoutes = require("./admin/users");
 
-router.get('/', function(req,res){
+router.get('/', checkIfAuthenticated, function(req,res){
     res.render('admin/index')
 })
 
-router.use("/products" , productRoutes);
+router.use("/products" , checkIfAuthenticated , productRoutes);
+router.use("/users" , userRoutes);
 
 // router.get('/products', async function(req,res){
 //     // use the Product model to get all the products

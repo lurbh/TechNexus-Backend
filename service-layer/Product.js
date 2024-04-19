@@ -6,13 +6,13 @@ const serviceGetAllProducts = async () => {
     return products;
 };
 
-const serviceAddProduct = async (product_name, category_id, brand_id, description, price, quantity_available) => {
-    const response = await productDAL.addProductDAL(product_name, category_id, brand_id, description, price, quantity_available);
+const serviceAddProduct = async (productForm) => {
+    const response = await productDAL.addProductDAL(productForm);
     return response;
 }
 
-const serviceEditProduct = async (product_name, category_id, brand_id, description, price, quantity_available,product_id) => {
-    const response = await productDAL.editProductDAL(product_name, category_id, brand_id, description, price, quantity_available,product_id);
+const serviceEditProduct = async (productForm, product_id) => {
+    const response = await productDAL.editProductDAL(productForm, product_id);
     return response;
 }
 

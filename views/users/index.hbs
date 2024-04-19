@@ -1,0 +1,60 @@
+{{#extends "base"}}
+
+
+{{#block "content"}}
+<h1>All Users</h1>
+
+<table class="table">
+    <thead>
+        <th>
+            User ID
+        </th>
+        <th>
+            Username
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Registration Date
+        </th>
+        <th>
+            Role
+        </th>
+        <th></th>
+        <th></th>
+    </thead>
+    {{#each users}}
+    <tr>
+        <td>
+            {{this.id}}
+        </td>
+        <td>
+            {{this.username}}
+        </td>
+        <td>
+            {{this.email}}
+        </td>
+        <td>
+            {{#dateFormat this.registration_date}}
+                {{date}} {{time}} 
+            {{/dateFormat}}
+        </td>
+        <td>
+            {{this.roles.role_name}}
+        </td>
+        <td>
+            <a href="users/update-user/{{this.id}}"
+               class="btn btn-warning btn-sm">Update</a>
+        </td>
+        <td>
+            <a href="users/delete-user/{{this.id}}"
+               class="btn btn-danger btn-sm">Delete</a>
+        </td>
+    </tr>
+    {{/each}}
+</table>
+<a class="btn btn-info btn-sm" href="users/add-user">Add Users</a>
+{{/block}}
+
+{{/extends}}

@@ -113,6 +113,16 @@ const Comment = bookshelf.model('Comment', {
     }
 })
 
+const Cart_Items = bookshelf.model('Cart_Items', {
+    tableName: 'cart_items',
+    product:function() {
+        return this.belongsTo('Produts')
+    },
+    user:function() {
+        return this.belongsTo('User')
+    }
+})
+
 
 module.exports = {  
                     Role, 

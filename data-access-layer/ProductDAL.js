@@ -25,7 +25,7 @@ const getProductDAL = async (product_id) => {
 
 const addProductDAL = async (productForm) => {
     try {
-        const product = models.Product();
+        const product = new models.Product();
         const {...productData} = productForm.data;
         product.set(productData);
         await product.save();
@@ -35,13 +35,17 @@ const addProductDAL = async (productForm) => {
     }
 }
 
-const editProductDAL = async (product_name, category_id, brand_id, description, price, quantity_available,product_id) => {
+const editProductDAL = async (productForm , product_id) => {
     try {
-        const connection = getConnection();
-        let response = await connection.execute(`
-            UPDATE Products SET product_name=?, category_id=?, brand_id=?, description=?, price=?, quantity_available=? WHERE product_id=?
-        `, [product_name, category_id, brand_id, description, price, quantity_available,product_id]);
-        return "Product Edited"
+        const product = await models.Product.where({
+            'id': product_id
+        }).fetch({
+            require: true
+        });
+        const {...productData} = productForm.data;
+        product.set(productData);
+        await product.save();
+        return product;
     } catch (error) {
         console.log("Error adding Product", error)
     }
@@ -49,11 +53,14 @@ const editProductDAL = async (product_name, category_id, brand_id, description, 
 
 const deleteProductDAL = async (product_id) => {
     try {
-        const connection = getConnection();
-        let response = await connection.execute(`
-            DELETE FROM Products WHERE product_id=?
-        `, [product_id]);
-        return "Product Deleted"
+        const product = await models.Product.where({
+            'id': product_id
+        }).fetch({
+            require: true
+        });
+        const name = product.get('product_name')
+        await product.destroy();
+        return name;
     } catch (error) {
         console.log("Error Deleting Product", error)
     }
@@ -89,11 +96,11 @@ const searchProductDAL = async (product_name="", category_id=0, brand_id=0) => {
 
 const getMainCategoriesDAL = async () => {
     try {
-        const connection = getConnection();
-        let [categories] = await connection.execute(`
-            SELECT * FROM Categories WHERE parent_category_id is NULL;
-        `);
-        return categories;
+        return await models.Category.where({
+            'parent_category_id': null
+        }).fetch({
+            require: true
+        });
     } catch (error) {
         console.log("Error getting Categories", error)
     }
@@ -101,11 +108,7 @@ const getMainCategoriesDAL = async () => {
 
 const getAllCategoriesDAL = async () => {
     try {
-        const connection = getConnection();
-        let [categories] = await connection.execute(`
-            SELECT * FROM Categories;
-        `);
-        return categories;
+        return await models.Category.fetchAll()
     } catch (error) {
         console.log("Error getting Categories", error)
     }
@@ -113,11 +116,7 @@ const getAllCategoriesDAL = async () => {
 
 const getAllBrandsDAL = async () => {
     try {
-        const connection = getConnection();
-        let [brands] = await connection.execute(`
-            SELECT * FROM Brands;
-        `);
-        return brands;
+        return await models.Brand.fetchAll();
     } catch (error) {
         console.log("Error getting Brands", error)
     }
