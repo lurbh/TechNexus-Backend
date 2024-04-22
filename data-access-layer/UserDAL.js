@@ -56,7 +56,6 @@ const updateUserDAL = async (userForm,user_id) => {
         }).fetch({
             require: true
         });
-        const {...userData} = userForm.data;
         user.set({
             'username': userForm.data.username,
             'password_hash': userForm.data.password,
@@ -66,7 +65,22 @@ const updateUserDAL = async (userForm,user_id) => {
         await user.save();
         return user;
     } catch (error) {
-        console.log("Error adding Product", error)
+        console.log("Error updating User", error)
+    }
+}
+
+const DeleteUserDAL = async (user_id) => {
+    try {
+        const user = await models.User.where({
+            'id': user_id
+        }).fetch({
+            require: true
+        });
+        const name = user.get('username');
+        await user.destroy();
+        return name;
+    } catch (error) {
+        console.log("Error Deleting User", error)
     }
 }
 
@@ -75,5 +89,6 @@ module.exports = {
     getAllRolesDAL,
     createUserDAL,
     getUserDAL,
-    updateUserDAL
+    updateUserDAL,
+    DeleteUserDAL
 }

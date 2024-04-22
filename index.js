@@ -72,7 +72,7 @@ hbs.registerHelper('dateFormat', function(datetime, options) {
 
 const port = 7319;
 
-const productRoutes = require("./controller-layer/Product");
+const apiRoutes = require("./controller-layer/api");
 const adminRoutes = require("./controller-layer/admin");
 const cloudinaryRoutes = require('./controller-layer/cloudinary')
 
@@ -85,8 +85,8 @@ async function main()
             "message":"Success"
         })
     });
-
-    app.use("/products" , productRoutes);
+    
+    app.use("/api" , apiRoutes);
     app.use("/admin" , adminRoutes);
     app.use('/cloudinary', cloudinaryRoutes);
 

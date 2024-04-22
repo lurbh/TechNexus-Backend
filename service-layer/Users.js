@@ -25,10 +25,16 @@ const serviceUpdateUser = async (userForm, user_id) => {
     return user;
 }
 
+const serviceDeleteUser = async (user_id) => {
+    const user = userDAL.DeleteUserDAL(user_id);
+    return user;
+}
+
 module.exports = {
     serviceGetAllUsers,
     serviceGetAllRoles,
     serviceAddUser,
     serviceGetUser,
-    serviceUpdateUser
+    serviceUpdateUser,
+    serviceDeleteUser
 }

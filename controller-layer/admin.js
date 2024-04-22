@@ -7,6 +7,7 @@ const models = require('../models');
 const modelforms = require('../forms');
 
 const productRoutes = require("./admin/product");
+const brandsRoutes = require("./admin/brands");
 const userRoutes = require("./admin/users");
 
 router.get('/', checkIfAuthenticated, function(req,res){
@@ -15,6 +16,7 @@ router.get('/', checkIfAuthenticated, function(req,res){
 
 router.use("/products" , checkIfAuthenticated , productRoutes);
 router.use("/users" , userRoutes);
+router.use("/brands" , checkIfAuthenticated , brandsRoutes);
 
 // router.get('/products', async function(req,res){
 //     // use the Product model to get all the products

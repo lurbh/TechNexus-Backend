@@ -129,8 +129,22 @@ const createLoginForm = () => {
     })
 }
 
+createBrandForm = () => {
+    return forms.create({
+        'brand_name': fields.string({
+            required: true,
+            errorAfterField: true,
+        }),
+        'country_of_origin': fields.string({
+            required: true,
+            errorAfterField: true,
+        }),
+    })
+}
+
 module.exports = {  createProductForm, 
                     bootstrapField, 
                     createUserForm,
-                    createLoginForm
+                    createLoginForm,
+                    createBrandForm
                  };

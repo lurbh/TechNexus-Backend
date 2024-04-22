@@ -93,6 +93,22 @@ router.post('/update-user/:user_id', checkIfAuthenticated, async function(req,re
     })
 })
 
+router.get('/delete-user/:user_id', async function(req,res){
+    const { user_id } = req.params;
+    const user = await serviceLayer.serviceGetUser(user_id);
+
+    res.render('users/delete', {
+        user: user.toJSON()
+    })
+})
+
+router.post('/delete-user/:user_id', async function(req,res){
+    const { user_id } = req.params;
+    const response = await serviceLayer.serviceDeleteUser(user_id);
+    req.flash("success_messages", `User ${response} has been Deleted`)
+    res.redirect("/admin/users");
+})
+
 // router.get('/register', async function(req,res){
 //     const registerForm = modelforms.createRegistrationForm();
 //     res.render('users/register', {
