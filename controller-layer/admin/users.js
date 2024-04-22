@@ -109,39 +109,41 @@ router.post('/delete-user/:user_id', async function(req,res){
     res.redirect("/admin/users");
 })
 
-// router.get('/register', async function(req,res){
-//     const registerForm = modelforms.createRegistrationForm();
-//     res.render('users/register', {
-//         'form': registerForm.toHTML(modelforms.bootstrapField)
-//     })
-// })
+router.get('/register', async function(req,res){
+    const roles = (await serviceLayer.serviceGetAllRoles()).map( role => [ role.get('id'), role.get('role_name')]);
+    const registerForm = modelforms.createUserForm(roles);
+    res.render('users/register', {
+        'form': registerForm.toHTML(modelforms.bootstrapField)
+    })
+})
 
-// router.post('/register', (req, res) => {
-//     const registerForm = modelforms.createRegistrationForm();
-//     registerForm.handle(req, {
-//         success: async (form) => {
-//             const user = new models.User({
-//                 'username': form.data.username,
-//                 'password_hash': getHashedPassword(form.data.password),
-//                 'email': form.data.email,
-//                 'role_id': 1
-//             });
-//             await user.save();
-//             req.flash("success_messages", "User signed up successfully!");
-//             res.redirect('/admin/users/login')
-//         },
-//         'empty': (form) => {
-//             res.render('users/register', {
-//                 form: form.toHTML(modelforms.bootstrapField)
-//             })
-//         },
-//         'error': (form) => {
-//             res.render('users/register', {
-//                 'form': form.toHTML(modelforms.bootstrapField)
-//             })
-//         }
-//     })
-// })
+router.post('/register', async (req, res) => {
+    const roles = (await serviceLayer.serviceGetAllRoles()).map( role => [ role.get('id'), role.get('role_name')]);
+    const registerForm = modelforms.createUserForm(roles);
+    registerForm.handle(req, {
+        success: async (form) => {
+            const user = new models.User({
+                'username': form.data.username,
+                'password_hash': getHashedPassword(form.data.password),
+                'email': form.data.email,
+                'role_id': 1
+            });
+            await user.save();
+            req.flash("success_messages", "User signed up successfully!");
+            res.redirect('/admin/users/login')
+        },
+        'empty': (form) => {
+            res.render('users/register', {
+                form: form.toHTML(modelforms.bootstrapField)
+            })
+        },
+        'error': (form) => {
+            res.render('users/register', {
+                'form': form.toHTML(modelforms.bootstrapField)
+            })
+        }
+    })
+})
 
 router.get('/login', (req,res)=>{
     const loginForm = modelforms.createLoginForm();

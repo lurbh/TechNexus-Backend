@@ -33,7 +33,7 @@
         /></a>
           <div class="container-fluid" >
             {{#if user}}
-              <span style="color: whitesmoke;">Hello, {{user.username}}</span>,
+              <span style="color: whitesmoke; top:25px; right: 125px;" class="position-absolute">Hello, {{user.username}}</span>
               <a href="/admin/users/logout" class="btn btn-primary position-absolute top-0 end-0 m-3">Logout</a>
               {{else}}
               <a href="/admin/users/login" class="btn btn-primary position-absolute top-0 end-0 m-3">Login</a>

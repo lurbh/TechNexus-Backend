@@ -9,6 +9,9 @@ const modelforms = require('../forms');
 const productRoutes = require("./admin/product");
 const brandsRoutes = require("./admin/brands");
 const userRoutes = require("./admin/users");
+const rolesRoutes = require("./admin/roles")
+const categoriesRoutes = require("./admin/category")
+const reviewsRoutes = require("./admin/reviews")
 
 router.get('/', checkIfAuthenticated, function(req,res){
     res.render('admin/index')
@@ -17,6 +20,9 @@ router.get('/', checkIfAuthenticated, function(req,res){
 router.use("/products" , checkIfAuthenticated , productRoutes);
 router.use("/users" , userRoutes);
 router.use("/brands" , checkIfAuthenticated , brandsRoutes);
+router.use("/roles" , checkIfAuthenticated, rolesRoutes)
+router.use("/categories", checkIfAuthenticated, categoriesRoutes)
+router.use("/reviews", checkIfAuthenticated, reviewsRoutes)
 
 // router.get('/products', async function(req,res){
 //     // use the Product model to get all the products

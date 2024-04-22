@@ -30,10 +30,9 @@ const createProductForm = (categories,brands) => {
             required: true,
             errorAfterField: true,
         }),
-        'price': fields.number({
+        'price': fields.string({
             required: true,
             errorAfterField: true,
-            widget: widgets.number(),
             validators: [validators.min(0)]
         }),
         'quantity_available': fields.number({
@@ -129,7 +128,7 @@ const createLoginForm = () => {
     })
 }
 
-createBrandForm = () => {
+const createBrandForm = () => {
     return forms.create({
         'brand_name': fields.string({
             required: true,
@@ -142,9 +141,36 @@ createBrandForm = () => {
     })
 }
 
+const createRoleForm = () => {
+    return forms.create({
+        'role_name': fields.string({
+            required: true,
+            errorAfterField: true,
+        }),
+    })
+}
+
+const createCategoryForm = (categories) => {
+    return forms.create({
+        'category_name': fields.string({
+            required: true,
+            errorAfterField: true
+        }),
+        'parent_category_id': fields.number({
+            label: 'Parent Category',
+            required: false,
+            errorAfterField: true,
+            widget: widgets.select(), 
+            choices: categories
+        })
+    })
+}
+
 module.exports = {  createProductForm, 
                     bootstrapField, 
                     createUserForm,
                     createLoginForm,
-                    createBrandForm
+                    createBrandForm,
+                    createRoleForm,
+                    createCategoryForm
                  };

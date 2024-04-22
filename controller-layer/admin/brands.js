@@ -75,18 +75,18 @@ router.post('/update-brands/:brand_id', async function(req,res){
     })
 });
 
-router.get('/delete-brands/:user_id', async function(req,res){
-    const { user_id } = req.params;
-    const user = await serviceLayer.serviceGetBrand(user_id);
+router.get('/delete-brands/:brand_id', async function(req,res){
+    const { brand_id } = req.params;
+    const brand = await serviceLayer.serviceGetBrand(brand_id);
 
     res.render('brands/delete', {
-        user: user.toJSON()
+        brand: brand.toJSON()
     })
 })
 
-router.post('/delete-brands/:user_id', async function(req,res){
-    const { user_id } = req.params;
-    const response = await serviceLayer.serviceDelBrand(user_id);
+router.post('/delete-brands/:brand_id', async function(req,res){
+    const { brand_id } = req.params;
+    const response = await serviceLayer.serviceDelBrand(brand_id);
     req.flash("success_messages", `Brand ${response} has been Deleted`)
     res.redirect("/admin/brands");
 })

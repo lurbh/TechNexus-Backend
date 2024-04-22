@@ -39,8 +39,9 @@ exports.up = function(db, callback) {
       type: 'text'
     },
     price: {
-      type: 'decimal',
-      length: '10,2',
+      type: 'decimal', //{type: 'DECIMAL', length: '10, 6'}
+      precision: "10", 
+      scale: "2",
       notNull: true
     },
     quantity_available: {

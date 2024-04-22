@@ -1,0 +1,40 @@
+{{#extends "base"}}
+
+
+{{#block "content"}}
+<h1>All Roles</h1>
+
+<table class="table">
+    <thead>
+        <th>
+            Role ID
+        </th>
+        <th>
+            Role Name
+        </th>
+        <th></th>
+        <th></th>
+    </thead>
+    {{#each roles}}
+    <tr>
+        <td>
+            {{this.id}}
+        </td>
+        <td>
+            {{this.role_name}}
+        </td>
+        <td>
+            <a href="roles/update-role/{{this.id}}"
+               class="btn btn-warning btn-sm">Update</a>
+        </td>
+        <td>
+            <a href="roles/delete-role/{{this.id}}"
+               class="btn btn-danger btn-sm">Delete</a>
+        </td>
+    </tr>
+    {{/each}}
+</table>
+<a class="btn btn-info btn-sm" href="roles/add-role">Add Role</a>
+{{/block}}
+
+{{/extends}}

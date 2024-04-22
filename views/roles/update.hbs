@@ -1,0 +1,14 @@
+{{#extends "base"}}
+{{#block "content"}}
+<h1>Updating {{role.role_name}}</h1>
+<form method="POST">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+    {{{form}}}
+    
+    <a class="btn btn-danger mt-3" href="/admin/roles">Cancel</a>
+    <input type="submit" value="Update Role" class="btn btn-primary mt-3"/>
+</form>
+{{/block}}
+
+
+{{/extends}}

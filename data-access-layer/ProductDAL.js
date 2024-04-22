@@ -43,7 +43,9 @@ const editProductDAL = async (productForm , product_id) => {
             require: true
         });
         const {...productData} = productForm.data;
+        console.log(productData);
         product.set(productData);
+        console.log(product);
         await product.save();
         return product;
     } catch (error) {
