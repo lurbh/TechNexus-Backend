@@ -22,7 +22,7 @@ exports.up = function(db, callback) {
       unsigned: true,
       autoIncrement: true
     },
-    article_id: {
+    news_article_id: {
       type: 'int',
       unsigned: true,
       notNull: true
@@ -41,7 +41,7 @@ exports.up = function(db, callback) {
     }
   }, () => {
     db.addForeignKey('comments', 'news_articles', 'comments_news_articles_fk', {
-      'article_id': 'id'
+      'news_article_id': 'id'
     }, {
       onDelete: 'CASCADE',
       onUpdate: 'RESTRICT'

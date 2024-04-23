@@ -58,9 +58,8 @@ const deleteReviewDAL = async (review_id) => {
         }).fetch({
             withRelated: ['user','products']
         });
-        const name = review.get('review_name');
         await review.destroy();
-        return name;
+        return;
     } catch (error) {
         console.log("Error Deleting Review", error)
     }

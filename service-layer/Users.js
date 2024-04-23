@@ -11,23 +11,29 @@ const serviceGetAllRoles = async () => {
 }
 
 const serviceAddUser = async (userForm) => {
-    const user = userDAL.createUserDAL(userForm);
+    const user = await userDAL.createUserDAL(userForm);
     return user;
 }
 
 const serviceGetUser = async (user_id) => {
-    const user = userDAL.getUserDAL(user_id);
+    const user = await auserDAL.getUserDAL(user_id);
     return user;
 }
 
 const serviceUpdateUser = async (userForm, user_id) => {
-    const user = userDAL.updateUserDAL(userForm,user_id);
+    const user = await userDAL.updateUserDAL(userForm,user_id);
     return user;
 }
 
 const serviceDeleteUser = async (user_id) => {
-    const user = userDAL.DeleteUserDAL(user_id);
+    const user = await userDAL.DeleteUserDAL(user_id);
     return user;
+}
+
+const serviceGetOnlyUserType = async (type) => {
+    const users = await userDAL.GetUserTypeDAL(type);
+    console.log(users);
+    return users;
 }
 
 module.exports = {
@@ -36,5 +42,6 @@ module.exports = {
     serviceAddUser,
     serviceGetUser,
     serviceUpdateUser,
-    serviceDeleteUser
+    serviceDeleteUser,
+    serviceGetOnlyUserType
 }

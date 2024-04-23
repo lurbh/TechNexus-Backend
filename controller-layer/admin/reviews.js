@@ -3,6 +3,8 @@ const router =  express.Router();
 
 const modelforms = require('../../forms');
 const serviceLayer = require('../../service-layer/Reviews')
+const productService = require('../../service-layer/Product')
+const userService = require('../../service-layer/Users')
 
 router.get('/', async function(req,res){
     console.log(serviceLayer);
@@ -13,15 +15,19 @@ router.get('/', async function(req,res){
     } );
 });
 
-router.get('/add-reviews', async function(req,res){
-    const reviewForm = modelforms.createReviewForm();
+router.get('/add-review', async function(req,res){
+    const allProducts = (await productService.serviceGetAllProducts()).map( product => [ product.get('id'), product.get('product_name')]);
+    const allUser = (await userService.serviceGetOnlyUserType(2)).map( user => [ user.get('id'), user.get('username')]);
+    const reviewForm = modelforms.createReviewForm(allProducts,allUser);
     res.render('reviews/create', {
         form: reviewForm.toHTML(modelforms.bootstrapField),
     })
 });
 
-router.post('/add-reviews', async function(req,res){
-    const reviewForm = modelforms.createReviewForm();
+router.post('/add-review', async function(req,res){
+    const allProducts = (await productService.serviceGetAllProducts()).map( product => [ product.get('id'), product.get('product_name')]);
+    const allUser = (await userService.serviceGetOnlyUserType(2)).map( user => [ user.get('id'), user.get('username')]);
+    const reviewForm = modelforms.createReviewForm(allProducts,allUser);
     reviewForm.handle(req, {
         'success': async function(form) {
             const review = await serviceLayer.serviceAddReview(form);
@@ -41,10 +47,12 @@ router.post('/add-reviews', async function(req,res){
     })
 });
 
-router.get('/update-reviews/:review_id', async function(req,res){
+router.get('/update-review/:review_id', async function(req,res){
     const { review_id } = req.params;
     const review = await serviceLayer.serviceGetReview(review_id)
-    const reviewForm = modelforms.createReviewForm();
+    const allProducts = (await productService.serviceGetAllProducts()).map( product => [ product.get('id'), product.get('product_name')]);
+    const allUser = (await userService.serviceGetOnlyUserType(2)).map( user => [ user.get('id'), user.get('username')]);
+    const reviewForm = modelforms.createReviewForm(allProducts,allUser);
     for(let field in reviewForm.fields)
     {
         reviewForm.fields[field].value = review.get(field);
@@ -55,9 +63,11 @@ router.get('/update-reviews/:review_id', async function(req,res){
     })
 });
 
-router.post('/update-reviews/:review_id', async function(req,res){
+router.post('/update-review/:review_id', async function(req,res){
     const { review_id } = req.params;
-    const reviewForm = modelforms.createReviewForm();
+    const allProducts = (await productService.serviceGetAllProducts()).map( product => [ product.get('id'), product.get('product_name')]);
+    const allUser = (await userService.serviceGetOnlyUserType(2)).map( user => [ user.get('id'), user.get('username')]);
+    const reviewForm = modelforms.createReviewForm(allProducts,allUser);
     reviewForm.handle(req, {
         'success': async function(form) {
             const review = await serviceLayer.serviceUpdateReview(form, review_id);
@@ -77,7 +87,7 @@ router.post('/update-reviews/:review_id', async function(req,res){
     })
 });
 
-router.get('/delete-reviews/:review_id', async function(req,res){
+router.get('/delete-review/:review_id', async function(req,res){
     const { review_id } = req.params;
     const review = await serviceLayer.serviceGetReview(review_id);
 
@@ -86,10 +96,10 @@ router.get('/delete-reviews/:review_id', async function(req,res){
     })
 })
 
-router.post('/delete-reviews/:review_id', async function(req,res){
+router.post('/delete-review/:review_id', async function(req,res){
     const { review_id } = req.params;
     const response = await serviceLayer.serviceDelReview(review_id);
-    req.flash("success_messages", `Review ${response} has been Deleted`)
+    req.flash("success_messages", `Review has been Deleted`)
     res.redirect("/admin/reviews");
 })
 

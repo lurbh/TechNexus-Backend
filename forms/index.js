@@ -166,11 +166,88 @@ const createCategoryForm = (categories) => {
     })
 }
 
+const createReviewForm = (products,user) => {
+    return forms.create({
+        'product_id': fields.number({
+            label: 'Product',
+            required: false,
+            errorAfterField: true,
+            widget: widgets.select(), 
+            choices: products
+        }),
+        'user_id': fields.number({
+            label: 'User',
+            required: false,
+            errorAfterField: true,
+            widget: widgets.select(), 
+            choices: user
+        }),
+        'rating': fields.number({
+            required: true,
+            errorAfterField: true,
+            validators: [validators.min(0),validators.max(5)]
+        }),
+        'review_text' : fields.string({
+            required: true,
+            errorAfterField: true,
+            widget: widgets.textarea()
+        })
+    })
+}
+
+const createNewsArticleForm = (user) => {
+    return forms.create({
+        'title' : fields.string({
+            required: true,
+            errorAfterField: true
+        }),
+        'content' : fields.string({
+            required: true,
+            errorAfterField: true,
+            widget: widgets.textarea()
+        }),
+        'author_id' : fields.number({
+            label: 'User',
+            required: false,
+            errorAfterField: true,
+            widget: widgets.select(), 
+            choices: user
+        })
+    })
+}
+
+const createCommentForm = (news_articles,user) => {
+    return forms.create({
+        'article_id': fields.number({
+            label: 'News Article',
+            required: false,
+            errorAfterField: true,
+            widget: widgets.select(), 
+            choices: news_articles
+        }),
+        'user_id': fields.number({
+            label: 'User',
+            required: false,
+            errorAfterField: true,
+            widget: widgets.select(), 
+            choices: user
+        }),
+        'comment_text' : fields.string({
+            required: true,
+            errorAfterField: true,
+            widget: widgets.textarea()
+        })
+    })
+}
+
 module.exports = {  createProductForm, 
                     bootstrapField, 
                     createUserForm,
                     createLoginForm,
                     createBrandForm,
                     createRoleForm,
-                    createCategoryForm
+                    createCategoryForm,
+                    createReviewForm,
+                    createNewsArticleForm,
+                    createCommentForm
                  };

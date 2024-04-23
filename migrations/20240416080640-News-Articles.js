@@ -34,13 +34,13 @@ exports.up = function(db, callback) {
       type: 'datetime',
       defaultValue: 'CURRENT_TIMESTAMP'
     },
-    author_id: {
+    user_id: {
       type: 'int',
       unsigned: true
     }
   }, () => {
     db.addForeignKey('news_articles', 'users', 'news_articles_users_fk', {
-      'author_id': 'id'
+      'user_id': 'id'
     }, {
       onDelete: 'CASCADE',
       onUpdate: 'RESTRICT'

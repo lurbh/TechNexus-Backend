@@ -7,7 +7,7 @@ const getAllUsersDAL = async () => {
         });
         return users;
     } catch (error) {
-        console.log("Error getting User", error)
+        console.log("Error getting Users", error)
     }
 }
 
@@ -39,7 +39,7 @@ const createUserDAL = async (userForm) => {
             'username': userForm.data.username,
             'password_hash': userForm.data.password,
             'email': userForm.data.email,
-            'role_id': 1
+            'role_id': userForm.data.role_id
         });
         await user.save();
         return user;
@@ -84,11 +84,25 @@ const DeleteUserDAL = async (user_id) => {
     }
 }
 
+const GetUserTypeDAL = async (type) => {
+    try {
+        const users = await models.User.where({
+            'role_id': type
+        }).fetchAll({
+            require: true
+        });
+        return users
+    } catch (error) {
+        console.log("Error getting Users", error)
+    }
+}
+
 module.exports = {
     getAllUsersDAL,
     getAllRolesDAL,
     createUserDAL,
     getUserDAL,
     updateUserDAL,
-    DeleteUserDAL
+    DeleteUserDAL,
+    GetUserTypeDAL
 }

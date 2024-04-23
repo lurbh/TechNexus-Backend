@@ -1,12 +1,12 @@
 {{#extends "base"}}
 
 {{#block "content"}}
-<h1>Create New Role</h1>
+<h1>Create New Reviews</h1>
 <form method="POST">
     <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
     {{{form}}}
-    <a class="btn btn-danger mt-3" href="/admin/roles">Cancel</a>
-    <input type="submit" class="btn btn-primary mt-3" value="Add Role"/>
+    <a class="btn btn-danger mt-3" href="/admin/reviews">Cancel</a>
+    <input type="submit" class="btn btn-primary mt-3" value="Add Reviews"/>
 </form>
 {{/block}}
 
