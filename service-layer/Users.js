@@ -32,7 +32,6 @@ const serviceDeleteUser = async (user_id) => {
 
 const serviceGetOnlyUserType = async (type) => {
     const users = await userDAL.GetUserTypeDAL(type);
-    console.log(users);
     return users;
 }
 

@@ -7,9 +7,7 @@ const productService = require('../../service-layer/Product')
 const userService = require('../../service-layer/Users')
 
 router.get('/', async function(req,res){
-    console.log(serviceLayer);
     const reviews = await serviceLayer.serviceGetReviews();
-    console.log(reviews);
     res.render('reviews/index', {
         reviews: reviews.toJSON()
     } );

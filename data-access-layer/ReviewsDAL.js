@@ -42,7 +42,6 @@ const updateReviewDAL = async (reviewForm, review_id) => {
             withRelated: ['user','products']
         });
         const {...reviewData} = reviewForm.data;
-        console.log(review);
         review.set(reviewData);
         await review.save();
         return review;

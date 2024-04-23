@@ -135,5 +135,6 @@ module.exports = {
                     Order_Item, 
                     Review,
                     News_Article,
-                    Comment 
+                    Comment,
+                    Cart_Items
                 }

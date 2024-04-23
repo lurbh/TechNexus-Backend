@@ -42,7 +42,6 @@ const updateCategoryDAL = async (categoryForm, category_id) => {
             require: true
         });
         const {...categoryData} = categoryForm.data;
-        console.log(category);
         category.set(categoryData);
         await category.save();
         return category;

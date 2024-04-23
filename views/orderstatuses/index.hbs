@@ -1,0 +1,40 @@
+{{#extends "base"}}
+
+
+{{#block "content"}}
+<h1>All Order Statuses</h1>
+
+<table class="table">
+    <thead>
+        <th>
+            Order Status ID
+        </th>
+        <th>
+            Status Name
+        </th>
+        <th></th>
+        <th></th>
+    </thead>
+    {{#each orderStatuses}}
+    <tr>
+        <td>
+            {{this.id}}
+        </td>
+        <td>
+            {{this.status_name}}
+        </td>
+        <td>
+            <a href="orderstatus/update-order-status/{{this.id}}"
+               class="btn btn-warning btn-sm">Update</a>
+        </td>
+        <td>
+            <a href="orderstatus/delete-order-status/{{this.id}}"
+               class="btn btn-danger btn-sm">Delete</a>
+        </td>
+    </tr>
+    {{/each}}
+</table>
+<a class="btn btn-info btn-sm" href="orderstatus/add-order-status">Add Order Status</a>
+{{/block}}
+
+{{/extends}}

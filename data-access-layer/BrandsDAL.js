@@ -42,7 +42,6 @@ const updateBrandDAL = async (brandForm, brands_id) => {
             require: true
         });
         const {...brandData} = brandForm.data;
-        console.log(brand);
         brand.set(brandData);
         await brand.save();
         return brand;

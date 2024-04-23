@@ -30,7 +30,6 @@ router.post('/add-product', async function(req,res){
     const productForm = modelforms.createProductForm(allCategories, allBrands);
     productForm.handle(req, {
         'success': async function(form) {
-            console.log(form);
             const product = await serviceLayer.serviceAddProduct(form);
             req.flash("success_messages", `New Product ${product.get('product_name')} has been created`)
             res.redirect("/admin/products");

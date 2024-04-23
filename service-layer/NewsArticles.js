@@ -2,7 +2,6 @@ const newsArticleDAL = require("../data-access-layer/NewsArticlesDAL");
 
 const serviceGetNewsArticles = async () => {
     const newsArticles = await newsArticleDAL.getAllNewsArticlesDAL();
-
     return newsArticles;
 } 
 

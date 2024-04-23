@@ -42,7 +42,6 @@ const updateNewsArticleDAL = async (newsArticleForm, newsArticle_id) => {
             require: true
         });
         const {...newsArticleData} = newsArticleForm.data;
-        console.log(newsArticle);
         newsArticle.set(newsArticleData);
         await newsArticle.save();
         return newsArticle;

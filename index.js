@@ -45,6 +45,13 @@ app.use(function (req, res, next) {
 });
 
 app.use(function(req,res,next){
+    if (req.url === "/checkout/process_payment" || req.url.slice(0, 5) == '/api/') {
+        return next();
+    } 
+    csurfInstance(req,res,next);
+})
+
+app.use(function(req,res,next){
     res.locals.csrfToken = req.csrfToken();
     next();
 })
@@ -57,7 +64,7 @@ app.use(function(req,res,next){
 app.use(function(err, req, res, next){
     if (err && err.code == "EBADCSRFTOKEN") {
         req.flash("error_messages", "The form has expired, please try again");
-        res.redirect('back'); // go back one page
+        res.redirect('back'); 
     } else {
         next();
     }
@@ -68,7 +75,6 @@ hbs.registerHelper('dateFormat', function(datetime, options) {
     const time = moment(datetime).format('HH:mm'); 
     return options.fn({ date, time }); 
   });
-// const { connectToDB, getConnection } = require('./data-access-layer/sql.js');
 
 const port = 7319;
 
@@ -86,7 +92,7 @@ async function main()
         })
     });
     
-    app.use("/api" , apiRoutes);
+    app.use("/api" , express.json() ,apiRoutes);
     app.use("/admin" , adminRoutes);
     app.use('/cloudinary', cloudinaryRoutes);
 

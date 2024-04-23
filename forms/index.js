@@ -170,14 +170,14 @@ const createReviewForm = (products,user) => {
     return forms.create({
         'product_id': fields.number({
             label: 'Product',
-            required: false,
+            required: true,
             errorAfterField: true,
             widget: widgets.select(), 
             choices: products
         }),
         'user_id': fields.number({
             label: 'User',
-            required: false,
+            required: true,
             errorAfterField: true,
             widget: widgets.select(), 
             choices: user
@@ -208,7 +208,7 @@ const createNewsArticleForm = (user) => {
         }),
         'author_id' : fields.number({
             label: 'User',
-            required: false,
+            required: true,
             errorAfterField: true,
             widget: widgets.select(), 
             choices: user
@@ -220,14 +220,14 @@ const createCommentForm = (news_articles,user) => {
     return forms.create({
         'article_id': fields.number({
             label: 'News Article',
-            required: false,
+            required: true,
             errorAfterField: true,
             widget: widgets.select(), 
             choices: news_articles
         }),
         'user_id': fields.number({
             label: 'User',
-            required: false,
+            required: true,
             errorAfterField: true,
             widget: widgets.select(), 
             choices: user
@@ -236,6 +236,34 @@ const createCommentForm = (news_articles,user) => {
             required: true,
             errorAfterField: true,
             widget: widgets.textarea()
+        })
+    })
+}
+
+const createOrderForm = (user,orderStatus) => {
+    return forms.create({
+        'user_id': fields.number({
+            label: 'User',
+            required: true,
+            errorAfterField: true,
+            widget: widgets.select(), 
+            choices: user
+        }),
+        'order_status_id' : fields.number({
+            label: 'Order Status',
+            required: true,
+            errorAfterField: true,
+            widget: widgets.select(), 
+            choices: orderStatus
+        }),
+    })
+}
+
+const createOrderStatusForm = () => {
+    return forms.create({
+        'status_name': fields.string({
+            required: true,
+            errorAfterField: true
         })
     })
 }
@@ -249,5 +277,7 @@ module.exports = {  createProductForm,
                     createCategoryForm,
                     createReviewForm,
                     createNewsArticleForm,
-                    createCommentForm
+                    createCommentForm,
+                    createOrderForm,
+                    createOrderStatusForm
                  };
