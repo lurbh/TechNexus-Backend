@@ -9,11 +9,10 @@ const wax = require('wax-on');
 const session = require('express-session');
 const flash = require('connect-flash');
 const FileStore = require('session-file-store')(session);
-const csrf = require('csurf')
+const csurf = require('csurf')
 const moment = require('moment');
 
 app.use(cors());
-app.use(express.json());
 
 app.set('view engine', 'hbs');
 
@@ -36,13 +35,14 @@ app.use(session({
 }))
 
 app.use(flash())
-app.use(csrf());
 
 app.use(function (req, res, next) {
     res.locals.success_messages = req.flash("success_messages");
     res.locals.error_messages = req.flash("error_messages");
     next();
 });
+
+const csurfInstance = csurf();
 
 app.use(function(req,res,next){
     if (req.url === "/checkout/process_payment" || req.url.slice(0, 5) == '/api/') {
@@ -52,7 +52,9 @@ app.use(function(req,res,next){
 })
 
 app.use(function(req,res,next){
-    res.locals.csrfToken = req.csrfToken();
+    if (req.csrfToken) {
+        res.locals.csrfToken = req.csrfToken();
+    }
     next();
 })
 

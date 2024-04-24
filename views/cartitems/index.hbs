@@ -2,53 +2,51 @@
 
 
 {{#block "content"}}
-<h1>All Comments</h1>
+<h1>All Cart Items</h1>
 
 <table class="table">
     <thead>
         <th>
-            Comment ID
-        </th>
-        <th>
-            Article
+            Cart Item ID
         </th>
         <th>
             User
         </th>
         <th>
-            Comment Date
+            Product
+        </th>
+        <th>
+            Quantity
         </th>
         <th></th>
         <th></th>
     </thead>
-    {{#each comments}}
+    {{#each cartitems}}
     <tr>
         <td>
             {{this.id}}
         </td>
         <td>
-            {{this.aritle.title}}
-        </td>
-        <td>
             {{this.user.username}}
         </td>
         <td>
-            {{#dateFormat this.comment_date}}
-                {{date}} {{time}} 
-            {{/dateFormat}}
+            {{this.product.product_name}}
         </td>
         <td>
-            <a href="comments/update-comment/{{this.id}}"
+            {{this.quantity}}
+        </td>
+        <td>
+            <a href="cartitems/update-cart-item/{{this.id}}"
                class="btn btn-warning btn-sm">Update</a>
         </td>
         <td>
-            <a href="comments/delete-comment/{{this.id}}"
+            <a href="cartitems/delete-cart-item/{{this.id}}"
                class="btn btn-danger btn-sm">Delete</a>
         </td>
     </tr>
     {{/each}}
 </table>
-<a class="btn btn-info btn-sm" href="comments/add-comment">Add Comment</a>
+<a class="btn btn-info btn-sm" href="cartitems/add-cart-item">Add Order Items</a>
 {{/block}}
 
 {{/extends}}

@@ -32,7 +32,7 @@ router.use("/reviews", checkIfAuthenticated, reviewsRoutes)
 router.use("/news", checkIfAuthenticated, newsRoutes)
 router.use("/comments", checkIfAuthenticated, commentsRoutes)
 router.use("/orders", checkIfAuthenticated, orderRoutes)
-router.use("/ordersitems", checkIfAuthenticated, orderItemsRoutes)
+router.use("/orderitems", checkIfAuthenticated, orderItemsRoutes)
 router.use("/orderstatus", checkIfAuthenticated, orderStatusesRoutes)
 router.use("/cartitems", checkIfAuthenticated, cartItemsRoutes)
 

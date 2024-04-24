@@ -65,8 +65,11 @@ const Product = bookshelf.model('Product', {
 
 const Order = bookshelf.model('Order' , {
     tableName: 'orders',
-    status:function() {
+    order_status:function() {
         return this.belongsTo('Order_Status')
+    },
+    user:function() {
+        return this.belongsTo('User');
     },
     order_items:function() {
         return this.hasMany('Order_Item', 'order_id')
@@ -75,7 +78,7 @@ const Order = bookshelf.model('Order' , {
 
 const Order_Item = bookshelf.model('Order_Item', {
     tableName: 'order_items',
-    products:function() {
+    product:function() {
         return this.belongsTo('Product')
     },
     order:function() {
@@ -113,10 +116,10 @@ const Comment = bookshelf.model('Comment', {
     }
 })
 
-const Cart_Items = bookshelf.model('Cart_Items', {
+const Cart_Item = bookshelf.model('Cart_Item', {
     tableName: 'cart_items',
     product:function() {
-        return this.belongsTo('Produts')
+        return this.belongsTo('Product')
     },
     user:function() {
         return this.belongsTo('User')
@@ -136,5 +139,5 @@ module.exports = {
                     Review,
                     News_Article,
                     Comment,
-                    Cart_Items
+                    Cart_Item
                 }

@@ -1,34 +1,34 @@
-const commentDAL = require("../data-access-layer/CommentsDAL");
+const cartitemDAL = require("../data-access-layer/CartItemsDAL");
 
-const serviceGetComments = async () => {
-    const comments = await commentDAL.getAllCommentsDAL();
-    return comments;
+const serviceGetCartItems = async () => {
+    const cartitems = await cartitemDAL.getAllCartItemsDAL();
+    return cartitems;
 } 
 
-const serviceGetComment = async (comment_id) => {
-    const comment =  await commentDAL.getCommentDAL(comment_id);
-    return comment;
+const serviceGetCartItem = async (cartitem_id) => {
+    const cartitem =  await cartitemDAL.getCartItemDAL(cartitem_id);
+    return cartitem;
 } 
 
-const serviceAddComment = async (commentForm) => {
-    const response = await commentDAL.addCommentDAL(commentForm);
+const serviceAddCartItem = async (cartitemForm) => {
+    const response = await cartitemDAL.addCartItemDAL(cartitemForm);
     return response;
 } 
 
-const serviceUpdateComment = async (commentForm, comment_id) => {
-    const response = await commentDAL.updateCommentDAL(commentForm, comment_id);
+const serviceUpdateCartItem = async (cartitemForm, cartitem_id) => {
+    const response = await cartitemDAL.updateCartItemDAL(cartitemForm, cartitem_id);
     return response;
 } 
 
-const serviceDelComment = async (comment_id) => {
-    const response = await commentDAL.deleteCommentDAL(comment_id);
+const serviceDelCartItem = async (cartitem_id) => {
+    const response = await cartitemDAL.deleteCartItemDAL(cartitem_id);
     return response;
 } 
 
 module.exports = {
-    serviceGetComments,
-    serviceGetComment,
-    serviceAddComment,
-    serviceUpdateComment,
-    serviceDelComment
+    serviceGetCartItems,
+    serviceGetCartItem,
+    serviceAddCartItem,
+    serviceUpdateCartItem,
+    serviceDelCartItem
 }

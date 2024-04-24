@@ -268,6 +268,62 @@ const createOrderStatusForm = () => {
     })
 }
 
+const createOrderItemForm = (orders,products) => {
+    return forms.create({
+        'order_id' : fields.number({
+            label: 'Order ID',
+            required: true,
+            errorAfterField: true,
+            widget: widgets.select(), 
+            choices: orders
+        }),
+        'product_id' : fields.number({
+            label: 'Products',
+            required: true,
+            errorAfterField: true,
+            widget: widgets.select(), 
+            choices: products
+        }),
+        'quantity': fields.number({
+            required: true,
+            errorAfterField: true,
+            widget: widgets.number(),
+            validators: [validators.min(0), validators.integer()]
+        }),
+        'unit_price': fields.string({
+            required: true,
+            errorAfterField: true,
+            widget: widgets.number(),
+            validators: [validators.min(0)]
+        })
+    })
+}
+
+const createCartItemForm = (users,products) => {
+    return forms.create({
+        'user_id' : fields.number({
+            label: 'User',
+            required: true,
+            errorAfterField: true,
+            widget: widgets.select(), 
+            choices: users
+        }),
+        'product_id' : fields.number({
+            label: 'Products',
+            required: true,
+            errorAfterField: true,
+            widget: widgets.select(), 
+            choices: products
+        }),
+        'quantity': fields.number({
+            required: true,
+            errorAfterField: true,
+            widget: widgets.number(),
+            validators: [validators.min(0), validators.integer()]
+        })
+    })
+}
+
 module.exports = {  createProductForm, 
                     bootstrapField, 
                     createUserForm,
@@ -279,5 +335,7 @@ module.exports = {  createProductForm,
                     createNewsArticleForm,
                     createCommentForm,
                     createOrderForm,
-                    createOrderStatusForm
+                    createOrderStatusForm,
+                    createOrderItemForm,
+                    createCartItemForm
                  };

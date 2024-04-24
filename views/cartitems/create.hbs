@@ -1,12 +1,12 @@
 {{#extends "base"}}
 
 {{#block "content"}}
-<h1>Create New Comment</h1>
+<h1>Create New Cart Item</h1>
 <form method="POST">
     <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
     {{{form}}}
-    <a class="btn btn-danger mt-3" href="/admin/comments">Cancel</a>
-    <input type="submit" class="btn btn-primary mt-3" value="Add Comment"/>
+    <a class="btn btn-danger mt-3" href="/admin/cartitems">Cancel</a>
+    <input type="submit" class="btn btn-primary mt-3" value="Add Cart Item"/>
 </form>
 {{/block}}
 

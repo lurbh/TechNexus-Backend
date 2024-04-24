@@ -1,12 +1,12 @@
 {{#extends "base"}}
 {{#block "content"}}
-<h1>Updating {{comment.user.username}} comments for {{comment.news.title}}</h1>
+<h1>Updating {{order.user.username}} order on {{order.order_date}}</h1>
 <form method="POST">
     <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
     {{{form}}}
     
-    <a class="btn btn-danger mt-3" href="/admin/comments">Cancel</a>
-    <input type="submit" value="Update Review" class="btn btn-primary mt-3"/>
+    <a class="btn btn-danger mt-3" href="/admin/orders">Cancel</a>
+    <input type="submit" value="Update Orders" class="btn btn-primary mt-3"/>
 </form>
 {{/block}}
 

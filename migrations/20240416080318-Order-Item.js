@@ -37,8 +37,10 @@ exports.up = function(db, callback) {
       unsigned: true
     },
     unit_price: {
-      type: 'decimal',
-      length: '10,2'
+      type: 'decimal', 
+      precision: "10", 
+      scale: "2",
+      notNull: true
     }
   }, () => {
     db.addForeignKey('order_items', 'orders', 'order_items_orders_fk', {

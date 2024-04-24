@@ -24,7 +24,7 @@ router.post('/add-order-status', async function(req,res){
         'success': async function(form) {
             const orderStatus = await serviceLayer.serviceAddOrderStatus(form);
             req.flash("success_messages", `New OrderStatus ${orderStatus.get('status_name')} has been created`)
-            res.redirect("/adminorderstatus");
+            res.redirect("/admin/orderstatus");
         },
         'empty': function(form) {
             res.render('orderstatuses/create', {
@@ -39,7 +39,7 @@ router.post('/add-order-status', async function(req,res){
     })
 });
 
-router.get('/update-orderStatus/:orderStatus_id', async function(req,res){
+router.get('/update-order-status/:orderStatus_id', async function(req,res){
     const { orderStatus_id } = req.params;
     const orderStatus = await serviceLayer.serviceGetOrderStatus(orderStatus_id)
     const orderStatusForm = modelforms.createOrderStatusForm();
@@ -53,14 +53,14 @@ router.get('/update-orderStatus/:orderStatus_id', async function(req,res){
     })
 });
 
-router.post('/update-orderStatus/:orderStatus_id', async function(req,res){
+router.post('/update-order-status/:orderStatus_id', async function(req,res){
     const { orderStatus_id } = req.params;
     const orderStatusForm = modelforms.createOrderStatusForm();
     orderStatusForm.handle(req, {
         'success': async function(form) {
             const orderStatus = await serviceLayer.serviceUpdateOrderStatus(form, orderStatus_id);
             req.flash("success_messages", `Order Status ${orderStatus.get('status_name')} has been updated`)
-            res.redirect("/adminorderstatus");
+            res.redirect("/admin/orderstatus");
         },
         'empty': function(form) {
             res.render('orderstatuses/create', {
@@ -75,7 +75,7 @@ router.post('/update-orderStatus/:orderStatus_id', async function(req,res){
     })
 });
 
-router.get('/delete-orderStatus/:orderStatus_id', async function(req,res){
+router.get('/delete-order-status/:orderStatus_id', async function(req,res){
     const { orderStatus_id } = req.params;
     const orderStatus = await serviceLayer.serviceGetOrderStatus(orderStatus_id);
 
@@ -84,11 +84,11 @@ router.get('/delete-orderStatus/:orderStatus_id', async function(req,res){
     })
 })
 
-router.post('/delete-orderStatus/:orderStatus_id', async function(req,res){
+router.post('/delete-order-status/:orderStatus_id', async function(req,res){
     const { orderStatus_id } = req.params;
     const response = await serviceLayer.serviceDelOrderStatus(orderStatus_id);
     req.flash("success_messages", `Order Status ${response} has been Deleted`)
-    res.redirect("/adminorderstatus");
+    res.redirect("/admin/orderstatus");
 })
 
 module.exports = router;

@@ -3,7 +3,7 @@ const models = require("../models");
 const getAllOrdersDAL = async () => {
     try {
         return await models.Order.fetchAll({
-            withRelated: ['status','order_items']
+            withRelated: ['order_status','user']
         });
     } catch (error) {
         console.log("Error getting Orders", error)
@@ -15,7 +15,7 @@ const getOrderDAL = async (order_id) => {
         return await models.Order.where({
             'id': order_id
         }).fetch({
-            withRelated: ['status','order_items']
+            require: true
         });
     } catch (error) {
         console.log("Error getting Order", error)
@@ -39,7 +39,7 @@ const updateOrderDAL = async (orderForm, order_id) => {
         const order = await models.Order.where({
             'id': order_id
         }).fetch({
-            withRelated: ['status','order_items']
+            require: true
         });
         const {...orderData} = orderForm.data;
         order.set(orderData);
@@ -54,7 +54,9 @@ const deleteOrderDAL = async (order_id) => {
     try {
         const order = await models.Order.where({
             'id': order_id
-        }).fetch();
+        }).fetch({
+            require: true
+        });
         await order.destroy();
         return;
     } catch (error) {

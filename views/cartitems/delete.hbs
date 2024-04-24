@@ -4,9 +4,9 @@
 <form method="POST">
     <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
     <div class="alert alert-danger">
-        Are you sure you want to delete {{comment.user.username}} comment for {{comment.news.title}}
+        Are you sure you want to delete Cart Item for {{cartitem.user.username}}, Product {{cartitem.product.product_name}} 
         <div>
-            <a class="btn btn-success btn-sm" href="/admin/comments">Cancel</a>
+            <a class="btn btn-success btn-sm" href="/admin/cartitems">Cancel</a>
             <input value="Confirm" type="submit" class="btn btn-danger btn-sm"/>
         </div>
     </div>

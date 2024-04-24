@@ -1,34 +1,34 @@
-const commentDAL = require("../data-access-layer/CommentsDAL");
+const orderitemDAL = require("../data-access-layer/OrderItemsDAL");
 
-const serviceGetComments = async () => {
-    const comments = await commentDAL.getAllCommentsDAL();
-    return comments;
+const serviceGetOrderItems = async () => {
+    const orderitems = await orderitemDAL.getAllOrderItemsDAL();
+    return orderitems;
 } 
 
-const serviceGetComment = async (comment_id) => {
-    const comment =  await commentDAL.getCommentDAL(comment_id);
-    return comment;
+const serviceGetOrderItem = async (orderitem_id) => {
+    const orderitem =  await orderitemDAL.getOrderItemDAL(orderitem_id);
+    return orderitem;
 } 
 
-const serviceAddComment = async (commentForm) => {
-    const response = await commentDAL.addCommentDAL(commentForm);
+const serviceAddOrderItem = async (orderitemForm) => {
+    const response = await orderitemDAL.addOrderItemDAL(orderitemForm);
     return response;
 } 
 
-const serviceUpdateComment = async (commentForm, comment_id) => {
-    const response = await commentDAL.updateCommentDAL(commentForm, comment_id);
+const serviceUpdateOrderItem = async (orderitemForm, orderitem_id) => {
+    const response = await orderitemDAL.updateOrderItemDAL(orderitemForm, orderitem_id);
     return response;
 } 
 
-const serviceDelComment = async (comment_id) => {
-    const response = await commentDAL.deleteCommentDAL(comment_id);
+const serviceDelOrderItem = async (orderitem_id) => {
+    const response = await orderitemDAL.deleteOrderItemDAL(orderitem_id);
     return response;
 } 
 
 module.exports = {
-    serviceGetComments,
-    serviceGetComment,
-    serviceAddComment,
-    serviceUpdateComment,
-    serviceDelComment
+    serviceGetOrderItems,
+    serviceGetOrderItem,
+    serviceAddOrderItem,
+    serviceUpdateOrderItem,
+    serviceDelOrderItem
 }

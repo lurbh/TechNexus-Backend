@@ -2,106 +2,103 @@ const express = require("express");
 const router =  express.Router();
 
 const modelforms = require('../../forms');
-const serviceLayer = require('../../service-layer/Categories')
+const serviceLayer = require('../../service-layer/OrdersItems')
+const { serviceGetAllProducts  } = require('../../service-layer/Product') 
+const { serviceGetOrders } = require('../../service-layer/Orders')
 
 router.get('/', async function(req,res){
-    const categories = await serviceLayer.serviceGetCategories();
-    res.render('categories/index', {
-        categories: categories.toJSON()
+    const orderitems = await serviceLayer.serviceGetOrderItems();
+    res.render('orderitems/index', {
+        orderitems: orderitems.toJSON()
     } );
 });
 
-router.get('/add-category', async function(req,res){
-    const allCategories = (await serviceLayer.serviceGetCategories()).map( category => [ category.get('id'), category.get('category_name')]); 
-    allCategories.push([0,"No Parent Category"])
-    allCategories.sort((a, b) => a[0] - b[0]);
-    const categoryForm = modelforms.createCategoryForm(allCategories);
-    res.render('categories/create', {
-        form: categoryForm.toHTML(modelforms.bootstrapField),
+router.get('/add-order-item', async function(req,res){
+    const allProducts = (await serviceGetAllProducts()).map( p => [ p.get('id'), p.get('product_name')]);
+    const allOrders = (await serviceGetOrders()).map( o => [o.get('id'), o.get('id')])
+    const orderForm = modelforms.createOrderItemForm(allOrders,allProducts)
+    res.render('orderitems/create', {
+        form: orderForm.toHTML(modelforms.bootstrapField),
     })
 });
 
-router.post('/add-category', async function(req,res){
-    const allCategories = (await serviceLayer.serviceGetCategories()).map( category => [ category.get('id'), category.get('category_name')]); 
-    allCategories.push([0,"No Parent Category"])
-    allCategories.sort((a, b) => a[0] - b[0]);
-    const categoryForm = modelforms.createCategoryForm(allCategories);
-    categoryForm.handle(req, {
+router.post('/add-order-item', async function(req,res){
+    const allProducts = (await serviceGetAllProducts()).map( p => [ p.get('id'), p.get('product_name')]);
+    const allOrders = (await serviceGetOrders()).map( o => [o.get('id'), o.get('id')])
+    const orderForm = modelforms.createOrderItemForm(allOrders,allProducts)
+    orderForm.handle(req, {
         'success': async function(form) {
-            if(form.data.parent_category_id === 0)
-                delete form.data.parent_category_id;
-            const category = await serviceLayer.serviceAddCategory(form);
-            req.flash("success_messages", `New Category ${category.get('category_name')} has been created`)
-            res.redirect("/admin/categories");
+            const order = await serviceLayer.serviceAddOrderItem(form);
+            req.flash("success_messages", `New Order Item has been created`)
+            res.redirect("/admin/orderitems");
         },
         'empty': function(form) {
-            res.render('categories/create', {
+            res.render('orderitems/create', {
                 form: form.toHTML(modelforms.bootstrapField)
             })
         },
         'error': function(form) {
-            res.render('categories/create', {
+            res.render('orderitems/create', {
                 form: form.toHTML(modelforms.bootstrapField)
             })
         }
     })
 });
 
-router.get('/update-category/:category_id', async function(req,res){
-    const { category_id } = req.params;
-    const category = await serviceLayer.serviceGetCategory(category_id)
-    const allCategories = (await serviceLayer.serviceGetCategories()).map( category => [ category.get('id'), category.get('category_name')]); 
-    allCategories.push([0,"No Parent Category"])
-    allCategories.sort((a, b) => a[0] - b[0]);
-    const categoryForm = modelforms.createCategoryForm(allCategories);
-    for(let field in categoryForm.fields)
+router.get('/update-order-item/:order_id', async function(req,res){
+    const { order_id } = req.params;
+    const orderitem = await serviceLayer.serviceGetOrderItem(order_id)
+    const allProducts = (await serviceGetAllProducts()).map( p => [ p.get('id'), p.get('product_name')]);
+    const allOrders = (await serviceGetOrders()).map( o => [o.get('id'), o.get('id')])
+    const orderForm = modelforms.createOrderItemForm(allOrders,allProducts)
+    for(let field in orderForm.fields)
     {
-        categoryForm.fields[field].value = category.get(field);
+        orderForm.fields[field].value = orderitem.get(field);
     }
-    res.render('categories/update', {
-        form: categoryForm.toHTML(modelforms.bootstrapField),
-        'category': category.toJSON(),
+    res.render('orderitems/update', {
+        form: orderForm.toHTML(modelforms.bootstrapField),
+        'orderitem': orderitem.toJSON(),
     })
 });
 
-router.post('/update-category/:category_id', async function(req,res){
-    const { category_id } = req.params;
-    const categoryForm = modelforms.createCategoryForm();
-    categoryForm.handle(req, {
+router.post('/update-order-item/:order_id', async function(req,res){
+    const { order_id } = req.params;
+    const allProducts = (await serviceGetAllProducts()).map( p => [ p.get('id'), p.get('product_name')]);
+    const allOrders = (await serviceGetOrders()).map( o => [o.get('id'), o.get('id')])
+    const orderForm = modelforms.createOrderItemForm(allOrders,allProducts)
+    orderForm.handle(req, {
         'success': async function(form) {
-            if(form.data.parent_category_id === 0)
-                delete form.data.parent_category_id;
-            const category = await serviceLayer.serviceUpdateCategory(form, category_id);
-            req.flash("success_messages", `Category ${category.get('category_name')} has been updated`)
-            res.redirect("/admin/categories");
+            const order = await serviceLayer.serviceUpdateOrderItem(form, order_id);
+            req.flash("success_messages", `Order Item has been updated`)
+            res.redirect("/admin/orderitems");
         },
         'empty': function(form) {
-            res.render('categories/create', {
+            res.render('orderitems/create', {
                 form: form.toHTML(modelforms.bootstrapField)
             })
         },
         'error': function(form) {
-            res.render('categories/create', {
+            res.render('orderitems/create', {
                 form: form.toHTML(modelforms.bootstrapField)
             })
         }
     })
 });
 
-router.get('/delete-category/:category_id', async function(req,res){
-    const { category_id } = req.params;
-    const category = await serviceLayer.serviceGetCategory(category_id);
+router.get('/delete-order-item/:order_id', async function(req,res){
+    const { order_id } = req.params;
+    const orderitem = await serviceLayer.serviceGetOrderItem(order_id);
 
-    res.render('categories/delete', {
-        category: category.toJSON()
+    res.render('orderitems/delete', {
+        orderitem: orderitem.toJSON()
     })
 })
 
-router.post('/delete-category/:category_id', async function(req,res){
-    const { category_id } = req.params;
-    const response = await serviceLayer.serviceDelCategory(category_id);
-    req.flash("success_messages", `Category ${response} has been Deleted`)
-    res.redirect("/admin/categories");
+router.post('/delete-order-item/:order_id', async function(req,res){
+    const { order_id } = req.params;
+    const response = await serviceLayer.serviceDelOrderItem(order_id);
+    req.flash("success_messages", `Order Item for has been Deleted`)
+    res.redirect("/admin/orderitems");
 })
 
 module.exports = router;

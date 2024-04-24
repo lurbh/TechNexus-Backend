@@ -49,8 +49,9 @@ const deleteOrderStatusDAL = async (order_id) => {
         const order = await models.Order_Status.where({
             'id': order_id
         }).fetch();
+        const name = order.get('status_name')
         await order.destroy();
-        return;
+        return name;
     } catch (error) {
         console.log("Error Deleting Order Status", error)
     }
