@@ -26,7 +26,7 @@ exports.up = function(db, callback) {
               'parent_category_id': 'id'
           },
           {
-              onDelete: 'CASCADE',
+              onDelete: 'RESTRICT',
               onUpdate: 'RESTRICT'
           },
           callback

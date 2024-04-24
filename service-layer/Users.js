@@ -16,7 +16,7 @@ const serviceAddUser = async (userForm) => {
 }
 
 const serviceGetUser = async (user_id) => {
-    const user = await auserDAL.getUserDAL(user_id);
+    const user = await userDAL.getUserDAL(user_id);
     return user;
 }
 

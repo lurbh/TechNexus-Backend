@@ -29,11 +29,12 @@ const createProductForm = (categories,brands) => {
         'product_name': fields.string({
             required: true,
             errorAfterField: true,
+            validators: [validators.maxlength(255)]
         }),
-        'price': fields.string({
+        'price': fields.number({
             required: true,
             errorAfterField: true,
-            validators: [validators.min(0)]
+            validators: [validators.min(0),validators.regexp(/^\\d+(\\.\\d{1,2})?$/)]
         }),
         'quantity_available': fields.number({
             required: true,
@@ -60,7 +61,8 @@ const createProductForm = (categories,brands) => {
             choices: brands
         }),
         'image_url': fields.string({
-            widget: widgets.hidden()
+            widget: widgets.hidden(),
+            validators: [validators.maxlength(255)]
         })
     })
 }
@@ -70,6 +72,7 @@ const createUserForm = (roles) => {
         'username': fields.string({
             required: true,
             errorAfterField: true,
+            validators: [validators.maxlength(255)],
             cssClasses: {
                 label: ['form-label']
             }
@@ -77,6 +80,7 @@ const createUserForm = (roles) => {
         'email': fields.string({
             required: true,
             errorAfterField: true,
+            validators: [validators.maxlength(255)],
             cssClasses: {
                 label: ['form-label']
             }
@@ -94,6 +98,7 @@ const createUserForm = (roles) => {
         'password': fields.password({
             required: true,
             errorAfterField: true,
+            validators: [validators.maxlength(255)],
             cssClasses: {
                 label: ['form-label']
             }
@@ -101,6 +106,7 @@ const createUserForm = (roles) => {
         'confirm_password': fields.password({
             required: true,
             errorAfterField: true,
+            validators: [validators.maxlength(255)],
             cssClasses: {
                 label: ['form-label']
             },
@@ -114,6 +120,7 @@ const createLoginForm = () => {
         'email': fields.string({
             required: true,
             errorAfterField: true,
+            validators: [validators.maxlength(255)],
             cssClasses: {
                 label: ['form-label']
             }
@@ -121,6 +128,7 @@ const createLoginForm = () => {
         'password': fields.password({
             required: true,
             errorAfterField: true,
+            validators: [validators.maxlength(255)],
             cssClasses: {
                 label: ['form-label']
             }
@@ -133,10 +141,12 @@ const createBrandForm = () => {
         'brand_name': fields.string({
             required: true,
             errorAfterField: true,
+            validators: [validators.maxlength(255)]
         }),
         'country_of_origin': fields.string({
             required: true,
             errorAfterField: true,
+            validators: [validators.maxlength(255)]
         }),
     })
 }
@@ -146,6 +156,7 @@ const createRoleForm = () => {
         'role_name': fields.string({
             required: true,
             errorAfterField: true,
+            validators: [validators.maxlength(255)]
         }),
     })
 }
@@ -154,7 +165,8 @@ const createCategoryForm = (categories) => {
     return forms.create({
         'category_name': fields.string({
             required: true,
-            errorAfterField: true
+            errorAfterField: true,
+            validators: [validators.maxlength(255)]
         }),
         'parent_category_id': fields.number({
             label: 'Parent Category',
@@ -199,7 +211,8 @@ const createNewsArticleForm = (user) => {
     return forms.create({
         'title' : fields.string({
             required: true,
-            errorAfterField: true
+            errorAfterField: true,
+            validators: [validators.maxlength(255)]
         }),
         'content' : fields.string({
             required: true,
@@ -263,7 +276,8 @@ const createOrderStatusForm = () => {
     return forms.create({
         'status_name': fields.string({
             required: true,
-            errorAfterField: true
+            errorAfterField: true,
+            validators: [validators.maxlength(255)]
         })
     })
 }
@@ -294,7 +308,7 @@ const createOrderItemForm = (orders,products) => {
             required: true,
             errorAfterField: true,
             widget: widgets.number(),
-            validators: [validators.min(0)]
+            validators: [validators.min(0),validators.regexp(/^\\d+(\\.\\d{1,2})?$/)]
         })
     })
 }

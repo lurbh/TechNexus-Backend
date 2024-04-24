@@ -29,7 +29,7 @@ exports.up = function(db, callback) {
               'Role_id': 'id'
           },
           {
-              onDelete: 'CASCADE',
+              onDelete: 'RESTRICT',
               onUpdate: 'RESTRICT'
           },
           callback
