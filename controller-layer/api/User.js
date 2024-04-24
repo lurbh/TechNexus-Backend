@@ -44,7 +44,7 @@ router.post("/login", async function(req, res) {
                 const accessToken = generateAccessToken(user, process.env.ACCESS_TOKEN_SECRET, "10m");
                 const refreshToken = generateAccessToken(user, process.env.REFRESH_TOKEN_SECRET, "1h")
                 res.status(200).json({
-                    accessToken, refreshToken
+                    accessToken, refreshToken,user
                 })
             } else {
                 res.status(401).json({
