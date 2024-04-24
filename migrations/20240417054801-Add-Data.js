@@ -18,6 +18,7 @@ exports.up = async function(db) {
   // Insert sample data into Roles Table
   await db.insert('roles', ['role_name'], ['admin']);
   await db.insert('roles', ['role_name'], ['user']);
+  await db.insert('roles', ['role_name'], ['seller']);
 
   // Insert sample data into Categories Table
   await db.insert('categories', ['category_name'], ['Smartphones']);
