@@ -26,13 +26,18 @@ const serviceUpdateUser = async (userForm, user_id) => {
 }
 
 const serviceDeleteUser = async (user_id) => {
-    const user = await userDAL.DeleteUserDAL(user_id);
+    const user = await userDAL.deleteUserDAL(user_id);
     return user;
 }
 
 const serviceGetOnlyUserType = async (type) => {
-    const users = await userDAL.GetUserTypeDAL(type);
+    const users = await userDAL.getUserTypeDAL(type);
     return users;
+}
+
+const serviceGetUserLogin = async (logininfo) => {
+    const user = await userDAL.getUserLoginDAL(logininfo);
+    return user
 }
 
 module.exports = {
@@ -42,5 +47,6 @@ module.exports = {
     serviceGetUser,
     serviceUpdateUser,
     serviceDeleteUser,
-    serviceGetOnlyUserType
+    serviceGetOnlyUserType,
+    serviceGetUserLogin
 }

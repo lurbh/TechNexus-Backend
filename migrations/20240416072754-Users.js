@@ -35,6 +35,7 @@ exports.up = function(db, callback) {
           callback
       );
       db.addIndex('users', 'unique_email', 'email', true, callback);
+      db.addIndex('users', 'unique_username', 'username', true, callback);
   });
 };
 

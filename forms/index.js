@@ -69,7 +69,7 @@ const createProductForm = (categories,brands) => {
 
 const createUserForm = (roles) => {
     return forms.create({
-        'username': fields.string({
+        'email': fields.string({
             required: true,
             errorAfterField: true,
             validators: [validators.maxlength(255)],
@@ -77,7 +77,7 @@ const createUserForm = (roles) => {
                 label: ['form-label']
             }
         }),
-        'email': fields.string({
+        'username': fields.string({
             required: true,
             errorAfterField: true,
             validators: [validators.maxlength(255)],
@@ -118,6 +118,7 @@ const createUserForm = (roles) => {
 const createLoginForm = () => {
     return forms.create({
         'email': fields.string({
+            label: 'Email or Username',
             required: true,
             errorAfterField: true,
             validators: [validators.maxlength(255)],

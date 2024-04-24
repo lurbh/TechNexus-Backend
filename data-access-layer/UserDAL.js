@@ -69,7 +69,7 @@ const updateUserDAL = async (userForm,user_id) => {
     }
 }
 
-const DeleteUserDAL = async (user_id) => {
+const deleteUserDAL = async (user_id) => {
     try {
         const user = await models.User.where({
             'id': user_id
@@ -84,7 +84,7 @@ const DeleteUserDAL = async (user_id) => {
     }
 }
 
-const GetUserTypeDAL = async (type) => {
+const getUserTypeDAL = async (type) => {
     try {
         const users = await models.User.where({
             'role_id': type
@@ -97,12 +97,33 @@ const GetUserTypeDAL = async (type) => {
     }
 }
 
+const getUserLoginDAL = async (logininfo) => {
+    try {
+        let user = await models.User.where({
+            'email': logininfo
+        }).fetch({
+           require:false}
+        );
+        if(!user)
+            user = await models.User.where({
+                'username': logininfo
+            }).fetch({
+                require:false}
+            );
+        return user;
+    } catch (error) {
+        console.log("Error getting User", error)
+        // throw() 
+    }
+}
+
 module.exports = {
     getAllUsersDAL,
     getAllRolesDAL,
     createUserDAL,
     getUserDAL,
     updateUserDAL,
-    DeleteUserDAL,
-    GetUserTypeDAL
+    deleteUserDAL,
+    getUserTypeDAL,
+    getUserLoginDAL
 }

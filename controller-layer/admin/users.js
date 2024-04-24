@@ -6,13 +6,8 @@ const models = require('../../models');
 const modelforms = require('../../forms');
 const serviceLayer = require('../../service-layer/Users');
 
-const { checkIfAuthenticated } = require('../../middleware');
+const { checkIfAuthenticated, getHashedPassword } = require('../../middleware');
 
-const getHashedPassword = (password) => {
-    const sha256 = crypto.createHash('sha256');
-    const hash = sha256.update(password).digest('base64');
-    return hash;
-}
 
 router.get('/', checkIfAuthenticated, async function(req,res){
     const users = await serviceLayer.serviceGetAllUsers();
@@ -121,13 +116,9 @@ router.post('/register', async (req, res) => {
     const registerForm = modelforms.createUserForm(roles);
     registerForm.handle(req, {
         success: async (form) => {
-            const user = new models.User({
-                'username': form.data.username,
-                'password_hash': getHashedPassword(form.data.password),
-                'email': form.data.email,
-                'role_id': 1
-            });
-            await user.save();
+            form.data.password = getHashedPassword(form.data.password);
+            form.data.confirm_password = getHashedPassword(form.data.confirm_password);
+            const user = await serviceLayer.serviceAddUser(form);
             req.flash("success_messages", "User signed up successfully!");
             res.redirect('/admin/users/login')
         },
@@ -155,12 +146,7 @@ router.post('/login', (req,res)=>{
     const loginForm = modelforms.createLoginForm();
     loginForm.handle(req, {
         'success': async (form) => {
-            let user = await models.User.where({
-                'email': form.data.email
-            }).fetch({
-               require:false}
-            );
-
+            const user = await serviceLayer.serviceGetUserLogin(form.data.email)
             if (!user) {
                 req.flash("error_messages", "Sorry, the authentication details you provided does not work.")
                 res.redirect('/admin/users/login');
@@ -169,7 +155,8 @@ router.post('/login', (req,res)=>{
                     req.session.user = {
                         id: user.get('id'),
                         username: user.get('username'),
-                        email: user.get('email')
+                        email: user.get('email'),
+                        role: user.get('role_id')
                     }
                     req.flash("success_messages", "Welcome back, " + user.get('username'));
                     res.redirect('/admin');

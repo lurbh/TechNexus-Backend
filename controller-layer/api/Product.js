@@ -26,14 +26,13 @@ router.get("/search/:product_id", async (req,res) => {
 
 router.post("/", async (req,res) => {
     const { product_name, category_id, brand_id, description, price, quantity_available } = req.body;
-    const allCategories = (await serviceLayer.serviceGetAllCategories()).map( category => [ category.get('id'), category.get('category_name')]);
-    const allBrands = (await serviceLayer.serviceGetAllBrands()).map (t => [t.get('id'), t.get('brand_name')]);
+    const allCategories = await serviceProducts.serviceGetAllCategories()
+    const allBrands = await serviceProducts.serviceGetAllBrands();
     const productForm = modelforms.createProductForm(allCategories, allBrands);
     productForm.handle(req, {
         'success': async function(form) {
-            const product = await serviceLayer.serviceAddProduct(form);
-            req.flash("success_messages", `New Product ${product.get('product_name')} has been created`)
-            res.redirect("/admin/products");
+            const product = await serviceProducts.serviceAddProduct(form);
+            res.status(201).json({"message":product});
         },
         'empty': function(form) {
             res.send(400);
