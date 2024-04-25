@@ -11,7 +11,7 @@ router.get('/', function(req,res){
     })
 });
 
-router.use("/product" , productRoutes);
+router.use("/products" , productRoutes);
 router.use("/user" , userRoutes);
 
 module.exports = router;

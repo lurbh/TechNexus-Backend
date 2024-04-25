@@ -34,10 +34,38 @@ const generateAccessToken = (user, tokenSecret, expiry) => {
     })
 };
 
+function verifyToken(req, res, next)
+{
+    const authHeader = req.headers['authorization'];
+    if (authHeader)
+    {
+        const token = authHeader;
+        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, function(err,payload){
+            if (err)
+            {
+                res.status(400);
+                return res.json({
+                    'error': err
+                })
+            } else 
+            {
+                req.payload = payload;
+                next();
+            }
+        })
+    }
+    else
+    {
+        return res.status(400).json({
+            'error': 'Login required to access this route'
+        })
+    }
+}
 
 
 module.exports = {
     checkIfAuthenticated,
     getHashedPassword,
     generateAccessToken,
+    verifyToken
 }

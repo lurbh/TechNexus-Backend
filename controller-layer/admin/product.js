@@ -69,6 +69,7 @@ router.get('/update-product/:product_id', async function(req,res){
 
 router.post('/update-product/:product_id', async function(req,res){
     const { product_id } = req.params;
+    const product = await serviceLayer.serviceGetProduct(product_id);
     const allCategories = (await serviceLayer.serviceGetAllCategories()).map( category => [ category.get('id'), category.get('category_name')]);
     const allBrands = (await serviceLayer.serviceGetAllBrands()).map (t => [t.get('id'), t.get('brand_name')]);
     const productForm = modelforms.createProductForm(allCategories, allBrands);
@@ -79,13 +80,21 @@ router.post('/update-product/:product_id', async function(req,res){
             res.redirect("/admin/products");
         },
         'empty': function(form) {
-            res.render('products/create', {
-                form: form.toHTML(modelforms.bootstrapField)
+            res.render('products/update', {
+                form: form.toHTML(modelforms.bootstrapField),
+                'product': product.toJSON(),
+                cloudinaryName: process.env.CLOUDINARY_NAME,
+                cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+                cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET
             })
         },
         'error': function(form) {
-            res.render('products/create', {
-                form: form.toHTML(modelforms.bootstrapField)
+            res.render('products/update', {
+                form: form.toHTML(modelforms.bootstrapField),
+                'product': product.toJSON(),
+                cloudinaryName: process.env.CLOUDINARY_NAME,
+                cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+                cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET
             })
         }
     })

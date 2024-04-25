@@ -34,7 +34,7 @@ const createProductForm = (categories,brands) => {
         'price': fields.number({
             required: true,
             errorAfterField: true,
-            validators: [validators.min(0),validators.regexp(/^\\d+(\\.\\d{1,2})?$/)]
+            validators: [validators.min(0), validators.regexp(/^\d+(\.\d{1,2})?$/)]
         }),
         'quantity_available': fields.number({
             required: true,

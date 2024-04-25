@@ -41,10 +41,14 @@ router.post("/login", async function(req, res) {
         'success': async (form) => {
             const user = await serviceLayer.serviceGetUserLogin(form.data.email)
             if (user && user.get('password_hash') === getHashedPassword(form.data.password)) {
-                const accessToken = generateAccessToken(user, process.env.ACCESS_TOKEN_SECRET, "10m");
-                const refreshToken = generateAccessToken(user, process.env.REFRESH_TOKEN_SECRET, "1h")
+                const accessToken = generateAccessToken(user, process.env.ACCESS_TOKEN_SECRET, "1h");
+                const refreshToken = generateAccessToken(user, process.env.REFRESH_TOKEN_SECRET, "1d")
                 res.status(200).json({
-                    accessToken, refreshToken,user
+                    accessToken, refreshToken, user : {
+                        username : user.get("username"),
+                        email : user.get("email"),
+                        role_id : user.get("role_id")
+                    }
                 })
             } else {
                 res.status(401).json({
@@ -97,7 +101,7 @@ router.post('/logout', async function(req,res){
     if (refreshToken) {
         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async function(err,user){
             const token = await BlacklistedDAL.addBlackListTokenDAL(refreshToken)
-            res.json({
+            res.status(200).json({
                 'message':"Logged out successfully"
             })
         })
