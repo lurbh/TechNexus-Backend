@@ -43,9 +43,8 @@ function verifyToken(req, res, next)
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, function(err,payload){
             if (err)
             {
-                res.status(400);
-                return res.json({
-                    'error': err
+                return res.status(498).json({
+                    'error': "Token Expired"
                 })
             } else 
             {
