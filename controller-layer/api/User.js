@@ -71,18 +71,18 @@ router.post('/refresh', async function (req,res){
             if (err) 
             {
                 return res.status(401).json({
-                    'error':'Invalid refresh token1'
+                    'error':'Invalid refresh token'
                 })
             }
             const blacklistedToken = await BlacklistedDAL.getBlackListToken(refreshToken)
             console.log(blacklistedToken);
             if (blacklistedToken) {
                 return res.status(401).json({
-                    'error':'Invalid refresh token2'
+                    'error':'Blacklisted refresh token'
                 })
             }
-
-            const accessToken = generateAccessToken(user, process.env.ACCESS_TOKEN_SECRET, "10");
+            console.log(user);
+            const accessToken = generateAccessToken(user, process.env.ACCESS_TOKEN_SECRET, "1h");
             res.status(200).json({
                 accessToken
             })
@@ -100,6 +100,12 @@ router.post('/logout', async function(req,res){
     const refreshToken = req.body.refreshToken;
     if (refreshToken) {
         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async function(err,user){
+            if (err) 
+            {
+                return res.status(401).json({
+                    'error':'Invalid refresh token'
+                })
+            }
             const token = await BlacklistedDAL.addBlackListTokenDAL(refreshToken)
             res.status(200).json({
                 'message':"Logged out successfully"

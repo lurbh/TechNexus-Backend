@@ -175,6 +175,10 @@ const createCategoryForm = (categories) => {
             errorAfterField: true,
             widget: widgets.select(), 
             choices: categories
+        }),
+        'category_img_url': fields.string({
+            widget: widgets.hidden(),
+            validators: [validators.maxlength(255)]
         })
     })
 }

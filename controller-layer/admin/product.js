@@ -3,9 +3,11 @@ const router =  express.Router();
 
 const modelforms = require('../../forms');
 const serviceLayer = require('../../service-layer/Product')
+const DAL = require('../../data-access-layer/ProductDAL')
 
 router.get('/', async function(req,res){
     const products = await serviceLayer.serviceGetAllProducts();
+    const price = await DAL.sumProductsDAL();
     res.render('products/index', {
         products: products.toJSON()
     } );

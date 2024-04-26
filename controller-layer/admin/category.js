@@ -18,6 +18,9 @@ router.get('/add-category', async function(req,res){
     const categoryForm = modelforms.createCategoryForm(allCategories);
     res.render('categories/create', {
         form: categoryForm.toHTML(modelforms.bootstrapField),
+        cloudinaryName: process.env.CLOUDINARY_NAME,
+        cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+        cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET
     })
 });
 
@@ -36,12 +39,18 @@ router.post('/add-category', async function(req,res){
         },
         'empty': function(form) {
             res.render('categories/create', {
-                form: form.toHTML(modelforms.bootstrapField)
+                form: form.toHTML(modelforms.bootstrapField),
+                cloudinaryName: process.env.CLOUDINARY_NAME,
+                cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+                cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET
             })
         },
         'error': function(form) {
             res.render('categories/create', {
-                form: form.toHTML(modelforms.bootstrapField)
+                form: form.toHTML(modelforms.bootstrapField),
+                cloudinaryName: process.env.CLOUDINARY_NAME,
+                cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+                cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET
             })
         }
     })
@@ -61,6 +70,9 @@ router.get('/update-category/:category_id', async function(req,res){
     res.render('categories/update', {
         form: categoryForm.toHTML(modelforms.bootstrapField),
         'category': category.toJSON(),
+        cloudinaryName: process.env.CLOUDINARY_NAME,
+        cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+        cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET
     })
 });
 
@@ -77,12 +89,18 @@ router.post('/update-category/:category_id', async function(req,res){
         },
         'empty': function(form) {
             res.render('categories/create', {
-                form: form.toHTML(modelforms.bootstrapField)
+                form: form.toHTML(modelforms.bootstrapField),
+                cloudinaryName: process.env.CLOUDINARY_NAME,
+                cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+                cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET
             })
         },
         'error': function(form) {
             res.render('categories/create', {
-                form: form.toHTML(modelforms.bootstrapField)
+                form: form.toHTML(modelforms.bootstrapField),
+                cloudinaryName: process.env.CLOUDINARY_NAME,
+                cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+                cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET
             })
         }
     })

@@ -122,6 +122,23 @@ const getAllBrandsDAL = async () => {
     }
 }
 
+const sumProductsDAL = async () => {
+    try {
+        models.Product.where({
+            'category_id': 1
+        }).query().sum('price as TotalPrice').then(result => {
+            console.log(result[0]);
+            const totalPrice = result[0].TotalPrice || 0;
+            console.log('Total Price:', totalPrice);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+    } catch (error) {
+        
+    }
+}
+
 module.exports = {
     getAllProductsDAL,
     addProductDAL,
@@ -131,5 +148,6 @@ module.exports = {
     searchProductDAL,
     getMainCategoriesDAL,
     getAllBrandsDAL,
-    getAllCategoriesDAL
+    getAllCategoriesDAL,
+    sumProductsDAL
 }
