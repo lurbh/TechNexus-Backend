@@ -1,3 +1,4 @@
+const res = require("express/lib/response");
 const cartitemDAL = require("../data-access-layer/CartItemsDAL");
 
 const serviceGetCartItems = async () => {
@@ -25,10 +26,16 @@ const serviceDelCartItem = async (cartitem_id) => {
     return response;
 } 
 
+const serviceGetUserCartItems = async (user_id) => {
+    const response = await cartitemDAL.getUserCartItemsDAL(user_id);
+    return response;
+}
+
 module.exports = {
     serviceGetCartItems,
     serviceGetCartItem,
     serviceAddCartItem,
     serviceUpdateCartItem,
-    serviceDelCartItem
+    serviceDelCartItem,
+    serviceGetUserCartItems
 }

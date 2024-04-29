@@ -3,7 +3,7 @@ const router =  express.Router();
 
 const serviceProducts = require("../../service-layer/Product");
 const { createProductForm } = require("../../forms");
-const { verifyToken } = require("../../middleware")
+const { verifyToken } = require("../../middleware");
 
 
 router.get("/", async (req,res) => {

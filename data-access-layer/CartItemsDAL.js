@@ -64,10 +64,24 @@ const deleteCartItemDAL = async (cartitem_id) => {
     }
 }
 
+const getUserCartItemsDAL = async (user_id) => {
+    try {
+        return await models.Cart_Item.where({
+            'user_id': user_id
+        }).fetchAll({
+            withRelated: ['user','product']
+        });
+    } catch (error) {
+        console.log("Error getting Cart Item", error)
+    }
+}
+
+
 module.exports = {
     getAllCartItemsDAL,
     getCartItemDAL,
     addCartItemDAL,
     updateCartItemDAL,
-    deleteCartItemDAL
+    deleteCartItemDAL,
+    getUserCartItemsDAL
 }
