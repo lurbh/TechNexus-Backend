@@ -47,7 +47,8 @@ router.post("/login", async function(req, res) {
                     accessToken, refreshToken, user : {
                         username : user.get("username"),
                         email : user.get("email"),
-                        role_id : user.get("role_id")
+                        role_id : user.get("role_id"),
+                        user_id : user.get("id")
                     }
                 })
             } else {
@@ -75,13 +76,11 @@ router.post('/refresh', async function (req,res){
                 })
             }
             const blacklistedToken = await BlacklistedDAL.getBlackListToken(refreshToken)
-            console.log(blacklistedToken);
             if (blacklistedToken) {
                 return res.status(401).json({
                     'error':'Blacklisted refresh token'
                 })
             }
-            console.log(user);
             const accessToken = generateAccessToken(user, process.env.ACCESS_TOKEN_SECRET, "1h");
             res.status(200).json({
                 accessToken

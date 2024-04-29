@@ -40,7 +40,6 @@ router.post("/", verifyToken ,  async (req,res) => {
             })
         },
         'error': function(form) {
-            console.log(form)
             const errors = {};
             for (let key in form.fields) {
                 if(form.fields[key].error)
