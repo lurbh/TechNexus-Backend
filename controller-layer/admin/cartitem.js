@@ -8,7 +8,6 @@ const { serviceGetOnlyUserType } = require('../../service-layer/Users')
 
 router.get('/', async function(req,res){
     const cartitems = await serviceLayer.serviceGetCartItems();
-    await serviceLayer.serviceSumcartItems(2)
     res.render('cartitems/index', {
         cartitems: cartitems.toJSON()
     } );

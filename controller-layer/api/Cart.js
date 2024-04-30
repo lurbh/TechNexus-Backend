@@ -42,7 +42,7 @@ router.post("/usercart", verifyToken , async (req,res) => {
 }) 
 
 router.put("/usercart/:cartitem_id", verifyToken , async (req,res) => {
-    const { cartitem_id } = req.body;
+    const { cartitem_id } = req.params;
     const allProducts = await serviceGetAllProducts();
     const allUsers = await serviceGetOnlyUserType(2);
     const cartitemform = createCartItemForm(allUsers,allProducts);

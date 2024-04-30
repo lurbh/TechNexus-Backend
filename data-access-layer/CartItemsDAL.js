@@ -28,7 +28,9 @@ const addCartItemDAL = async (cartitemForm) => {
         const {...cartitemData} = cartitemForm.data;
         cartitem.set(cartitemData);
         await cartitem.save();
-        return cartitem;
+        return cartitem.fetch({
+            withRelated: ['product']
+        });;
     } catch (error) {
         console.log("Error creating Cart Item", error)
     }
@@ -76,28 +78,6 @@ const getUserCartItemsDAL = async (user_id) => {
     }
 }
 
-const sumCartItemsDAL = async (user_id) => {
-    try {
-        const cartitems = await models.Cart_Item.where({
-            'user_id': user_id
-        }).fetchAll({
-            withRelated: ['user','product']
-        });
-        console.log(cartitems);
-        return cartitems;
-        // }).query().sum('price as TotalPrice').then(result => {
-        //     console.log(result[0]);
-        //     const totalPrice = result[0].TotalPrice || 0;
-        //     console.log('Total Price:', totalPrice);
-        //   })
-        //   .catch(error => {
-        //     console.error('Error:', error);
-        //   });
-    } catch (error) {
-        
-    }
-}
-
 
 module.exports = {
     getAllCartItemsDAL,
@@ -106,5 +86,4 @@ module.exports = {
     updateCartItemDAL,
     deleteCartItemDAL,
     getUserCartItemsDAL,
-    sumCartItemsDAL
 }
