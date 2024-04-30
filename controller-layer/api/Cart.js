@@ -2,11 +2,14 @@ const express = require("express");
 const router =  express.Router();
 
 const serviceCartItems = require("../../service-layer/CartItems");
+const { serviceGetAllProducts } = require("../../service-layer/Product");
+const { serviceGetOnlyUserType } = require("../../service-layer/Users");
+const { createCartItemForm } = require("../../forms")
 
 const { verifyToken } = require("../../middleware");
 
-router.get("/usercart", verifyToken , async (req,res) => {
-    const { user_id } = req.body
+router.get("/usercart/:user_id", verifyToken , async (req,res) => {
+    const { user_id } = req.params
     const cart_items = await serviceCartItems.serviceGetUserCartItems(user_id);
     res.status(200).json({"cart_items":cart_items});
 });
@@ -14,7 +17,7 @@ router.get("/usercart", verifyToken , async (req,res) => {
 router.post("/usercart", verifyToken , async (req,res) => {
     const allProducts = await serviceGetAllProducts();
     const allUsers = await serviceGetOnlyUserType(2);
-    const cartitemform = modelforms.createCartItemForm(allUsers,allProducts);
+    const cartitemform = createCartItemForm(allUsers,allProducts);
     cartitemform.handle(req, {
         'success': async function(form) {
             const cartitem = await serviceCartItems.serviceAddCartItem(form);
@@ -42,7 +45,7 @@ router.put("/usercart/:cartitem_id", verifyToken , async (req,res) => {
     const { cartitem_id } = req.body;
     const allProducts = await serviceGetAllProducts();
     const allUsers = await serviceGetOnlyUserType(2);
-    const cartitemform = modelforms.createCartItemForm(allUsers,allProducts);
+    const cartitemform = createCartItemForm(allUsers,allProducts);
     cartitemform.handle(req, {
         'success': async function(form) {
             const cartitem = await serviceCartItems.serviceUpdateCartItem(form, cartitem_id);

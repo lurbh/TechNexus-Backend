@@ -66,7 +66,6 @@ const deleteCartItemDAL = async (cartitem_id) => {
 
 const getUserCartItemsDAL = async (user_id) => {
     try {
-        console.log(user_id);
         return await models.Cart_Item.where({
             'user_id': user_id
         }).fetchAll({
