@@ -30,7 +30,7 @@ const addCartItemDAL = async (cartitemForm) => {
         await cartitem.save();
         return cartitem.fetch({
             withRelated: ['product']
-        });;
+        });
     } catch (error) {
         console.log("Error creating Cart Item", error)
     }
@@ -46,7 +46,9 @@ const updateCartItemDAL = async (cartitemForm, cartitem_id) => {
         const {...cartitemData} = cartitemForm.data;
         cartitem.set(cartitemData);
         await cartitem.save();
-        return cartitem;
+        return cartitem.fetch({
+            withRelated: ['product']
+        });
     } catch (error) {
         console.log("Error updating Cart Item", error)
     }
