@@ -25,10 +25,16 @@ const serviceDelOrder = async (order_id) => {
     return response;
 } 
 
+const serviceCreateNewOrder = async (user_id) => {
+    const response = await orderDAL.createNewOrderDAL(user_id);
+    return response;
+}
+
 module.exports = {
     serviceGetOrders,
     serviceGetOrder,
     serviceAddOrder,
     serviceUpdateOrder,
-    serviceDelOrder
+    serviceDelOrder,
+    serviceCreateNewOrder
 }

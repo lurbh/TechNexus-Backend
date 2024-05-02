@@ -31,10 +31,11 @@ const serviceGetUserCartItems = async (user_id) => {
     return response;
 }
 
-const serviceSumcartItems = async (user_id) => {
-    const response = await cartitemDAL.sumCartItemsDAL(user_id);
+const serviceClearUserCartItems = async (user_id) => {
+    const response = await cartitemDAL.clearUserCartDAL(user_id);
     return response;
 }
+
 
 module.exports = {
     serviceGetCartItems,
@@ -43,5 +44,5 @@ module.exports = {
     serviceUpdateCartItem,
     serviceDelCartItem,
     serviceGetUserCartItems,
-    serviceSumcartItems
+    serviceClearUserCartItems
 }

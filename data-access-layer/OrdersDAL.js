@@ -64,10 +64,25 @@ const deleteOrderDAL = async (order_id) => {
     }
 }
 
+const createNewOrderDAL = async (user_id) => {
+    try {
+        const order = new models.Order();
+        order.set({
+            user_id: user_id,
+            order_status_id: 1,
+        });
+        await order.save();
+        return order;
+    } catch (error) {
+        console.log("Error creating Order", error)
+    }
+}
+
 module.exports = {
     getAllOrdersDAL,
     getOrderDAL,
     addOrderDAL,
     updateOrderDAL,
-    deleteOrderDAL
+    deleteOrderDAL,
+    createNewOrderDAL
 }

@@ -25,10 +25,16 @@ const serviceDelOrderItem = async (orderitem_id) => {
     return response;
 } 
 
+const serviceAddCartItemstoOrderItems = async (cartItems, order_id) => {
+    const response = await orderitemDAL.addCartItemstoOrderItemsDAL(cartItems,order_id);
+    return response;
+}
+
 module.exports = {
     serviceGetOrderItems,
     serviceGetOrderItem,
     serviceAddOrderItem,
     serviceUpdateOrderItem,
-    serviceDelOrderItem
+    serviceDelOrderItem,
+    serviceAddCartItemstoOrderItems
 }

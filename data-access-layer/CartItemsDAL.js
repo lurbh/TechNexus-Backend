@@ -76,7 +76,22 @@ const getUserCartItemsDAL = async (user_id) => {
             withRelated: ['product']
         });
     } catch (error) {
-        console.log("Error getting Cart Item", error)
+        console.log("Error getting Cart Items", error)
+    }
+}
+
+const clearUserCartDAL = async (user_id) => {
+    try {
+        const cartitems = await models.Cart_Item.where({
+            'user_id': user_id
+        }).fetchAll({
+            withRelated: ['product']
+        });
+        for (let item of cartitems)
+            await item.destroy();
+        return;
+    } catch (error) {
+        console.log("Error Deleting Cart Items", error)
     }
 }
 
@@ -88,4 +103,5 @@ module.exports = {
     updateCartItemDAL,
     deleteCartItemDAL,
     getUserCartItemsDAL,
+    clearUserCartDAL
 }
