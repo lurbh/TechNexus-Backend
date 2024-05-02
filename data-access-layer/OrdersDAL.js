@@ -78,11 +78,24 @@ const createNewOrderDAL = async (user_id) => {
     }
 }
 
+const getOrdersForUserDAL = async (user_id) => {
+    try {
+        return await models.Order.where({
+            'user_id': user_id
+        }).fetchAll({
+            withRelated: ['order_items.product', 'order_status']
+        });
+    } catch (error) {
+        console.log("Error getting Order", error)
+    }
+}
+
 module.exports = {
     getAllOrdersDAL,
     getOrderDAL,
     addOrderDAL,
     updateOrderDAL,
     deleteOrderDAL,
-    createNewOrderDAL
+    createNewOrderDAL,
+    getOrdersForUserDAL
 }

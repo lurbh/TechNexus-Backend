@@ -309,12 +309,11 @@ const createOrderItemForm = (orders,products) => {
             widget: widgets.number(),
             validators: [validators.min(0), validators.integer()]
         }),
-        'unit_price': fields.string({
+        'unit_price': fields.number({
             required: true,
             errorAfterField: true,
-            widget: widgets.number(),
-            validators: [validators.min(0),validators.regexp(/^\\d+(\\.\\d{1,2})?$/)]
-        })
+            validators: [validators.min(0), validators.regexp(/^\d+(\.\d{1,2})?$/)]
+        }),
     })
 }
 
