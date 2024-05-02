@@ -32,12 +32,16 @@ router.post("/" , verifyToken , async (req,res) => {
         lineItems.push(lineitem);
     }
 
+    const order = await serviceOrders.serviceCreateNewOrder(user_id);
+    const orderitems = await serviceOrderItems.serviceAddCartItemstoOrderItems(items,order.get('id'));
+
     const payment = {
         payment_method_types: ['card'],
         mode:'payment',
         line_items: lineItems,
-        success_url: process.env.STRIPE_SUCCESS_URL + '?sessionId={CHECKOUT_SESSION_ID}',
+        success_url: process.env.STRIPE_SUCCESS_URL + `/${order.get('id')}`,
         cancel_url: process.env.STRIPE_ERROR_URL,
+        client_reference_id: order.get('id'),
         metadata: {
            user_id: user_id
         }
@@ -47,11 +51,11 @@ router.post("/" , verifyToken , async (req,res) => {
     console.log(stripeSession);
     if(stripeSession.id)
     {
-        const order = await serviceOrders.serviceCreateNewOrder(user_id);
-        console.log(order);
-        const orderitems = await serviceOrderItems.serviceAddCartItemstoOrderItems(items,order.get('id'));
-        const response = await serviceCartItems.serviceClearUserCartItems(user_id);
-        
+        const response = await serviceCartItems.serviceClearUserCartItems(user_id);   
+    }
+    else
+    {
+        await serviceOrders.serviceDelOrder(order.get('id'));
     }
 
     res.status(200).json({'stripeURL': stripeSession.url});
