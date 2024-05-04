@@ -35,6 +35,11 @@ const servicegetOrdersForUser = async (user_id) => {
     return response;
 }
 
+const servicePaymentCompleted = async (order_id) => {
+    const response = await orderDAL.paymentCompletedDAL(order_id);
+    return response;
+}
+
 module.exports = {
     serviceGetOrders,
     serviceGetOrder,
@@ -42,5 +47,6 @@ module.exports = {
     serviceUpdateOrder,
     serviceDelOrder,
     serviceCreateNewOrder,
-    servicegetOrdersForUser
+    servicegetOrdersForUser,
+    servicePaymentCompleted
 }

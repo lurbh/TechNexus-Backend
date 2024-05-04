@@ -90,6 +90,23 @@ const getOrdersForUserDAL = async (user_id) => {
     }
 }
 
+const paymentCompletedDAL = async (order_id) => {
+    try {
+        const order = await models.Order.where({
+            'id': order_id
+        }).fetch({
+            require: true
+        });
+        order.set({
+            order_status_id: 2
+        });
+        await order.save();
+        return order;
+    } catch (error) {
+        console.log("Error updating Order", error)
+    }
+}
+
 module.exports = {
     getAllOrdersDAL,
     getOrderDAL,
@@ -97,5 +114,6 @@ module.exports = {
     updateOrderDAL,
     deleteOrderDAL,
     createNewOrderDAL,
-    getOrdersForUserDAL
+    getOrdersForUserDAL,
+    paymentCompletedDAL
 }

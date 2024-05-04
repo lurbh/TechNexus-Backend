@@ -14,11 +14,12 @@ router.post("/" , verifyToken , async (req,res) => {
     const lineItems = [];
     for ( let cartitem  of items )
     {
+        console.log(cartitem.related('product').get('price'));
         const lineitem = {
             'quantity': cartitem.get('quantity'),
             'price_data': {
                 'currency':'SGD',
-                'unit_amount': cartitem.related('product').get('price') * 100,
+                'unit_amount': Math.round(cartitem.related('product').get('price') * 100),
                 'product_data': {
                     'name': cartitem.related('product').get('product_name'),
                     'metadata': {
@@ -31,7 +32,7 @@ router.post("/" , verifyToken , async (req,res) => {
         }
         lineItems.push(lineitem);
     }
-
+    console.log(lineItems);
     const order = await serviceOrders.serviceCreateNewOrder(user_id);
     const orderitems = await serviceOrderItems.serviceAddCartItemstoOrderItems(items,order.get('id'));
 
@@ -48,7 +49,7 @@ router.post("/" , verifyToken , async (req,res) => {
     }
 
     let stripeSession = await Stripe.checkout.sessions.create(payment);
-    console.log(stripeSession);
+    // console.log(stripeSession);
     if(stripeSession.id)
     {
         const response = await serviceCartItems.serviceClearUserCartItems(user_id);   
