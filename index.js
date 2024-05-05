@@ -48,7 +48,8 @@ const csurfInstance = csurf();
 
 app.use(function (req, res, next) {
   if (
-    req.url.slice(0, 5) == "/api/"
+    req.url.slice(0, 5) == "/api/" ||
+    req.url === "/stripe/process_payment"
   ) {
     return next();
   }
@@ -87,6 +88,7 @@ const port = 7319;
 const apiRoutes = require("./controller-layer/api");
 const adminRoutes = require("./controller-layer/admin");
 const cloudinaryRoutes = require("./controller-layer/cloudinary");
+const stripeRoute = require("./controller-layer/stripe")
 
 async function main() {
   app.get("/", function (req, res) {
@@ -99,6 +101,7 @@ async function main() {
   app.use("/api", express.json(), apiRoutes);
   app.use("/admin", adminRoutes);
   app.use("/cloudinary", cloudinaryRoutes);
+  app.use("/stripe", stripeRoute)
 
   app.listen(port, function () {
     console.log("Server is running");

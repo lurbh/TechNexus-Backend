@@ -60,50 +60,6 @@ router.post("/", verifyToken, async (req, res) => {
   res.status(200).json({ stripeURL: stripeSession.url });
 });
 
-router.post('/process_payment', express.raw({type: 'application/json'}), async (req, res) => {
-    console.log("process_payment IN")
-    const payload = req.body;
-    const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
-    const sigHeader = req.headers['stripe-signature'];
-    console.log("received payment confirmation req.body here", payload)
-    console.log("signatureHeader here", sigHeader)
-    const payloadString = JSON.stringify(payload, null, 2);
-    console.log("JSON.stringify",payloadString);
-    let event;
-    try {
-        event = Stripe.webhooks.constructEvent(payload, sigHeader, endpointSecret);
-        console.log("Event")
-        const client_reference_id = await Stripe.checkout.sessions.retrieve(
-            stripeSession.id, {
-            expand: ['client_reference_id']
-      });
-
-      console.log(client_reference_id);
-           
-    //   const lineItems = await Stripe.checkout.sessions.listLineItems(stripeSession.id, {
-    //             expand: ['data.price.product'],
-    //       });
-
-    //   for (let i of lineItems.data) {
-    //       // TODO: add those info to the db
-    //       console.log(i.price);
-    //       console.log("Metadata: ", i.price.product.metadata)
-    //   }
-
-
-
-    } catch (err) {
-        console.log(`❌ Error message: ${err.message}`);
-        res.status(400).send(`Webhook Error: ${err.message}`);
-        return;
-    }
-    if (event.type == 'checkout.session.completed') {
-        let stripeSession = event.data.object;
-        console.log(stripeSession);
-        // process stripeSession
-    }
-    res.send({ received: true });
-});
 
 
 module.exports = router;
