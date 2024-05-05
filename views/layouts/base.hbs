@@ -1,12 +1,19 @@
-<!doctype html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="https://res.cloudinary.com/dymr3ncda/image/upload/v1713425710/zjccgr47lw81u4n4srcn.png" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      href="https://res.cloudinary.com/dymr3ncda/image/upload/v1713425710/zjccgr47lw81u4n4srcn.png"
+    />
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
 
     <title>TechNexus Admin Portal</title>
   </head>
@@ -25,28 +32,39 @@
 
     <div class="container position-relative">
       <nav class="navbar navbar-expand-sm bg-dark p-3">
-        <div class="container-fluid" >
-          <a href="/admin" class="header-image-link" style="height: 40px;"><img 
-            src="http://res.cloudinary.com/dymr3ncda/image/upload/v1713504268/hlfirr3hu8eg3wxndrrd.png"
-            style="height: 130%; width:auto;"
-            alt="TechNexus Logo"
-        /></a>
-          <div class="container-fluid" >
+        <div class="container-fluid">
+          <a href="/admin" class="header-image-link" style="height: 40px;"><img
+              src="http://res.cloudinary.com/dymr3ncda/image/upload/v1713504268/hlfirr3hu8eg3wxndrrd.png"
+              style="height: 130%; width:auto;"
+              alt="TechNexus Logo"
+            /></a>
+          <div class="container-fluid">
             {{#if user}}
-              <span style="color: whitesmoke; top:25px; right: 125px;" class="position-absolute">Hello, {{user.username}}</span>
-              <a href="/admin/users/logout" class="btn btn-primary position-absolute top-0 end-0 m-3">Logout</a>
-              {{else}}
-              <a href="/admin/users/login" class="btn btn-primary position-absolute top-0 end-0 m-3">Login</a>
+              <span
+                style="color: whitesmoke; top:25px; right: 125px;"
+                class="position-absolute"
+              >Hello, {{user.username}}</span>
+              <a
+                href="/admin/users/logout"
+                class="btn btn-primary position-absolute top-0 end-0 m-3"
+              >Logout</a>
+            {{else}}
+              <a
+                href="/admin/users/login"
+                class="btn btn-primary position-absolute top-0 end-0 m-3"
+              >Login</a>
             {{/if}}
           </div>
         </div>
       </nav>
-        {{#block "content"}}{{/block}}
+      {{#block "content"}}{{/block}}
     </div>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    {{#block 'js'}}
-    {{/block}}
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    {{#block "js"}}{{/block}}
   </body>
 </html>

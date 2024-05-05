@@ -1,60 +1,64 @@
 {{#extends "base"}}
 
+  {{#block "content"}}
+    <h1>All Reviews</h1>
 
-{{#block "content"}}
-<h1>All Reviews</h1>
-
-<table class="table">
-    <thead>
+    <table class="table">
+      <thead>
         <th>
-            Review ID
+          Review ID
         </th>
         <th>
-            Product
+          Product
         </th>
         <th>
-            User
+          User
         </th>
         <th>
-            Rating
+          Rating
         </th>
         <th>
-            Review Date
+          Review Date
         </th>
         <th></th>
         <th></th>
-    </thead>
-    {{#each reviews}}
-    <tr>
-        <td>
+      </thead>
+      {{#each reviews}}
+        <tr>
+          <td>
             {{this.id}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.user.username}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.products.product_name}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.rating}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{#dateFormat this.review_date}}
-                {{date}} {{time}} 
+              {{date}}
+              {{time}}
             {{/dateFormat}}
-        </td>
-        <td>
-            <a href="reviews/update-review/{{this.id}}"
-               class="btn btn-warning btn-sm">Update</a>
-        </td>
-        <td>
-            <a href="reviews/delete-review/{{this.id}}"
-               class="btn btn-danger btn-sm">Delete</a>
-        </td>
-    </tr>
-    {{/each}}
-</table>
-<a class="btn btn-info btn-sm" href="reviews/add-review">Add Review</a>
-{{/block}}
+          </td>
+          <td>
+            <a
+              href="reviews/update-review/{{this.id}}"
+              class="btn btn-warning btn-sm"
+            >Update</a>
+          </td>
+          <td>
+            <a
+              href="reviews/delete-review/{{this.id}}"
+              class="btn btn-danger btn-sm"
+            >Delete</a>
+          </td>
+        </tr>
+      {{/each}}
+    </table>
+    <a class="btn btn-info btn-sm" href="reviews/add-review">Add Review</a>
+  {{/block}}
 
 {{/extends}}

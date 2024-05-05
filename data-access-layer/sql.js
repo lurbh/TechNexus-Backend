@@ -1,20 +1,22 @@
-const {createConnection} = require('mysql2/promise');
+const { createConnection } = require("mysql2/promise");
 
 let connection;
 
-async function connectToDB(host, user, database, password) 
-{
-    connection = await createConnection({
-        host, user, database, password
-    })
-    console.log("Connected to MySQL");
+async function connectToDB(host, user, database, password) {
+  connection = await createConnection({
+    host,
+    user,
+    database,
+    password,
+  });
+  console.log("Connected to MySQL");
 }
 
-function getConnection() 
-{
-    return connection;
+function getConnection() {
+  return connection;
 }
 
 module.exports = {
-    connectToDB, getConnection
-}
+  connectToDB,
+  getConnection,
+};

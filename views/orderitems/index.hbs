@@ -1,58 +1,62 @@
 {{#extends "base"}}
 
+  {{#block "content"}}
+    <h1>All Order Items</h1>
 
-{{#block "content"}}
-<h1>All Order Items</h1>
-
-<table class="table">
-    <thead>
+    <table class="table">
+      <thead>
         <th>
-            Order Item ID
+          Order Item ID
         </th>
         <th>
-            Order ID
+          Order ID
         </th>
         <th>
-            Product
+          Product
         </th>
         <th>
-            Quantity
+          Quantity
         </th>
         <th>
-            Unit Price
+          Unit Price
         </th>
         <th></th>
         <th></th>
-    </thead>
-    {{#each orderitems}}
-    <tr>
-        <td>
+      </thead>
+      {{#each orderitems}}
+        <tr>
+          <td>
             {{this.id}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.order_id}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.product.product_name}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.quantity}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.unit_price}}
-        </td>
-        <td>
-            <a href="orderitems/update-order-item/{{this.id}}"
-               class="btn btn-warning btn-sm">Update</a>
-        </td>
-        <td>
-            <a href="orderitems/delete-order-item/{{this.id}}"
-               class="btn btn-danger btn-sm">Delete</a>
-        </td>
-    </tr>
-    {{/each}}
-</table>
-<a class="btn btn-info btn-sm" href="orderitems/add-order-item">Add Order Items</a>
-{{/block}}
+          </td>
+          <td>
+            <a
+              href="orderitems/update-order-item/{{this.id}}"
+              class="btn btn-warning btn-sm"
+            >Update</a>
+          </td>
+          <td>
+            <a
+              href="orderitems/delete-order-item/{{this.id}}"
+              class="btn btn-danger btn-sm"
+            >Delete</a>
+          </td>
+        </tr>
+      {{/each}}
+    </table>
+    <a class="btn btn-info btn-sm" href="orderitems/add-order-item">Add Order
+      Items</a>
+  {{/block}}
 
 {{/extends}}

@@ -1,16 +1,17 @@
 {{#extends "base"}}
 
-{{#block "content"}}
-<form method="POST">
-    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
-    <div class="alert alert-danger">
-        Are you sure you want to delete {{role.role_name}}
+  {{#block "content"}}
+    <form method="POST">
+      <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+      <div class="alert alert-danger">
+        Are you sure you want to delete
+        {{role.role_name}}
         <div>
-            <a class="btn btn-success btn-sm" href="/admin/roles">Cancel</a>
-            <input value="Confirm" type="submit" class="btn btn-danger btn-sm"/>
+          <a class="btn btn-success btn-sm" href="/admin/roles">Cancel</a>
+          <input value="Confirm" type="submit" class="btn btn-danger btn-sm" />
         </div>
-    </div>
-</form>
-{{/block}}
+      </div>
+    </form>
+  {{/block}}
 
 {{/extends}}

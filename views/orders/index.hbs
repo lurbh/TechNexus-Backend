@@ -1,54 +1,58 @@
 {{#extends "base"}}
 
+  {{#block "content"}}
+    <h1>All Orders</h1>
 
-{{#block "content"}}
-<h1>All Orders</h1>
-
-<table class="table">
-    <thead>
+    <table class="table">
+      <thead>
         <th>
-            Order ID
+          Order ID
         </th>
         <th>
-            User
+          User
         </th>
         <th>
-            Order Date
+          Order Date
         </th>
         <th>
-            Order Status
+          Order Status
         </th>
         <th></th>
         <th></th>
-    </thead>
-    {{#each orders}}
-    <tr>
-        <td>
+      </thead>
+      {{#each orders}}
+        <tr>
+          <td>
             {{this.id}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.user.username}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{#dateFormat this.order_date}}
-                {{date}} {{time}} 
+              {{date}}
+              {{time}}
             {{/dateFormat}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.order_status.status_name}}
-        </td>
-        <td>
-            <a href="orders/update-order/{{this.id}}"
-               class="btn btn-warning btn-sm">Update</a>
-        </td>
-        <td>
-            <a href="orders/delete-order/{{this.id}}"
-               class="btn btn-danger btn-sm">Delete</a>
-        </td>
-    </tr>
-    {{/each}}
-</table>
-<a class="btn btn-info btn-sm" href="orders/add-order">Add Order</a>
-{{/block}}
+          </td>
+          <td>
+            <a
+              href="orders/update-order/{{this.id}}"
+              class="btn btn-warning btn-sm"
+            >Update</a>
+          </td>
+          <td>
+            <a
+              href="orders/delete-order/{{this.id}}"
+              class="btn btn-danger btn-sm"
+            >Delete</a>
+          </td>
+        </tr>
+      {{/each}}
+    </table>
+    <a class="btn btn-info btn-sm" href="orders/add-order">Add Order</a>
+  {{/block}}
 
 {{/extends}}

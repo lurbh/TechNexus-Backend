@@ -1,13 +1,17 @@
 {{#extends "base"}}
 
-{{#block "content"}}
-<h1>Create New Order Item</h1>
-<form method="POST">
-    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
-    {{{form}}}
-    <a class="btn btn-danger mt-3" href="/admin/orderitems">Cancel</a>
-    <input type="submit" class="btn btn-primary mt-3" value="Add Order Item"/>
-</form>
-{{/block}}
+  {{#block "content"}}
+    <h1>Create New Order Item</h1>
+    <form method="POST">
+      <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+      {{{form}}}
+      <a class="btn btn-danger mt-3" href="/admin/orderitems">Cancel</a>
+      <input
+        type="submit"
+        class="btn btn-primary mt-3"
+        value="Add Order Item"
+      />
+    </form>
+  {{/block}}
 
 {{/extends}}

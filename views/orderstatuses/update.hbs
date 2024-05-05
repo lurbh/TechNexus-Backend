@@ -1,14 +1,17 @@
 {{#extends "base"}}
-{{#block "content"}}
-<h1>Updating {{orderStatus.status_name}}</h1>
-<form method="POST">
-    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
-    {{{form}}}
-    
-    <a class="btn btn-danger mt-3" href="/admin/orderstatus">Cancel</a>
-    <input type="submit" value="Update Order Status" class="btn btn-primary mt-3"/>
-</form>
-{{/block}}
+  {{#block "content"}}
+    <h1>Updating {{orderStatus.status_name}}</h1>
+    <form method="POST">
+      <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+      {{{form}}}
 
+      <a class="btn btn-danger mt-3" href="/admin/orderstatus">Cancel</a>
+      <input
+        type="submit"
+        value="Update Order Status"
+        class="btn btn-primary mt-3"
+      />
+    </form>
+  {{/block}}
 
 {{/extends}}

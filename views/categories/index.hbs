@@ -1,50 +1,53 @@
 {{#extends "base"}}
 
+  {{#block "content"}}
+    <h1>All Categories</h1>
 
-{{#block "content"}}
-<h1>All Categories</h1>
-
-<table class="table">
-    <thead>
+    <table class="table">
+      <thead>
         <th>
-            Category ID
+          Category ID
         </th>
         <th>
-            Name
+          Name
         </th>
         <th>
-            Parent Category
+          Parent Category
         </th>
         <th></th>
         <th></th>
-    </thead>
-    {{#each categories}}
-    <tr>
-        <td>
+      </thead>
+      {{#each categories}}
+        <tr>
+          <td>
             {{this.id}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.category_name}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{#if this.parentCategory.category_name}}
-                {{this.parentCategory.category_name}}
+              {{this.parentCategory.category_name}}
             {{else}}
-                None
+              None
             {{/if}}
-        </td>
-        <td>
-            <a href="categories/update-category/{{this.id}}"
-               class="btn btn-warning btn-sm">Update</a>
-        </td>
-        <td>
-            <a href="categories/delete-category/{{this.id}}"
-               class="btn btn-danger btn-sm">Delete</a>
-        </td>
-    </tr>
-    {{/each}}
-</table>
-<a class="btn btn-info btn-sm" href="categories/add-category">Add Categories</a>
-{{/block}}
+          </td>
+          <td>
+            <a
+              href="categories/update-category/{{this.id}}"
+              class="btn btn-warning btn-sm"
+            >Update</a>
+          </td>
+          <td>
+            <a
+              href="categories/delete-category/{{this.id}}"
+              class="btn btn-danger btn-sm"
+            >Delete</a>
+          </td>
+        </tr>
+      {{/each}}
+    </table>
+    <a class="btn btn-info btn-sm" href="categories/add-category">Add Categories</a>
+  {{/block}}
 
 {{/extends}}

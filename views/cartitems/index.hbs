@@ -1,52 +1,56 @@
 {{#extends "base"}}
 
+  {{#block "content"}}
+    <h1>All Cart Items</h1>
 
-{{#block "content"}}
-<h1>All Cart Items</h1>
-
-<table class="table">
-    <thead>
+    <table class="table">
+      <thead>
         <th>
-            Cart Item ID
+          Cart Item ID
         </th>
         <th>
-            User
+          User
         </th>
         <th>
-            Product
+          Product
         </th>
         <th>
-            Quantity
+          Quantity
         </th>
         <th></th>
         <th></th>
-    </thead>
-    {{#each cartitems}}
-    <tr>
-        <td>
+      </thead>
+      {{#each cartitems}}
+        <tr>
+          <td>
             {{this.id}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.user.username}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.product.product_name}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.quantity}}
-        </td>
-        <td>
-            <a href="cartitems/update-cart-item/{{this.id}}"
-               class="btn btn-warning btn-sm">Update</a>
-        </td>
-        <td>
-            <a href="cartitems/delete-cart-item/{{this.id}}"
-               class="btn btn-danger btn-sm">Delete</a>
-        </td>
-    </tr>
-    {{/each}}
-</table>
-<a class="btn btn-info btn-sm" href="cartitems/add-cart-item">Add Order Items</a>
-{{/block}}
+          </td>
+          <td>
+            <a
+              href="cartitems/update-cart-item/{{this.id}}"
+              class="btn btn-warning btn-sm"
+            >Update</a>
+          </td>
+          <td>
+            <a
+              href="cartitems/delete-cart-item/{{this.id}}"
+              class="btn btn-danger btn-sm"
+            >Delete</a>
+          </td>
+        </tr>
+      {{/each}}
+    </table>
+    <a class="btn btn-info btn-sm" href="cartitems/add-cart-item">Add Order
+      Items</a>
+  {{/block}}
 
 {{/extends}}

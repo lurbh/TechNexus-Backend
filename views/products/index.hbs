@@ -1,70 +1,73 @@
 {{#extends "base"}}
 
+  {{#block "content"}}
+    <h1>All Products</h1>
 
-{{#block "content"}}
-<h1>All Products</h1>
-
-<table class="table">
-    <thead>
+    <table class="table">
+      <thead>
         <th>
-            Product ID
+          Product ID
         </th>
         <th>
-            Name
+          Name
         </th>
         <th>
-            Price
+          Price
         </th>
         <th>
-            Description
+          Description
         </th>
         <th>
-            Category
+          Category
         </th>
         <th>
-            Brand
+          Brand
         </th>
         <th>
-            Qty Available
+          Qty Available
         </th>
         <th></th>
         <th></th>
-    </thead>
-    {{#each products}}
-    <tr>
-        <td>
+      </thead>
+      {{#each products}}
+        <tr>
+          <td>
             {{this.id}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.product_name}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.price}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.description}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.category.category_name}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.brands.brand_name}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.quantity_available}}
-        </td>
-        <td>
-            <a href="products/update-product/{{this.id}}"
-               class="btn btn-warning btn-sm">Update</a>
-        </td>
-        <td>
-            <a href="products/delete-product/{{this.id}}"
-               class="btn btn-danger btn-sm">Delete</a>
-        </td>
-    </tr>
-    {{/each}}
-</table>
-<a class="btn btn-info btn-sm" href="products/add-product">Add Products</a>
-{{/block}}
+          </td>
+          <td>
+            <a
+              href="products/update-product/{{this.id}}"
+              class="btn btn-warning btn-sm"
+            >Update</a>
+          </td>
+          <td>
+            <a
+              href="products/delete-product/{{this.id}}"
+              class="btn btn-danger btn-sm"
+            >Delete</a>
+          </td>
+        </tr>
+      {{/each}}
+    </table>
+    <a class="btn btn-info btn-sm" href="products/add-product">Add Products</a>
+  {{/block}}
 
 {{/extends}}

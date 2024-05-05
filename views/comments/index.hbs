@@ -1,54 +1,58 @@
 {{#extends "base"}}
 
+  {{#block "content"}}
+    <h1>All Comments</h1>
 
-{{#block "content"}}
-<h1>All Comments</h1>
-
-<table class="table">
-    <thead>
+    <table class="table">
+      <thead>
         <th>
-            Comment ID
+          Comment ID
         </th>
         <th>
-            Article
+          Article
         </th>
         <th>
-            User
+          User
         </th>
         <th>
-            Comment Date
+          Comment Date
         </th>
         <th></th>
         <th></th>
-    </thead>
-    {{#each comments}}
-    <tr>
-        <td>
+      </thead>
+      {{#each comments}}
+        <tr>
+          <td>
             {{this.id}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.aritle.title}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{this.user.username}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{#dateFormat this.comment_date}}
-                {{date}} {{time}} 
+              {{date}}
+              {{time}}
             {{/dateFormat}}
-        </td>
-        <td>
-            <a href="comments/update-comment/{{this.id}}"
-               class="btn btn-warning btn-sm">Update</a>
-        </td>
-        <td>
-            <a href="comments/delete-comment/{{this.id}}"
-               class="btn btn-danger btn-sm">Delete</a>
-        </td>
-    </tr>
-    {{/each}}
-</table>
-<a class="btn btn-info btn-sm" href="comments/add-comment">Add Comment</a>
-{{/block}}
+          </td>
+          <td>
+            <a
+              href="comments/update-comment/{{this.id}}"
+              class="btn btn-warning btn-sm"
+            >Update</a>
+          </td>
+          <td>
+            <a
+              href="comments/delete-comment/{{this.id}}"
+              class="btn btn-danger btn-sm"
+            >Delete</a>
+          </td>
+        </tr>
+      {{/each}}
+    </table>
+    <a class="btn btn-info btn-sm" href="comments/add-comment">Add Comment</a>
+  {{/block}}
 
 {{/extends}}
