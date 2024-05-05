@@ -11,8 +11,7 @@ router.get("/:user_id", verifyToken, async (req, res) => {
   res.status(200).json({ orders: orders });
 });
 
-router.put("payment/:order_id", verifyToken, async (req, res) => {
-  console.log("Payment");
+router.put("/payment/:order_id", verifyToken, async (req, res) => {
   const { order_id } = req.params;
   const orders = await serviceOrders.servicePaymentCompleted(order_id);
   res.status(200).json({ orders: orders });

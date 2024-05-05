@@ -48,7 +48,6 @@ const csurfInstance = csurf();
 
 app.use(function (req, res, next) {
   if (
-    req.url === "/checkout/process_payment" ||
     req.url.slice(0, 5) == "/api/"
   ) {
     return next();
