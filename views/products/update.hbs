@@ -44,18 +44,34 @@
     ></script>
 
     <script>
-      async function generateSignature(callback, params_to_sign) { const
-      response = await axios.get('/cloudinary/sign', { params: { params_to_sign
-      } }); callback(response.data); } const widget =
-      cloudinary.createUploadWidget({ cloudName: "{{cloudinaryName}}", apiKey: "{{cloudinaryApiKey}}",
-      uploadPreset: "{{cloudinaryPreset}}", uploadSignature: generateSignature
-      }, function(err, result){ if (!err && result && result.event =="success")
-      { document.querySelector("#id_image_url").value = result.info.url; const
-      uploadedImage = document.querySelector("#uploaded_image");
-      uploadedImage.style.display = "block"; uploadedImage.src =
-      result.info.thumbnail_url; } });
-      document.getElementById("upload_widget").addEventListener("click",
-      function(){ widget.open(); }, false);
+        async function generateSignature(callback, params_to_sign) {
+            console.log(params_to_sign) const response = await axios.get('/cloudinary/sign', {
+                params: {
+                    params_to_sign
+                }
+            });
+            callback(response.data);
+        }
+
+        const widget = cloudinary.createUploadWidget({
+            cloudName: "{{cloudinaryName}}",
+            apiKey: "{{cloudinaryApiKey}}",
+            uploadPreset: "{{cloudinaryPreset}}",
+            uploadSignature: generateSignature
+        },function(err, result) {
+            if (!err && result && result.event == "success") {
+                document.querySelector("#id_image_url").value = result.info.url;
+                console.log(result.info.url);
+                const uploadedImage = document.querySelector("#uploaded_image");
+                uploadedImage.style.display = "block";
+                uploadedImage.src = result.info.thumbnail_url;
+            }
+        });
+
+        document.getElementById("upload_widget").addEventListener("click",
+        function() {
+            widget.open();
+        },false);
     </script>
 
   {{/block}}
