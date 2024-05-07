@@ -46,7 +46,7 @@ const editProductDAL = async (productForm, product_id) => {
     await product.save();
     return product;
   } catch (error) {
-    console.log("Error adding Product", error);
+    console.log("Error updating Product", error);
   }
 };
 
@@ -140,6 +140,26 @@ const sumProductsDAL = async () => {
   } catch (error) {}
 };
 
+const reduceQuantityDAL = async (product_id,amt) => {
+    try
+    {
+        const product = await models.Product.where({
+            id: product_id,
+        }).fetch({
+            require: true,
+        });
+        product.set({
+            quantity_available : product.get('quantity_available') - amt
+        });
+        await product.save();
+        return product;
+    }
+    catch (error)
+    {
+        console.log("Error updating Product", error);
+    }
+}
+
 module.exports = {
   getAllProductsDAL,
   addProductDAL,
@@ -151,4 +171,5 @@ module.exports = {
   getAllBrandsDAL,
   getAllCategoriesDAL,
   sumProductsDAL,
+  reduceQuantityDAL
 };

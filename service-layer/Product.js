@@ -53,6 +53,11 @@ const serviceGetAllBrands = async () => {
   return categories;
 };
 
+const serviceReduceQuantity = async (product_id, amt) => {
+    const product = await productDAL.reduceQuantityDAL(product_id,amt)
+    return product;
+}
+
 module.exports = {
   serviceGetAllProducts,
   serviceAddProduct,
@@ -63,4 +68,5 @@ module.exports = {
   serviceGetMainCategories,
   serviceGetAllCategories,
   serviceGetAllBrands,
+  serviceReduceQuantity
 };
