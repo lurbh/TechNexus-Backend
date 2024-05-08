@@ -20,5 +20,5 @@ TechNexus E-commerce is an online platform dedicated to providing users with a s
 Entity Relationship Diagram
 ![ERD Image](/ERD.png)
 
-Entity Relationship Diagram
-![ERD Image](/ERD.png)
+SQL Schema Diagram
+![SQL Schema Diagram](/schema.png)
