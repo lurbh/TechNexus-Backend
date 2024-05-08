@@ -1,19 +1,24 @@
-To start mysql, in the terminal, type in `mysql -u root`
+# TechNexus
 
-# Create a new database user
+## Project Overview
 
-In the MySQL CLI:
+TechNexus E-commerce is an online platform dedicated to providing users with a seamless shopping experience for a wide range of technology products. From smartphones and laptops to accessories and gadgets, TechNexus E-commerce aims to offer a diverse selection of high-quality tech products to meet the needs of tech enthusiasts and casual users alike.
 
-```
-CREATE USER 'ahkow'@'localhost' IDENTIFIED BY 'rotiprata123';
-```
+* Live Link for API and Admin Backend : [Link](https://github.com/lurbh/TechNexus-Backend/tree/db_migrate)
+* GitHub Repository for FrontEnd (ReactJS) : [Link](https://github.com/lurbh/TechNexus-Frontend)
+* Live Webpage of Frontend: [Link](https://github.com/lurbh/TechNexus-Frontend)
 
-```
-GRANT ALL PRIVILEGES on sakila.* TO 'ahkow'@'localhost' WITH GRANT OPTION;
-```
 
-**Note:** Replace _sakila_ with the name of the database you want the user to have access to
+## Table of Contents
+1. [System Design](#system-design)
+2. [Technologies](#technologies)
+3. [Installation](#installation)
+4. [Collaboration](#collaboration)
+5. [FAQs](#faqs)
 
-```
-FLUSH PRIVILEGES;
-```
+## System Design
+Entity Relationship Diagram
+![ERD Image](/ERD.png)
+
+Entity Relationship Diagram
+![ERD Image](/ERD.png)
