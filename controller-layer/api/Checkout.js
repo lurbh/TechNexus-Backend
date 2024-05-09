@@ -49,15 +49,16 @@ router.post("/", verifyToken, async (req, res) => {
       order_id: order.get("id")
     },
   };
-  console.log(payment);
   let stripeSession = await Stripe.checkout.sessions.create(payment);
   if (stripeSession.id) {
     const response = await serviceCartItems.serviceClearUserCartItems(user_id);
+    res.status(200).json({ stripeURL: stripeSession.url });
   } else {
     await serviceOrders.serviceDelOrder(order.get("id"));
+    res.status(400).json({ error: "Error generating Stripe Payment"})
   }
 
-  res.status(200).json({ stripeURL: stripeSession.url });
+  
 });
 
 

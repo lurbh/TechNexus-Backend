@@ -11,7 +11,10 @@ const { verifyToken } = require("../../middleware");
 router.get("/usercart/:user_id", verifyToken, async (req, res) => {
   const { user_id } = req.params;
   const cart_items = await serviceCartItems.serviceGetUserCartItems(user_id);
-  res.status(200).json({ cart_items: cart_items });
+  if(cart_items)
+    res.status(200).json({ cart_items: cart_items });
+  else
+    res.status(400).json({error: "Error getting Cart Items"})
 });
 
 router.post("/usercart", verifyToken, async (req, res) => {
@@ -21,7 +24,10 @@ router.post("/usercart", verifyToken, async (req, res) => {
   cartitemform.handle(req, {
     success: async function (form) {
       const cartitem = await serviceCartItems.serviceAddCartItem(form);
-      res.status(201).json({ message: cartitem });
+      if(cartitem)
+        res.status(201).json({ message: cartitem });
+      else
+        res.status(400).json({error:"Error creating Cart Item"})
     },
     empty: function (form) {
       res.status(400).json({
@@ -51,7 +57,10 @@ router.put("/usercart/:cartitem_id", verifyToken, async (req, res) => {
         form,
         cartitem_id,
       );
-      res.status(201).json({ message: cartitem });
+      if(cartitem)
+        res.status(202).json({ message: cartitem });
+      else
+        res.status(400).json({error:"Error updating Cart Item"})
     },
     empty: function (form) {
       res.status(400).json({
@@ -73,7 +82,10 @@ router.put("/usercart/:cartitem_id", verifyToken, async (req, res) => {
 router.delete("/usercart/:cartitem_id", verifyToken, async (req, res) => {
   const { cartitem_id } = req.params;
   const response = await serviceCartItems.serviceDelCartItem(cartitem_id);
-  res.status(200).json({ message: response });
+  if(response)
+    res.status(200).json({ message: response });
+  else
+    res.status(400).json({error:"Error deleting Cart Item"})
 });
 
 module.exports = router;

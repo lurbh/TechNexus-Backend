@@ -87,6 +87,7 @@ const getOrdersForUserDAL = async (user_id) => {
     });
   } catch (error) {
     console.log("Error getting Order", error);
+    return null;
   }
 };
 
@@ -104,6 +105,7 @@ const paymentCompletedDAL = async (order_id) => {
     return order;
   } catch (error) {
     console.log("Error updating Order", error);
+    return null;
   }
 };
 

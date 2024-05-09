@@ -33,6 +33,7 @@ const addCartItemDAL = async (cartitemForm) => {
     });
   } catch (error) {
     console.log("Error creating Cart Item", error);
+    return null;
   }
 };
 
@@ -77,6 +78,7 @@ const getUserCartItemsDAL = async (user_id) => {
     });
   } catch (error) {
     console.log("Error getting Cart Items", error);
+    return null;
   }
 };
 

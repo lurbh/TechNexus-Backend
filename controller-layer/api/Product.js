@@ -7,7 +7,11 @@ const { verifyToken } = require("../../middleware");
 
 router.get("/", async (req, res) => {
   const products = await serviceProducts.serviceGetAllProducts();
-  res.status(200).json({ products: products });
+  if(products)
+    res.status(200).json({ products: products });
+  else
+    res.status(400).json({ error: "Error getting Products"})
+
 });
 
 router.get("/search", async (req, res) => {
@@ -35,7 +39,10 @@ router.post("/", verifyToken, async (req, res) => {
   productForm.handle(req, {
     success: async function (form) {
       const product = await serviceProducts.serviceAddProduct(form);
-      res.status(201).json({ message: product });
+      if(product)
+        res.status(201).json({ message: product });
+      else
+        res.status(400).json({ error: "Error adding Product"})
     },
     empty: function (form) {
       res.status(400).json({
@@ -67,7 +74,10 @@ router.put("/:product_id", verifyToken, async (req, res) => {
         form,
         product_id,
       );
-      res.status(202).json({ message: product });
+      if(product)
+        res.status(202).json({ message: product });
+      else
+        res.status(400).json({ error: "Error updating Product"})
     },
     empty: function (form) {
       res.send(400);
@@ -93,22 +103,34 @@ router.put("/:product_id", verifyToken, async (req, res) => {
 router.delete("/:product_id", verifyToken, async (req, res) => {
   const { product_id } = req.params;
   const response = await serviceProducts.serviceDeleteProduct(product_id);
-  res.status(200).json({ message: response });
+  if(response)
+    res.status(200).json({ message: response });
+  else
+    res.status(400).json({ error: "Error deleting Product"})
 });
 
 router.get("/categories", async (req, res) => {
   const categories = await serviceProducts.serviceGetMainCategories();
-  res.status(200).json({ categories: categories });
+  if(categories)
+    res.status(200).json({ categories: categories });
+  else
+    res.status(400).json({srror: "Error getting Categories"})
 });
 
 router.get("/allcategories", async (req, res) => {
   const categories = await serviceProducts.serviceGetAllCategories();
-  res.status(200).json({ categories: categories });
+  if(categories)
+    res.status(200).json({ categories: categories });
+  else
+    res.status(400).json({srror: "Error getting Categories"})
 });
 
 router.get("/brands", async (req, res) => {
   const brands = await serviceProducts.serviceGetAllBrands();
-  res.status(200).json({ brands: brands });
+  if(brands)
+    res.status(200).json({ brands: brands });
+  else
+  res.status(400).json({srror: "Error getting Brands"})
 });
 
 module.exports = router;

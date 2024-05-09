@@ -7,6 +7,7 @@ const getAllProductsDAL = async () => {
     });
   } catch (error) {
     console.log("Error getting Products", error);
+    return null;
   }
 };
 
@@ -19,6 +20,7 @@ const getProductDAL = async (product_id) => {
     });
   } catch (error) {
     console.log("Error getting Product", error);
+    return null;
   }
 };
 
@@ -31,6 +33,7 @@ const addProductDAL = async (productForm) => {
     return product;
   } catch (error) {
     console.log("Error adding Product", error);
+    return null;
   }
 };
 
@@ -47,6 +50,7 @@ const editProductDAL = async (productForm, product_id) => {
     return product;
   } catch (error) {
     console.log("Error updating Product", error);
+    return null;
   }
 };
 
@@ -62,6 +66,7 @@ const deleteProductDAL = async (product_id) => {
     return name;
   } catch (error) {
     console.log("Error Deleting Product", error);
+    return null;
   }
 };
 
@@ -103,6 +108,7 @@ const getMainCategoriesDAL = async () => {
     });
   } catch (error) {
     console.log("Error getting Categories", error);
+    return null;
   }
 };
 
@@ -111,6 +117,7 @@ const getAllCategoriesDAL = async () => {
     return await models.Category.fetchAll();
   } catch (error) {
     console.log("Error getting Categories", error);
+    return null;
   }
 };
 
@@ -119,25 +126,8 @@ const getAllBrandsDAL = async () => {
     return await models.Brand.fetchAll();
   } catch (error) {
     console.log("Error getting Brands", error);
+    return null;
   }
-};
-
-const sumProductsDAL = async () => {
-  try {
-    models.Product.where({
-      category_id: 1,
-    })
-      .query()
-      .sum("price as TotalPrice")
-      .then((result) => {
-        console.log(result[0]);
-        const totalPrice = result[0].TotalPrice || 0;
-        console.log("Total Price:", totalPrice);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  } catch (error) {}
 };
 
 const reduceQuantityDAL = async (product_id,amt) => {
@@ -157,6 +147,7 @@ const reduceQuantityDAL = async (product_id,amt) => {
     catch (error)
     {
         console.log("Error updating Product", error);
+        return null;
     }
 }
 
