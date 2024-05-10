@@ -65,10 +65,10 @@ const deleteRoleDAL = async (role_id) => {
   }
 };
 
-const getRoleIDDAL = async (role) => {
+const getRoleIDDAL = async (role_name) => {
     try {
         const role = await models.Role.where({
-          role_name: role,
+          role_name: role_name,
         }).fetch({
           require: true,
         });
