@@ -21,99 +21,34 @@ exports.up = async function (db) {
   await db.insert("roles", ["role_name"], ["seller"]);
 
   // Insert sample data into Categories Table
-  await db.insert("categories", ["category_name"], ["Smartphones"]);
-  await db.insert("categories", ["category_name"], ["Laptops"]);
-  await db.insert("categories", ["category_name"], ["Headphones"]);
-  await db.insert("categories", ["category_name"], ["Gaming Consoles"]);
+  await db.insert("categories", ["category_name", "category_img_url"], ["Smartphones", "https://res.cloudinary.com/dymr3ncda/image/upload/v1713430833/q4w4etp0dfxptxllk1ik.png"]);
+  await db.insert("categories", ["category_name", "category_img_url"], ["Laptops", "https://res.cloudinary.com/dymr3ncda/image/upload/v1713430874/amt3nc6mujazt8pwso9d.png"]);
+  await db.insert("categories", ["category_name", "category_img_url"], ["Headphones", "https://res.cloudinary.com/dymr3ncda/image/upload/v1713430898/skyhp8yrhdttnkhsnvkh.png"]);
+  await db.insert("categories", ["category_name", "category_img_url"], ["Gaming Consoles", "https://res.cloudinary.com/dymr3ncda/image/upload/v1713430920/onrtigq2ezdxr3peh0he.png"]);
+  await db.insert("categories", ["category_name", "category_img_url"], ["Personal Computers", "https://res.cloudinary.com/dymr3ncda/image/upload/v1714104532/blmwrbmtd1otdhqud4qc.jpg"]);
 
   // Insert sample data into Brands Table
-  await db.insert(
-    "brands",
-    ["brand_name", "country_of_origin"],
+  await db.insert("brands", 
+  ["brand_name", "country_of_origin"], [
     ["Apple", "USA"],
-  );
-  await db.insert(
-    "brands",
-    ["brand_name", "country_of_origin"],
     ["Samsung", "South Korea"],
-  );
-  await db.insert(
-    "brands",
-    ["brand_name", "country_of_origin"],
     ["Sony", "Japan"],
-  );
-  await db.insert(
-    "brands",
-    ["brand_name", "country_of_origin"],
     ["Microsoft", "USA"],
-  );
-  await db.insert(
-    "brands",
-    ["brand_name", "country_of_origin"],
+    ["Google", "USA"],
     ["Nintendo", "Japan"],
-  );
-  await db.insert(
-    "brands",
-    ["brand_name", "country_of_origin"],
     ["MSI", "Taiwan"],
-  );
+    ["Dell", "USA"],
+    ["Bose", "USA"]
+  ]);
 
-  // Insert sample data into Products Table
-  await db.insert(
-    "products",
-    [
-      "product_name",
-      "category_id",
-      "brand_id",
-      "description",
-      "price",
-      "quantity_available",
-    ],
-    ["iPhone 12", 1, 1, "Latest iPhone model", 999.99, 100],
-  );
-  await db.insert(
-    "products",
-    [
-      "product_name",
-      "category_id",
-      "brand_id",
-      "description",
-      "price",
-      "quantity_available",
-    ],
-    ["Galaxy S21", 1, 2, "Samsung flagship smartphone", 899.99, 120],
-  );
-  await db.insert(
-    "products",
-    [
-      "product_name",
-      "category_id",
-      "brand_id",
-      "description",
-      "price",
-      "quantity_available",
-    ],
-    ["Sony WH-1000XM4", 3, 3, "Noise-canceling headphones", 349.99, 150],
-  );
-  await db.insert(
-    "products",
-    [
-      "product_name",
-      "category_id",
-      "brand_id",
-      "description",
-      "price",
-      "quantity_available",
-    ],
-    ["Xbox Series X", 4, 4, "Next-gen gaming console", 499.99, 70],
-  );
+  
 
   // Insert sample data into Order_Statuses Table
-  await db.insert("order_statuses", ["status_name"], ["pending"]);
-  await db.insert("order_statuses", ["status_name"], ["processing"]);
-  await db.insert("order_statuses", ["status_name"], ["shipped"]);
-  await db.insert("order_statuses", ["status_name"], ["delivered"]);
-  await db.insert("order_statuses", ["status_name"], ["cancelled"]);
+  await db.insert("order_statuses", ["status_name"], ["Pending"]);
+  await db.insert("order_statuses", ["status_name"], ["Processing"]);
+  await db.insert("order_statuses", ["status_name"], ["Shipped"]);
+  await db.insert("order_statuses", ["status_name"], ["Delivered"]);
+  await db.insert("order_statuses", ["status_name"], ["Cancelled"]);
 };
 
 exports.down = async function (db) {
