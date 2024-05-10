@@ -70,13 +70,13 @@ router.post("/login", async function (req, res) {
           },
         });
       } else {
-        res.status(401).json({
+        res.status(498).json({
           error: "The authentication details you provided does not work.",
         });
       }
     },
     error: (form) => {
-      res.status(401).json({
+      res.status(498).json({
         error: "The authentication details you provided does not work.",
       });
     },
@@ -113,7 +113,7 @@ router.post("/refresh", async function (req, res) {
       },
     );
   } else {
-    res.status(401).json({
+    res.status(400).json({
       error: "No Refresh Token Given",
     });
   }
