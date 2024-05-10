@@ -5,6 +5,7 @@ const modelforms = require("../../forms");
 const serviceLayer = require("../../service-layer/CartItems");
 const { serviceGetAllProducts } = require("../../service-layer/Product");
 const { serviceGetOnlyUserType } = require("../../service-layer/Users");
+const { servicegetRoleID } = require("../../service-layer/Roles")
 
 router.get("/", async function (req, res) {
   const cartitems = await serviceLayer.serviceGetCartItems();
@@ -18,7 +19,8 @@ router.get("/add-cart-item", async function (req, res) {
     p.get("id"),
     p.get("product_name"),
   ]);
-  const allUsers = (await serviceGetOnlyUserType(2)).map((user) => [
+  const role_id = await servicegetRoleID("user");
+  const allUsers = (await serviceGetOnlyUserType(role_id)).map((user) => [
     user.get("id"),
     user.get("username"),
   ]);
@@ -33,7 +35,8 @@ router.post("/add-cart-item", async function (req, res) {
     p.get("id"),
     p.get("product_name"),
   ]);
-  const allUsers = (await serviceGetOnlyUserType(2)).map((user) => [
+  const role_id = await servicegetRoleID("user");
+  const allUsers = (await serviceGetOnlyUserType(role_id)).map((user) => [
     user.get("id"),
     user.get("username"),
   ]);
@@ -64,7 +67,8 @@ router.get("/update-cart-item/:cartitem_id", async function (req, res) {
     p.get("id"),
     p.get("product_name"),
   ]);
-  const allUsers = (await serviceGetOnlyUserType(2)).map((user) => [
+  const role_id = await servicegetRoleID("user");
+  const allUsers = (await serviceGetOnlyUserType(role_id)).map((user) => [
     user.get("id"),
     user.get("username"),
   ]);
@@ -84,7 +88,8 @@ router.post("/update-cart-item/:cartitem_id", async function (req, res) {
     p.get("id"),
     p.get("product_name"),
   ]);
-  const allUsers = (await serviceGetOnlyUserType(2)).map((user) => [
+  const role_id = await servicegetRoleID("user");
+  const allUsers = (await serviceGetOnlyUserType(role_id)).map((user) => [
     user.get("id"),
     user.get("username"),
   ]);

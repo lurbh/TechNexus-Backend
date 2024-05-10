@@ -3,8 +3,9 @@ const router = express.Router();
 
 const modelforms = require("../../forms");
 const serviceLayer = require("../../service-layer/Orders");
-const userService = require("../../service-layer/Users");
 const orderStatusService = require("../../service-layer/OrdersStatuses");
+const { serviceGetOnlyUserType } = require("../../service-layer/Users");
+const { servicegetRoleID } = require("../../service-layer/Roles")
 
 router.get("/", async function (req, res) {
   const orders = await serviceLayer.serviceGetOrders();
@@ -14,10 +15,11 @@ router.get("/", async function (req, res) {
 });
 
 router.get("/add-order", async function (req, res) {
-  const allUser = (await userService.serviceGetOnlyUserType(2)).map((user) => [
-    user.get("id"),
-    user.get("username"),
-  ]);
+    const role_id = await servicegetRoleID("user");
+    const allUser = (await serviceGetOnlyUserType(role_id)).map((user) => [
+        user.get("id"),
+        user.get("username"),
+    ]);
   const allOrderStatus = (
     await orderStatusService.serviceGetOrderStatuses()
   ).map((status) => [status.get("id"), status.get("status_name")]);
@@ -28,10 +30,11 @@ router.get("/add-order", async function (req, res) {
 });
 
 router.post("/add-order", async function (req, res) {
-  const allUser = (await userService.serviceGetOnlyUserType(2)).map((user) => [
-    user.get("id"),
-    user.get("username"),
-  ]);
+    const role_id = await servicegetRoleID("user");
+    const allUser = (await serviceGetOnlyUserType(role_id)).map((user) => [
+        user.get("id"),
+        user.get("username"),
+    ]);
   const allOrderStatus = (
     await orderStatusService.serviceGetOrderStatuses()
   ).map((status) => [status.get("id"), status.get("status_name")]);
@@ -59,10 +62,11 @@ router.post("/add-order", async function (req, res) {
 router.get("/update-order/:order_id", async function (req, res) {
   const { order_id } = req.params;
   const order = await serviceLayer.serviceGetOrder(order_id);
-  const allUser = (await userService.serviceGetOnlyUserType(2)).map((user) => [
-    user.get("id"),
-    user.get("username"),
-  ]);
+  const role_id = await servicegetRoleID("user");
+    const allUser = (await serviceGetOnlyUserType(role_id)).map((user) => [
+        user.get("id"),
+        user.get("username"),
+    ]);
   const allOrderStatus = (
     await orderStatusService.serviceGetOrderStatuses()
   ).map((status) => [status.get("id"), status.get("status_name")]);
@@ -78,10 +82,11 @@ router.get("/update-order/:order_id", async function (req, res) {
 
 router.post("/update-order/:order_id", async function (req, res) {
   const { order_id } = req.params;
-  const allUser = (await userService.serviceGetOnlyUserType(2)).map((user) => [
-    user.get("id"),
-    user.get("username"),
-  ]);
+  const role_id = await servicegetRoleID("user");
+    const allUser = (await serviceGetOnlyUserType(role_id)).map((user) => [
+        user.get("id"),
+        user.get("username"),
+    ]);
   const allOrderStatus = (
     await orderStatusService.serviceGetOrderStatuses()
   ).map((status) => [status.get("id"), status.get("status_name")]);

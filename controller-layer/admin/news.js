@@ -3,7 +3,8 @@ const router = express.Router();
 
 const modelforms = require("../../forms");
 const serviceLayer = require("../../service-layer/NewsArticles");
-const userService = require("../../service-layer/Users");
+const { serviceGetOnlyUserType } = require("../../service-layer/Users");
+const { servicegetRoleID } = require("../../service-layer/Roles")
 
 router.get("/", async function (req, res) {
   const newsArticles = await serviceLayer.serviceGetNewsArticles();
@@ -13,9 +14,10 @@ router.get("/", async function (req, res) {
 });
 
 router.get("/add-new-article", async function (req, res) {
-  const allUser = (await userService.serviceGetOnlyUserType(3)).map((user) => [
-    user.get("id"),
-    user.get("username"),
+  const role_id = await servicegetRoleID("seller");
+  const allUser = (await serviceGetOnlyUserType(role_id)).map((user) => [
+      user.get("id"),
+      user.get("username"),
   ]);
   const newsArticleForm = modelforms.createNewsArticleForm(allUser);
   res.render("newsArticles/create", {
@@ -24,10 +26,11 @@ router.get("/add-new-article", async function (req, res) {
 });
 
 router.post("/add-new-article", async function (req, res) {
-  const allUser = (await userService.serviceGetOnlyUserType(3)).map((user) => [
-    user.get("id"),
-    user.get("username"),
-  ]);
+    const role_id = await servicegetRoleID("seller");
+    const allUser = (await serviceGetOnlyUserType(role_id)).map((user) => [
+        user.get("id"),
+        user.get("username"),
+    ]);
   const newsArticleForm = modelforms.createNewsArticleForm(allUser);
   newsArticleForm.handle(req, {
     success: async function (form) {
@@ -56,9 +59,10 @@ router.post("/add-new-article", async function (req, res) {
 router.get("/update-new-article/:newsArticle_id", async function (req, res) {
   const { newsArticle_id } = req.params;
   const newsArticle = await serviceLayer.serviceGetNewsArticle(newsArticle_id);
-  const allUser = (await userService.serviceGetOnlyUserType(3)).map((user) => [
-    user.get("id"),
-    user.get("username"),
+  const role_id = await servicegetRoleID("seller");
+  const allUser = (await serviceGetOnlyUserType(role_id)).map((user) => [
+      user.get("id"),
+      user.get("username"),
   ]);
   const newsArticleForm = modelforms.createNewsArticleForm(allUser);
   for (let field in newsArticleForm.fields) {
@@ -72,9 +76,10 @@ router.get("/update-new-article/:newsArticle_id", async function (req, res) {
 
 router.post("/update-new-article/:newsArticle_id", async function (req, res) {
   const { newsArticle_id } = req.params;
-  const allUser = (await userService.serviceGetOnlyUserType(3)).map((user) => [
-    user.get("id"),
-    user.get("username"),
+  const role_id = await servicegetRoleID("seller");
+  const allUser = (await serviceGetOnlyUserType(role_id)).map((user) => [
+      user.get("id"),
+      user.get("username"),
   ]);
   const newsArticleForm = modelforms.createNewsArticleForm(allUser);
   newsArticleForm.handle(req, {

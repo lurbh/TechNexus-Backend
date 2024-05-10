@@ -4,7 +4,8 @@ const router = express.Router();
 const modelforms = require("../../forms");
 const serviceLayer = require("../../service-layer/Comments");
 const newsService = require("../../service-layer/NewsArticles");
-const userService = require("../../service-layer/Users");
+const { serviceGetOnlyUserType } = require("../../service-layer/Users");
+const { servicegetRoleID } = require("../../service-layer/Roles")
 
 router.get("/", async function (req, res) {
   const comments = await serviceLayer.serviceGetComments();
@@ -17,7 +18,8 @@ router.get("/add-comment", async function (req, res) {
   const allNewsArticles = (await newsService.serviceGetNewsArticles()).map(
     (news) => [news.get("id"), news.get("title")],
   );
-  const allUser = (await userService.serviceGetOnlyUserType(2)).map((user) => [
+  const role_id = await servicegetRoleID("user");
+  const allUser = (await serviceGetOnlyUserType(role_id)).map((user) => [
     user.get("id"),
     user.get("username"),
   ]);
@@ -31,7 +33,8 @@ router.post("/add-comment", async function (req, res) {
   const allNewsArticles = (await newsService.serviceGetNewsArticles()).map(
     (news) => [news.get("id"), news.get("title")],
   );
-  const allUser = (await userService.serviceGetOnlyUserType(2)).map((user) => [
+  const role_id = await servicegetRoleID("user");
+  const allUser = (await serviceGetOnlyUserType(role_id)).map((user) => [
     user.get("id"),
     user.get("username"),
   ]);
@@ -64,7 +67,8 @@ router.get("/update-comment/:comment_id", async function (req, res) {
   const allNewsArticles = (await newsService.serviceGetNewsArticles()).map(
     (news) => [news.get("id"), news.get("title")],
   );
-  const allUser = (await userService.serviceGetOnlyUserType(2)).map((user) => [
+  const role_id = await servicegetRoleID("user");
+  const allUser = (await serviceGetOnlyUserType(role_id)).map((user) => [
     user.get("id"),
     user.get("username"),
   ]);
@@ -83,7 +87,8 @@ router.post("/update-comment/:comment_id", async function (req, res) {
   const allNewsArticles = (await newsService.serviceGetNewsArticles()).map(
     (news) => [news.get("id"), news.get("title")],
   );
-  const allUser = (await userService.serviceGetOnlyUserType(2)).map((user) => [
+  const role_id = await servicegetRoleID("user");
+  const allUser = (await serviceGetOnlyUserType(role_id)).map((user) => [
     user.get("id"),
     user.get("username"),
   ]);

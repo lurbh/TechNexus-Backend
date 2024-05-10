@@ -70,35 +70,6 @@ const deleteProductDAL = async (product_id) => {
   }
 };
 
-const searchProductDAL = async (
-  product_name = "",
-  category_id = 0,
-  brand_id = 0,
-) => {
-  try {
-    const connection = getConnection();
-    let queryArray = [];
-    let searchquery = `WHERE `;
-    if (product_name)
-      queryArray.push(`Products.product_name LIKE '%${product_name}%'`);
-    if (category_id) queryArray.push(`Products.category_id = ${category_id}`);
-    if (brand_id) queryArray.push(`Products.brand_id = ${brand_id}`);
-    for (let index = 0; index < queryArray.length; index++) {
-      searchquery = searchquery + queryArray[index];
-      if (index != queryArray.length - 1) searchquery = searchquery + " AND ";
-    }
-    let [products] = await connection.execute(`
-            SELECT Products.*,Categories.category_name,Brands.brand_name FROM Products 
-            INNER JOIN Categories ON Categories.category_id = Products.category_id 
-            INNER JOIN Brands ON Brands.brand_id = Products.brand_id
-            ${searchquery};
-        `);
-    return products;
-  } catch (error) {
-    console.log("Error searching for Products", error);
-  }
-};
-
 const getMainCategoriesDAL = async () => {
   try {
     return await models.Category.where({
@@ -157,10 +128,8 @@ module.exports = {
   editProductDAL,
   deleteProductDAL,
   getProductDAL,
-  searchProductDAL,
   getMainCategoriesDAL,
   getAllBrandsDAL,
   getAllCategoriesDAL,
-  sumProductsDAL,
   reduceQuantityDAL
 };

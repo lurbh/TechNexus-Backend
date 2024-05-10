@@ -65,10 +65,24 @@ const deleteRoleDAL = async (role_id) => {
   }
 };
 
+const getRoleIDDAL = async (role) => {
+    try {
+        const role = await models.Role.where({
+          role_name: role,
+        }).fetch({
+          require: true,
+        });
+        return role.get('id');
+      } catch (error) {
+        console.log("Error getting Role", error);
+      }
+}
+
 module.exports = {
   getAllRolesDAL,
   getRoleDAL,
   addRoleDAL,
   updateRoleDAL,
   deleteRoleDAL,
+  getRoleIDDAL
 };

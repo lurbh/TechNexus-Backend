@@ -4,7 +4,8 @@ const router = express.Router();
 const modelforms = require("../../forms");
 const serviceLayer = require("../../service-layer/Reviews");
 const productService = require("../../service-layer/Product");
-const userService = require("../../service-layer/Users");
+const { serviceGetOnlyUserType } = require("../../service-layer/Users");
+const { servicegetRoleID } = require("../../service-layer/Roles")
 
 router.get("/", async function (req, res) {
   const reviews = await serviceLayer.serviceGetReviews();
@@ -17,10 +18,11 @@ router.get("/add-review", async function (req, res) {
   const allProducts = (await productService.serviceGetAllProducts()).map(
     (product) => [product.get("id"), product.get("product_name")],
   );
-  const allUser = (await userService.serviceGetOnlyUserType(2)).map((user) => [
-    user.get("id"),
-    user.get("username"),
-  ]);
+  const role_id = await servicegetRoleID("user");
+    const allUser = (await serviceGetOnlyUserType(role_id)).map((user) => [
+        user.get("id"),
+        user.get("username"),
+    ]);
   const reviewForm = modelforms.createReviewForm(allProducts, allUser);
   res.render("reviews/create", {
     form: reviewForm.toHTML(modelforms.bootstrapField),
@@ -31,10 +33,11 @@ router.post("/add-review", async function (req, res) {
   const allProducts = (await productService.serviceGetAllProducts()).map(
     (product) => [product.get("id"), product.get("product_name")],
   );
-  const allUser = (await userService.serviceGetOnlyUserType(2)).map((user) => [
-    user.get("id"),
-    user.get("username"),
-  ]);
+  const role_id = await servicegetRoleID("user");
+    const allUser = (await serviceGetOnlyUserType(role_id)).map((user) => [
+        user.get("id"),
+        user.get("username"),
+    ]);
   const reviewForm = modelforms.createReviewForm(allProducts, allUser);
   reviewForm.handle(req, {
     success: async function (form) {
@@ -64,10 +67,11 @@ router.get("/update-review/:review_id", async function (req, res) {
   const allProducts = (await productService.serviceGetAllProducts()).map(
     (product) => [product.get("id"), product.get("product_name")],
   );
-  const allUser = (await userService.serviceGetOnlyUserType(2)).map((user) => [
-    user.get("id"),
-    user.get("username"),
-  ]);
+  const role_id = await servicegetRoleID("user");
+    const allUser = (await serviceGetOnlyUserType(role_id)).map((user) => [
+        user.get("id"),
+        user.get("username"),
+    ]);
   const reviewForm = modelforms.createReviewForm(allProducts, allUser);
   for (let field in reviewForm.fields) {
     reviewForm.fields[field].value = review.get(field);
@@ -83,10 +87,11 @@ router.post("/update-review/:review_id", async function (req, res) {
   const allProducts = (await productService.serviceGetAllProducts()).map(
     (product) => [product.get("id"), product.get("product_name")],
   );
-  const allUser = (await userService.serviceGetOnlyUserType(2)).map((user) => [
-    user.get("id"),
-    user.get("username"),
-  ]);
+  const role_id = await servicegetRoleID("user");
+    const allUser = (await serviceGetOnlyUserType(role_id)).map((user) => [
+        user.get("id"),
+        user.get("username"),
+    ]);
   const reviewForm = modelforms.createReviewForm(allProducts, allUser);
   reviewForm.handle(req, {
     success: async function (form) {

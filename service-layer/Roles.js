@@ -25,10 +25,16 @@ const serviceDelRole = async (role_id) => {
   return response;
 };
 
+const servicegetRoleID = async (role) => {
+    const response = await roleDAL.getRoleIDDAL(role)
+    return response;
+}
+
 module.exports = {
   serviceGetRoles,
   serviceGetRole,
   serviceAddRole,
   serviceUpdateRole,
   serviceDelRole,
+  servicegetRoleID
 };
