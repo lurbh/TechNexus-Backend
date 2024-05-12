@@ -73,6 +73,7 @@ The base URL for all endpoints is `https://your-api-domain.com/api/orders`.
 ## Technologies Used
 * [Express.js](https://expressjs.com/)
 * [Bookshelf ORM](https://bookshelfjs.org/)
+* [Knex JS](https://knexjs.org/)
 * [db_migrate](https://db-migrate.readthedocs.io/en/latest/)
 * [MySQL](https://www.mysql.com/)
 * [Stripe](https://stripe.com/en-sg)
