@@ -25,16 +25,8 @@ const serviceGetProduct = async (product_id) => {
   return product;
 };
 
-const serviceSearchProduct = async (
-  product_name = "",
-  category_id = 0,
-  brand_id = 0,
-) => {
-  const products = await productDAL.searchProductDAL(
-    product_name,
-    category_id,
-    brand_id,
-  );
+const serviceSearchProduct = async (searchForm) => {
+  const products = await productDAL.searchProductsDAL(searchForm);
   return products;
 };
 

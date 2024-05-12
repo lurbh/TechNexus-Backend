@@ -10,7 +10,14 @@ const bootstrapField = function (name, object) {
   }
 
   if (object.widget.classes.indexOf("form-control") === -1) {
-    object.widget.classes.push("form-control");
+    if(object.widget.type !== "multipleCheckbox")
+      object.widget.classes.push("form-control");
+    else
+    {
+        object.widget.classes.push("form-check-input");
+        object.widget.classes.push("mx-2");
+    }
+      
   }
 
   var validationclass = object.value && !object.error ? "is-valid" : "";
@@ -25,6 +32,7 @@ const bootstrapField = function (name, object) {
     : "";
 
   var widget = object.widget.toHTML(name, object);
+  
   return '<div class="form-group">' + label + widget + error + "</div>";
 };
 
@@ -346,6 +354,46 @@ const createCartItemForm = (users, products) => {
   });
 };
 
+const createSearchForm  = (categories, brands) => {
+    return forms.create({
+        name: fields.string({
+            label: "Product Name",
+            required: false,
+            errorAfterField: true,
+            validators: [validators.maxlength(255)],
+            
+        }),
+        category: fields.array({
+            label: "Categories:",
+            choices: categories,
+            required : false,
+            errorAfterField: true,
+            widget: widgets.multipleCheckbox()
+        }),
+        brand: fields.array({
+            label: "Brands:",
+            choices: brands,
+            required : false,
+            errorAfterField: true,
+            widget: widgets.multipleCheckbox()
+        }),
+        minprice : fields.number({
+            label: "Min Price",
+            required : false,
+            errorAfterField: true,
+            widget: widgets.number(),
+            validators: [validators.min(0), validators.integer(), validators.max(99999)]
+        }),
+        maxprice : fields.number({
+            label: "Max Price",
+            required : false,
+            errorAfterField: true,
+            widget: widgets.number(),
+            validators: [validators.min(0), validators.integer(), validators.max(99999)]
+        })
+    })
+}
+
 module.exports = {
   createProductForm,
   bootstrapField,
@@ -361,4 +409,5 @@ module.exports = {
   createOrderStatusForm,
   createOrderItemForm,
   createCartItemForm,
+  createSearchForm
 };

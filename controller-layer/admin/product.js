@@ -6,9 +6,41 @@ const serviceLayer = require("../../service-layer/Product");
 const DAL = require("../../data-access-layer/ProductDAL");
 
 router.get("/", async function (req, res) {
-  const products = await serviceLayer.serviceGetAllProducts();
-  res.render("products/index", {
-    products: products.toJSON(),
+  const allCategories = (await serviceLayer.serviceGetAllCategories()).map(
+    (category) => [category.get("id"), category.get("category_name")],
+  );
+  const allBrands = (await serviceLayer.serviceGetAllBrands()).map((t) => [
+    t.get("id"),
+    t.get("brand_name"),
+  ]);
+  const searchForm = modelforms.createSearchForm(allCategories, allBrands);
+  searchForm.handle(req, {
+    success: async function (form) {
+        const products = await serviceLayer.serviceSearchProduct(form);
+        if(products)
+        res.render("products/index", {
+            searchForm : searchForm.toHTML(modelforms.bootstrapField),
+            products: products.toJSON(),
+        });
+        else
+        res.render("products/index", {
+            searchForm : searchForm.toHTML(modelforms.bootstrapField),
+            products: [],
+        });
+    },
+    empty: async function (form) {
+        const products = await serviceLayer.serviceGetAllProducts();
+        res.render("products/index", {
+            searchForm : searchForm.toHTML(modelforms.bootstrapField),
+            products: products.toJSON(),
+          });
+    },
+    error: function (form) {
+        res.render("products/index", {
+            searchForm : searchForm.toHTML(modelforms.bootstrapField),
+            products: [],
+          });
+    },
   });
 });
 

@@ -122,6 +122,38 @@ const reduceQuantityDAL = async (product_id,amt) => {
     }
 }
 
+const searchProductsDAL = async (searchForm) => {
+    try {
+        const queryBuilder = models.Product.collection();
+        if (searchForm.data.name) {
+            queryBuilder.where('product_name', 'like', "%" + searchForm.data.name + "%");
+        }
+        if (searchForm.data.minprice) {
+            queryBuilder.where('price', '>=', searchForm.data.min_cost);
+        }
+        if (searchForm.data.maxprice) {
+            queryBuilder.where('price', '<=', searchForm.data.max_cost);
+        }
+        console.log(searchForm.data.category, "CAT")
+        if(searchForm.data.category.length !== 0)
+        {
+            queryBuilder.where('category_id', "in", searchForm.data.category);
+        }
+        console.log(searchForm.data.brand, "BRAND")
+        if(searchForm.data.brand.length !== 0)
+        {
+            queryBuilder.where('brand_id', "in", searchForm.data.brand);
+        }
+        const products = await queryBuilder.fetch({
+            withRelated: ["brands", "category"],
+        });
+        return products;
+    } catch (error) {
+        console.log("Error Finding Products", error);
+        return null;
+    }
+} 
+
 module.exports = {
   getAllProductsDAL,
   addProductDAL,
@@ -131,5 +163,6 @@ module.exports = {
   getMainCategoriesDAL,
   getAllBrandsDAL,
   getAllCategoriesDAL,
-  reduceQuantityDAL
+  reduceQuantityDAL,
+  searchProductsDAL
 };

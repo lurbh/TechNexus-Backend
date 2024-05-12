@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const serviceProducts = require("../../service-layer/Product");
-const { createProductForm } = require("../../forms");
+const { createProductForm, createSearchForm } = require("../../forms");
 const { verifyToken } = require("../../middleware");
 
 router.get("/", async (req, res) => {
@@ -14,16 +14,39 @@ router.get("/", async (req, res) => {
 
 });
 
-router.get("/search", async (req, res) => {
-  console.log("Control Search");
-  const { product_name, category_id, brand_id } = req.body;
-  console.log(product_name, category_id, brand_id);
-  const products = await serviceProducts.serviceSearchProduct(
-    product_name,
-    category_id,
-    brand_id,
-  );
-  res.status(200).json({ products: products });
+router.post("/search", async (req, res) => {
+  const allCategories = await serviceProducts.serviceGetAllCategories();
+  const allBrands = await serviceProducts.serviceGetAllBrands();
+  const searchForm = createSearchForm(allCategories, allBrands);
+  searchForm.handle(req, {
+    success: async function (form) {
+      const products = await serviceProducts.serviceSearchProduct(form);
+      if(products)
+        res.status(200).json({ products: products });
+      else
+        res.status(400).json({ error: "Error getting Products"})
+    },
+    empty: function (form) {
+      res.status(400).json({
+        error: "Empty request recieved",
+      });
+    },
+    error: function (form) {
+      const errors = {};
+      for (let key in form.fields) {
+        if (form.fields[key].error) errors[key] = form.fields[key].error;
+      }
+      res.status(400).json({
+        error: errors,
+      });
+    },
+  });
+//   const products = await serviceProducts.serviceSearchProduct(
+//     product_name,
+//     category_id,
+//     brand_id,
+//   );
+//   res.status(200).json({ products: products });
 });
 
 router.get("/search/:product_id", async (req, res) => {
