@@ -7,6 +7,7 @@ const knex = require("knex")({
     database: process.env.DB_DATABASE,
     host: process.env.DB_HOST,
   },
+  'ssl': true
 });
 const bookshelf = require("bookshelf")(knex);
 
