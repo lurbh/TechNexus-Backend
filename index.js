@@ -103,9 +103,9 @@ async function main() {
   app.use("/cloudinary", cloudinaryRoutes);
   app.use("/stripe", stripeRoute)
 
-  app.listen(port, function () {
-    console.log("Server is running");
-  });
+  app.listen(process.env.PORT || port, function(){
+    console.log("Server has started")
+    })
 }
 
 main();
