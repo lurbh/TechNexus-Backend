@@ -53,12 +53,12 @@ exports.up = function (db, callback) {
       },
       created_on: {
         type: "datetime",
-        defaultValue: "CURRENT_TIMESTAMP",
+        defaultValue: "NOW()",
       },
       last_updated: {
         type: "datetime",
-        defaultValue: "CURRENT_TIMESTAMP",
-        onUpdate: "CURRENT_TIMESTAMP",
+        defaultValue: "NOW()",
+        onUpdate: "NOW()",
       },
     },
     () => {

@@ -34,7 +34,7 @@ exports.up = function (db, callback) {
       },
       publication_date: {
         type: "datetime",
-        defaultValue: "CURRENT_TIMESTAMP",
+        defaultValue: "NOW()",
       },
       user_id: {
         type: "int",

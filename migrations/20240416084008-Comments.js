@@ -39,7 +39,7 @@ exports.up = function (db, callback) {
       },
       comment_date: {
         type: "datetime",
-        defaultValue: "CURRENT_TIMESTAMP",
+        defaultValue: "NOW()",
       },
     },
     () => {

@@ -31,7 +31,7 @@ exports.up = function (db, callback) {
       },
       order_date: {
         type: "datetime",
-        defaultValue: "CURRENT_TIMESTAMP",
+        defaultValue: "NOW()",
       },
       order_status_id: {
         type: "int",
@@ -44,7 +44,7 @@ exports.up = function (db, callback) {
         "users",
         "orders_users_fk",
         {
-          User_id: "id",
+            user_id: "id",
         },
         {
           onDelete: "CASCADE",
@@ -56,7 +56,7 @@ exports.up = function (db, callback) {
             "order_statuses",
             "orders_order_status_fk",
             {
-              Order_Status_id: "id",
+                order_status_id: "id",
             },
             {
               onDelete: "CASCADE",
