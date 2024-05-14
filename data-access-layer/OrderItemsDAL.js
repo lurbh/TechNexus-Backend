@@ -58,7 +58,7 @@ const deleteOrderItemDAL = async (orderitem_id) => {
       required: true,
     });
     await orderitem.destroy();
-    return;
+    return true;
   } catch (error) {
     console.log("Error Deleting OrderItem", error);
   }

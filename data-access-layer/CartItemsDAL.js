@@ -63,7 +63,7 @@ const deleteCartItemDAL = async (cartitem_id) => {
       required: true,
     });
     await cartitem.destroy();
-    return;
+    return true;
   } catch (error) {
     console.log("Error Deleting Cart Item", error);
   }
@@ -90,7 +90,7 @@ const clearUserCartDAL = async (user_id) => {
       withRelated: ["product"],
     });
     for (let item of cartitems) await item.destroy();
-    return;
+    return true;
   } catch (error) {
     console.log("Error Deleting Cart Items", error);
   }
