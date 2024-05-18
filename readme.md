@@ -4,9 +4,9 @@
 
 TechNexus E-commerce is an online platform dedicated to providing users with a seamless shopping experience for a wide range of technology products. From smartphones and laptops to accessories and gadgets, TechNexus E-commerce aims to offer a diverse selection of high-quality tech products to meet the needs of tech enthusiasts and casual users alike.
 
-* Live Link for API and Admin Backend : [Link](https://github.com/lurbh/TechNexus-Backend/tree/db_migrate)
+* Live Link for API and Admin Backend : [Link](https://technexus-backend.onrender.com)
 * GitHub Repository for FrontEnd (ReactJS) : [Link](https://github.com/lurbh/TechNexus-Frontend)
-* Live Webpage of Frontend: [Link](https://github.com/lurbh/TechNexus-Frontend)
+* Live Webpage of Frontend: [Link](https://technexus-react.netlify.app)
 
 ## System Design
 ### Entity Relationship Diagram
@@ -27,7 +27,7 @@ TechNexus E-commerce is an online platform dedicated to providing users with a s
 The backend API endpoint provides developers with access to various endpoints for interacting with the platform's features and data. This documentation outlines the available endpoints, request and response formats, authentication methods, and usage guidelines.
 
 ### User API Documentation
-The base URL for all endpoints is `https://your-api-domain.com/api/user`.
+The base URL for all endpoints is `https://technexus-backend.onrender.com/api/user`.
 | Endpoint| Method | Description| Request Body | Response Body | JWT Authentication |
 |---------------------------------|--------|--------------------------------------|----------------------------------------------------|-------------------------------------------------------------|-------------|
 | `/register` | POST| Create a new user account| `{ "email": "user@example.com", "password": "password", "username": "User Name", "role_id": "2" }` | Status 201 with user data and tokens or Status 400 with error message | No|
@@ -36,7 +36,7 @@ The base URL for all endpoints is `https://your-api-domain.com/api/user`.
 | `/logout` | POST | Logout | `{ "refreshToken": "<refresh_token>" }` | Status 200 with success message or Status 401 with error message | No|
 
 ### Product API Documentation
-The base URL for all endpoints is `https://your-api-domain.com/api/products`.
+The base URL for all endpoints is `https://technexus-backend.onrender.com/api/products`.
 | Endpoint| Method | Description| Request Body | Response Body | JWT Authentication |
 |---------------------------------|--------|--------------------------------------|----------------------------------------------------|-------------------------------------------------------------|-------------|
 | `/` | GET | Get All Products | - | Status 200 with data or Status 400 with error message | No |
@@ -48,7 +48,7 @@ The base URL for all endpoints is `https://your-api-domain.com/api/products`.
 | `/:product_id` | DELETE | Delete Product | - | Status 200 with response or Status 400 with error message | Yes |
 
 ### Cart API Documentation
-The base URL for all endpoints is `https://your-api-domain.com/api/cart`.
+The base URL for all endpoints is `https://technexus-backend.onrender.com/api/cart`.
 | Endpoint| Method | Description| Request Body | Response Body | JWT Authentication |
 |---------------------------------|--------|--------------------------------------|----------------------------------------------------|-------------------------------------------------------------|-------------|
 | `/usercart/:user_id` | GET | Get Cart Items for a User | - | Status 200 with data or Status 400 with error message | Yes |
@@ -57,13 +57,13 @@ The base URL for all endpoints is `https://your-api-domain.com/api/cart`.
 | `/usercart/:cartitem_id` | DELETE | Delete Cart Item | - | Status 200 with response or Status 400 with error message | Yes |
 
 ### Checkout API Documentation
-The base URL for all endpoints is `https://your-api-domain.com/api/checkout`.
+The base URL for all endpoints is `https://technexus-backend.onrender.com/api/checkout`.
 | Endpoint| Method | Description| Request Body | Response Body | JWT Authentication |
 |---------------------------------|--------|--------------------------------------|----------------------------------------------------|-------------------------------------------------------------|-------------|
 | `/` | POST | Generate the Checkout for Stripe to handle | `{ user_id: 1 }` | Status 200 with stripeURL or Status 400 with error message | Yes |
 
 ### Orders API Documentation
-The base URL for all endpoints is `https://your-api-domain.com/api/orders`.
+The base URL for all endpoints is `https://technexus-backend.onrender.com/api/orders`.
 | Endpoint| Method | Description| Request Body | Response Body | JWT Authentication |
 |---------------------------------|--------|--------------------------------------|----------------------------------------------------|-------------------------------------------------------------|-------------|
 | `/:user_id` | GET | Get Orders for a User | - | Status 200 with data or Status 400 with error message | Yes |
@@ -82,6 +82,8 @@ The base URL for all endpoints is `https://your-api-domain.com/api/orders`.
 * [Caolan Forms](https://github.com/caolan/forms)
 
 ## Deployment
+Database and Backend Web Service deployed on Render
+React Frontend Deployed on Netlify
 
 ## Future Upgrades
 
