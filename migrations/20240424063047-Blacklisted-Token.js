@@ -18,7 +18,7 @@ exports.up = function (db) {
   return db.createTable("blacklisted_tokens", {
     id: { type: "int", unsigned: true, autoIncrement: true, primaryKey: true },
     token: { type: "string", length: 5000 },
-    date_created: { type: "datetime", defaultValue: "CURRENT_TIMESTAMP" },
+    date_created: { type: "datetime", defaultValue: "NOW()" },
   });
 };
 

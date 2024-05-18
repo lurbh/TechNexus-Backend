@@ -28,17 +28,18 @@ exports.up = async function (db) {
   await db.insert("categories", ["category_name", "category_img_url"], ["Personal Computers", "https://res.cloudinary.com/dymr3ncda/image/upload/v1714104532/blmwrbmtd1otdhqud4qc.jpg"]);
 
   // Insert sample data into Brands Table
-  await db.insert("brands", ["brand_name", "country_of_origin"], ["Apple", "USA"]);
-  await db.insert("brands", ["brand_name", "country_of_origin"], ["Samsung", "South Korea"]);
-  await db.insert("brands", ["brand_name", "country_of_origin"], ["Sony", "Japan"]);
-  await db.insert("brands", ["brand_name", "country_of_origin"], ["Microsoft", "USA"]);
-  await db.insert("brands", ["brand_name", "country_of_origin"], ["Google", "USA"]);
-  await db.insert("brands", ["brand_name", "country_of_origin"], ["Nintendo", "Japan"]);
-  await db.insert("brands", ["brand_name", "country_of_origin"], ["MSI", "Taiwan"]);
-  await db.insert("brands", ["brand_name", "country_of_origin"], ["Dell", "USA"]);
-  await db.insert("brands", ["brand_name", "country_of_origin"], ["Bose", "USA"]);
-
-
+  await db.insert("brands", 
+  ["brand_name", "country_of_origin"], [
+    ["Apple", "USA"],
+    ["Samsung", "South Korea"],
+    ["Sony", "Japan"],
+    ["Microsoft", "USA"],
+    ["Google", "USA"],
+    ["Nintendo", "Japan"],
+    ["MSI", "Taiwan"],
+    ["Dell", "USA"],
+    ["Bose", "USA"]
+  ]);
 
   
 

@@ -92,10 +92,7 @@ const stripeRoute = require("./controller-layer/stripe")
 
 async function main() {
   app.get("/", function (req, res) {
-    res.status(200);
-    res.json({
-      message: "Success",
-    });
+    res.redirect("/admin")
   });
 
   app.use("/api", express.json(), apiRoutes);
@@ -103,9 +100,9 @@ async function main() {
   app.use("/cloudinary", cloudinaryRoutes);
   app.use("/stripe", stripeRoute)
 
-  app.listen(port, function () {
-    console.log("Server is running");
-  });
+  app.listen(process.env.PORT || port, function(){
+    console.log("Server has started")
+    })
 }
 
 main();

@@ -42,7 +42,7 @@ exports.up = function (db, callback) {
       },
       review_date: {
         type: "datetime",
-        defaultValue: "CURRENT_TIMESTAMP",
+        defaultValue: "NOW()",
       },
     },
     () => {

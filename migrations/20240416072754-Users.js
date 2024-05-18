@@ -29,7 +29,7 @@ exports.up = function (db, callback) {
       password_hash: { type: "string", length: 255, notNull: true },
       registration_date: {
         type: "datetime",
-        defaultValue: "CURRENT_TIMESTAMP",
+        defaultValue: "NOW()",
       },
       role_id: { type: "int", unsigned: true },
       // Add other user profile information fields as needed
@@ -40,7 +40,7 @@ exports.up = function (db, callback) {
         "roles",
         "Users_roles_foreign",
         {
-          Role_id: "id",
+          role_id: "id",
         },
         {
           onDelete: "RESTRICT",
